@@ -1,4 +1,4 @@
-# wg-star
+# Noise\*
 Verified implementations for the Noise family of protocols
 
 TODO: README
