@@ -103,13 +103,11 @@ int main (int argc, char *arg[]) {
     // Alice being the initiator, she needs to know who to send the first
     // message, hence the bob_id parameter.
     session *alice_session = Noise_session_create_initiator(alice_device, bob_id);
-    if (!alice_session) return 1;
-    printf("Alice's session created\n");
+    RETURN_IF_ERROR(alice_session, "Alice session creation");
 
     // Bob, however, needs to wait for the first message to learn Alice's identity.
     session *bob_session = Noise_session_create_responder(bob_device);
-    if (!bob_session) return 1;
-    printf("Bob's session created\n");
+    RETURN_IF_ERROR(alice_session, "Bob session creation");
       
     // # Step 1: Send an empty message from Alice to Bob
     encap_message *encap_msg0;
@@ -124,14 +122,12 @@ int main (int argc, char *arg[]) {
     uint32_t cipher_msg0_len;
     uint8_t *cipher_msg0;
     res = Noise_session_write(encap_msg0, alice_session, &cipher_msg0_len, &cipher_msg0);
-    if (!Noise_rcode_is_success(res)) return 1;
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Send message 0");
     Noise_encap_message_p_free(encap_msg0);
-    printf("Message 0 sent\n");
 
     // ## Bob: read the message
     res = Noise_session_read(&encap_msg0, bob_session, cipher_msg0_len, cipher_msg0);
-    if (!Noise_rcode_is_success(res)) return res.tag == Noise_Error? res.val.case_Error : res.val.case_Stuck;
-    printf("Message 0 received\n");
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Receive message 0");
 
     // In order to actually read the message, Bob needs to unpack it.
     // Unpacking is similar to packing, but here we use an authentication level:
@@ -139,11 +135,11 @@ int main (int argc, char *arg[]) {
     // guarantees, then the unpacking fails.
     uint32_t plain_msg0_len;
     uint8_t *plain_msg0;
-    if (!Noise_unpack_message_with_auth_level(&plain_msg0_len, &plain_msg0,
-                                              NOISE_AUTH_ZERO, encap_msg0))
-        return 1;
+    RETURN_IF_ERROR(
+                    Noise_unpack_message_with_auth_level(&plain_msg0_len, &plain_msg0,
+                                                         NOISE_AUTH_ZERO, encap_msg0),
+                    "Unpack message 0");
     Noise_encap_message_p_free(encap_msg0);
-    printf("Message 0 unpacked\n");
     
     // # Step 2: Send an empty message from Bob to Alice.
     // Very similar to step 1.
@@ -155,6 +151,7 @@ int main (int argc, char *arg[]) {
     
     // Same for Bob: we can now send messages with the highest confidentiality level.
     
+    printf("Success!\n");
 
     return 0;
 }
