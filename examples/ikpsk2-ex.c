@@ -39,12 +39,6 @@ uint8_t alice_spriv[DH_KEY_SIZE] = {
     0x54, 0xb4, 0x07, 0x55, 0x77, 0xa2, 0x85, 0x52
 };
 
-/*uint8_t alice_spub[DH_KEY_SIZE] = {
-    0xe6, 0xdb, 0x68, 0x67, 0x58, 0x30, 0x30, 0xdb,
-    0x35, 0x94, 0xc1, 0xa4, 0x24, 0xb1, 0x5f, 0x7c,
-    0x72, 0x66, 0x24, 0xec, 0x26, 0xb3, 0x35, 0x3b,
-    0x10, 0xa9, 0x03, 0xa6, 0xd0, 0xab, 0x1c, 0x4c
-    };*/
 uint8_t alice_spub[DH_KEY_SIZE]  = { 0 };
 
 // Symmetric key used by Bob for serialization/deserialization
@@ -56,9 +50,15 @@ uint8_t bob_srlz_key[AEAD_KEY_SIZE] = {
 };
 
 // Bob's DH keys
-uint8_t *bob_spriv = alice_spriv;
+uint8_t bob_spriv[DH_KEY_SIZE] = {
+    0xc3, 0xda, 0x55, 0x37, 0x9d, 0xe9, 0xc6, 0x90,
+    0x8e, 0x94, 0xea, 0x4d, 0xf2, 0x8d, 0x08, 0x4f,
+    0x32, 0xec, 0xcf, 0x03, 0x49, 0x1c, 0x71, 0xf7,
+    0x54, 0xb4, 0x07, 0x55, 0x77, 0xa2, 0x85, 0x52
+};
 
-uint8_t *bob_spub = alice_spub;
+
+uint8_t bob_spub[DH_KEY_SIZE]  = { 0 };
 
 // Pre-shared key
 uint8_t psk[PSK_SIZE] = {
@@ -70,9 +70,12 @@ uint8_t psk[PSK_SIZE] = {
 
 int main (int argc, char *arg[]) {
     uint8_t prologue[10] = "Noise* 1.0";
+    encap_message *encap_msg;
     rcode res;
 
+    // Generate the public keys from the private keys
     Noise_dh_secret_to_public(alice_spub, alice_spriv);
+    Noise_dh_secret_to_public(bob_spub, bob_spriv);
 
     /*
      * Initialize Alice's device
@@ -110,7 +113,6 @@ int main (int argc, char *arg[]) {
     RETURN_IF_ERROR(alice_session, "Bob session creation");
       
     // # Step 1: Send an empty message from Alice to Bob
-    encap_message *encap_msg0;
 
     // ## Alice: generate the message
 
@@ -118,15 +120,15 @@ int main (int argc, char *arg[]) {
     // level. Upon sending the message, the session state will dynamically
     // check that it can provide the requested security guarantees, and will
     // fail otherwise.
-    encap_msg0 = Noise_pack_message_with_conf_level(NOISE_CONF_ZERO, 0, NULL);
+    encap_msg = Noise_pack_message_with_conf_level(NOISE_CONF_ZERO, 0, NULL);
     uint32_t cipher_msg0_len;
     uint8_t *cipher_msg0;
-    res = Noise_session_write(encap_msg0, alice_session, &cipher_msg0_len, &cipher_msg0);
+    res = Noise_session_write(encap_msg, alice_session, &cipher_msg0_len, &cipher_msg0);
     RETURN_IF_ERROR(Noise_rcode_is_success(res), "Send message 0");
-    Noise_encap_message_p_free(encap_msg0);
+    Noise_encap_message_p_free(encap_msg);
 
     // ## Bob: read the message
-    res = Noise_session_read(&encap_msg0, bob_session, cipher_msg0_len, cipher_msg0);
+    res = Noise_session_read(&encap_msg, bob_session, cipher_msg0_len, cipher_msg0);
     RETURN_IF_ERROR(Noise_rcode_is_success(res), "Receive message 0");
 
     // In order to actually read the message, Bob needs to unpack it.
@@ -137,12 +139,14 @@ int main (int argc, char *arg[]) {
     uint8_t *plain_msg0;
     RETURN_IF_ERROR(
                     Noise_unpack_message_with_auth_level(&plain_msg0_len, &plain_msg0,
-                                                         NOISE_AUTH_ZERO, encap_msg0),
+                                                         NOISE_AUTH_ZERO, encap_msg),
                     "Unpack message 0");
-    Noise_encap_message_p_free(encap_msg0);
+    Noise_encap_message_p_free(encap_msg);
     
     // # Step 2: Send an empty message from Bob to Alice.
     // Very similar to step 1.
+
+    // ## Bob: generate the message
     
 
     // By then, Alice should have reached the best security level.
