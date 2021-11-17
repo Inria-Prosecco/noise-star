@@ -104,11 +104,12 @@ int main () {
     // Note that we parameterized the code generation so that whenever we receive
     // a public static key during the handshake, this static key is accepted only
     // if it was registered before. If we don't register Alice, the first message
-    // from Alice to Bob will be rejected.
+    // from Alice to Bob will get rejected.
     // Note that it is possible to parameterize the API to accept unknown remote
     // keys, but in that case it is necessary to provide a validation function
     // to check remote static keys upon receiving them (the payload should then
-    // contain a certificate for the key).
+    // contain a certificate for the key): we can't use arbitrary remote static
+    // public keys.
     peer *peer_alice = Noise_device_add_peer(bob_device, (uint8_t*) "Alice", alice_spub, psk);
     if (!peer_alice) return 1;
 
@@ -121,7 +122,7 @@ int main () {
     session *alice_session = Noise_session_create_initiator(alice_device, bob_id);
     RETURN_IF_ERROR(alice_session, "Alice session creation");
 
-    // Bob, however, needs to wait for the first message to learn Alice's identity.
+    // Bob, however, uses the first message to learn Alice's identity.
     session *bob_session = Noise_session_create_responder(bob_device);
     RETURN_IF_ERROR(alice_session, "Bob session creation");
       
@@ -130,9 +131,12 @@ int main () {
     // ## Alice: generate the message
 
     // Before sending a message, we need to pack it with a confidentiality
-    // level. Upon sending the message, the session state will dynamically
-    // check that it can provide the requested security guarantees, and will
-    // fail otherwise.
+    // level. Upon sending the message, if the message is non-empty, the
+    // session state will dynamically check that it can provide the requested
+    // security guarantees, and will fail otherwise.
+    // Here, the message is empty, so no check is actually performed, but we
+    // still request the lowest guarantees (no guarantees, actually: the message
+    // is considered public).
     encap_msg = Noise_pack_message_with_conf_level(NOISE_CONF_ZERO, 0, NULL);
     res = Noise_session_write(encap_msg, alice_session, &cipher_msg_len, &cipher_msg);
     RETURN_IF_ERROR(Noise_rcode_is_success(res), "Send message 0");
@@ -144,8 +148,8 @@ int main () {
 
     // In order to actually read the message, Bob needs to unpack it.
     // Unpacking is similar to packing, but here we use an authentication level:
-    // if at the current step the protocol doesn't provide enough authentication
-    // guarantees, then the unpacking fails.
+    // if at the current step the message is non-empty and the protocol doesn't
+    // provide enough authentication guarantees, then the unpacking fails.
     RETURN_IF_ERROR(
                     Noise_unpack_message_with_auth_level(&plain_msg_len, &plain_msg,
                                                          NOISE_AUTH_ZERO, encap_msg),
@@ -179,7 +183,7 @@ int main () {
 
     // By now, Alice should have reached the best security level.
     // Send a secret message, and request the highest confidentiality
-    // guarantee.
+    // guarantees.
 
     // ## Alice: generate the message
     // We request strong forward secrecy
@@ -190,7 +194,7 @@ int main () {
     Noise_encap_message_p_free(encap_msg);
 
     // ## Bob: read the message
-    // We request the sender (Alice) to be known, without possible KCI
+    // We request the highest authentication guarantees (known sender, no KCI).
     res = Noise_session_read(&encap_msg, bob_session, cipher_msg_len, cipher_msg);
     RETURN_IF_ERROR(Noise_rcode_is_success(res), "Receive message 2");
     RETURN_IF_ERROR(
