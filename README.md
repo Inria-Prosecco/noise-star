@@ -25,9 +25,9 @@ In order to link a final executable, remember to pass
 Example
 =======
 
-See `examples` for an example of use of the API.
-Building and running the example simply requires executing `make`, after
-HACL* and Noise\* have been properly built.
+See `examples` for an example of usuage of the API.
+Building and running the example simply requires executing `make` in the subdirectory,
+after HACL* and Noise\* have been properly built.
 
 The example uses IKpsk2, with Curve25519, ChaChaPoly and SHA256 (non-optimized
 implementations).
