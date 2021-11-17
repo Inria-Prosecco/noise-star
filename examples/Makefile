@@ -33,7 +33,7 @@ $(NOISE_STAR_IMPLEMENTATION)/libnoise.a:
 	cd $(NOISE_STAR_IMPLEMENTATION) && $(MAKE)
 
 ikpsk2-ex.exe: $(NOISE_STAR_IMPLEMENTATION)/libnoise.a
-	$(CC) $(INCLUDES) ikpsk2-ex.c -o $@ $(LIBS)
+	$(CC) -Wall -Wextra $(INCLUDES) ikpsk2-ex.c -o $@ $(LIBS)
 
 .PHONY: clean
 clean:
