@@ -68,10 +68,14 @@ uint8_t psk[PSK_SIZE] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-int main (int argc, char *arg[]) {
+int main () {
     uint8_t prologue[10] = "Noise* 1.0";
-    encap_message *encap_msg;
     rcode res;
+    encap_message *encap_msg;
+    uint32_t cipher_msg_len;
+    uint8_t *cipher_msg;
+    uint32_t plain_msg_len;
+    uint8_t *plain_msg;
 
     // Generate the public keys from the private keys
     Noise_dh_secret_to_public(alice_spub, alice_spriv);
@@ -81,10 +85,11 @@ int main (int argc, char *arg[]) {
      * Initialize Alice's device
      */
     // Create the device
-    device *alice_device = Noise_device_create(10, prologue, "Alice", alice_srlz_key, alice_spriv);
+    device *alice_device = Noise_device_create(10, prologue, (uint8_t*) "Alice",
+                                               alice_srlz_key, alice_spriv);
     
     // Register Bob
-    peer *peer_bob = Noise_device_add_peer(alice_device, "Bob", bob_spub, psk);
+    peer *peer_bob = Noise_device_add_peer(alice_device, (uint8_t*) "Bob", bob_spub, psk);
     if (!peer_bob) return 1;
     peer_id bob_id = Noise_peer_get_id(peer_bob);
 
@@ -92,12 +97,20 @@ int main (int argc, char *arg[]) {
      * Initialize Bob's device
      */
     // Create the device
-    device *bob_device = Noise_device_create(10, prologue, "Bob", bob_srlz_key, bob_spriv);
+    device *bob_device = Noise_device_create(10, prologue, (uint8_t*) "Bob",
+                                             bob_srlz_key, bob_spriv);
 
     // Register Alice
-    peer *peer_alice = Noise_device_add_peer(bob_device, "Alice", alice_spub, psk);
+    // Note that we parameterized the code generation so that whenever we receive
+    // a public static key during the handshake, this static key is accepted only
+    // if it was registered before. If we don't register Alice, the first message
+    // from Alice to Bob will be rejected.
+    // Note that it is possible to parameterize the API to accept unknown remote
+    // keys, but in that case it is necessary to provide a validation function
+    // to check remote static keys upon receiving them (the payload should then
+    // contain a certificate for the key).
+    peer *peer_alice = Noise_device_add_peer(bob_device, (uint8_t*) "Alice", alice_spub, psk);
     if (!peer_alice) return 1;
-    peer_id alice_id = Noise_peer_get_id(peer_alice);
 
     /*
      * Start communicating
@@ -121,39 +134,105 @@ int main (int argc, char *arg[]) {
     // check that it can provide the requested security guarantees, and will
     // fail otherwise.
     encap_msg = Noise_pack_message_with_conf_level(NOISE_CONF_ZERO, 0, NULL);
-    uint32_t cipher_msg0_len;
-    uint8_t *cipher_msg0;
-    res = Noise_session_write(encap_msg, alice_session, &cipher_msg0_len, &cipher_msg0);
+    res = Noise_session_write(encap_msg, alice_session, &cipher_msg_len, &cipher_msg);
     RETURN_IF_ERROR(Noise_rcode_is_success(res), "Send message 0");
     Noise_encap_message_p_free(encap_msg);
 
     // ## Bob: read the message
-    res = Noise_session_read(&encap_msg, bob_session, cipher_msg0_len, cipher_msg0);
+    res = Noise_session_read(&encap_msg, bob_session, cipher_msg_len, cipher_msg);
     RETURN_IF_ERROR(Noise_rcode_is_success(res), "Receive message 0");
 
     // In order to actually read the message, Bob needs to unpack it.
     // Unpacking is similar to packing, but here we use an authentication level:
     // if at the current step the protocol doesn't provide enough authentication
     // guarantees, then the unpacking fails.
-    uint32_t plain_msg0_len;
-    uint8_t *plain_msg0;
     RETURN_IF_ERROR(
-                    Noise_unpack_message_with_auth_level(&plain_msg0_len, &plain_msg0,
+                    Noise_unpack_message_with_auth_level(&plain_msg_len, &plain_msg,
                                                          NOISE_AUTH_ZERO, encap_msg),
                     "Unpack message 0");
     Noise_encap_message_p_free(encap_msg);
+    if (cipher_msg_len > 0) free(cipher_msg);
+    if (plain_msg_len > 0) free(plain_msg);
     
     // # Step 2: Send an empty message from Bob to Alice.
     // Very similar to step 1.
 
     // ## Bob: generate the message
-    
+    encap_msg = Noise_pack_message_with_conf_level(NOISE_CONF_ZERO, 0, NULL);
+    res = Noise_session_write(encap_msg, bob_session, &cipher_msg_len, &cipher_msg);
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Send message 1");
+    Noise_encap_message_p_free(encap_msg);
 
-    // By then, Alice should have reached the best security level.
+    // ## Alice: read the message
+    res = Noise_session_read(&encap_msg, alice_session, cipher_msg_len, cipher_msg);
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Receive message 1");
+    RETURN_IF_ERROR(
+                    Noise_unpack_message_with_auth_level(&plain_msg_len, &plain_msg,
+                                                         NOISE_AUTH_ZERO, encap_msg),
+                    "Unpack message 1");
+    Noise_encap_message_p_free(encap_msg);
+    if (cipher_msg_len > 0) free(cipher_msg);
+    if (plain_msg_len > 0) free(plain_msg);
+
+    
+    // # Step 3 : Send a confidential message from Alice to Bob
+
+    // By now, Alice should have reached the best security level.
     // Send a secret message, and request the highest confidentiality
     // guarantee.
-    
+
+    // ## Alice: generate the message
+    // We request strong forward secrecy
+    encap_msg = Noise_pack_message_with_conf_level(NOISE_CONF_STRONG_FORWARD_SECRECY,
+        11, (uint8_t*) "Hello Bob!");
+    res = Noise_session_write(encap_msg, alice_session, &cipher_msg_len, &cipher_msg);
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Send message 2");
+    Noise_encap_message_p_free(encap_msg);
+
+    // ## Bob: read the message
+    // We request the sender (Alice) to be known, without possible KCI
+    res = Noise_session_read(&encap_msg, bob_session, cipher_msg_len, cipher_msg);
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Receive message 2");
+    RETURN_IF_ERROR(
+                    Noise_unpack_message_with_auth_level(&plain_msg_len, &plain_msg,
+                                                         NOISE_AUTH_KNOWN_SENDER_NO_KCI,
+                                                         encap_msg),
+                    "Unpack message 2");
+    Noise_encap_message_p_free(encap_msg);
+    if (cipher_msg_len > 0) free(cipher_msg);
+    if (plain_msg_len > 0) free(plain_msg);
+
+    // # Step 4: Send a confidential message from Bob to Alice.
     // Same for Bob: we can now send messages with the highest confidentiality level.
+
+    // ## Bob: generate the message (request max confidentiality)
+    encap_msg = Noise_pack_message_with_conf_level(NOISE_CONF_STRONG_FORWARD_SECRECY,
+        11, (uint8_t*) "Hello Alice!");
+    res = Noise_session_write(encap_msg, bob_session, &cipher_msg_len, &cipher_msg);
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Send message 3");
+    Noise_encap_message_p_free(encap_msg);
+
+   // ## Alice: read the message (request max authentication)
+    res = Noise_session_read(&encap_msg, alice_session, cipher_msg_len, cipher_msg);
+    RETURN_IF_ERROR(Noise_rcode_is_success(res), "Receive message 3");
+    RETURN_IF_ERROR(
+                    Noise_unpack_message_with_auth_level(&plain_msg_len, &plain_msg,
+                                                         NOISE_AUTH_KNOWN_SENDER_NO_KCI,
+                                                         encap_msg),
+                    "Unpack message 3");
+    Noise_encap_message_p_free(encap_msg);
+    if (cipher_msg_len > 0) free(cipher_msg);
+    if (plain_msg_len > 0) free(plain_msg);
+
+    /*
+     * Cleanup
+     */
+    // Free the sessions, then the devices
+    Noise_session_free(alice_session);
+    Noise_session_free(bob_session);
+    Noise_device_free(alice_device);
+    Noise_device_free(bob_device);
+
     
     printf("Success!\n");
 
