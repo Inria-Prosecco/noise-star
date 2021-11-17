@@ -16,11 +16,8 @@ Then, navigate to one of the directories you are interested in:
 ```bash
 cd api-IKpsk2/IKpsk2_25519_ChaChaPoly_SHA256
 make -j
-# Optional:
-make libnoiseapi.so
 ```
 
 In order to link a final executable, remember to pass
-`$HACL-HOME/dist/gcc-compatible/libevercrypt.so` to the linker (after
-`libnoiseapi`). Static linking is also an option, this time passing
-`libnoiseapi.a` and `libevercrypt.a`, in this order.
+`-L$HACL-HOME/dist/gcc-compatible -levercrypt` to the linker (after
+`-lnoiseapi`).
