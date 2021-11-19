@@ -3,25 +3,25 @@
 
 #include "NX.h"
 
-bool Noise_uu___is_Success(Noise_rcode projectee)
+bool Noise_NX_uu___is_Success(Noise_NX_rcode projectee)
 {
-  if (projectee.tag == Noise_Success)
+  if (projectee.tag == Noise_NX_Success)
     return true;
   else
     return false;
 }
 
-bool Noise_uu___is_Error(Noise_rcode projectee)
+bool Noise_NX_uu___is_Error(Noise_NX_rcode projectee)
 {
-  if (projectee.tag == Noise_Error)
+  if (projectee.tag == Noise_NX_Error)
     return true;
   else
     return false;
 }
 
-Noise_error_code Noise___proj__Error__item___0(Noise_rcode projectee)
+Noise_NX_error_code Noise_NX___proj__Error__item___0(Noise_NX_rcode projectee)
 {
-  if (projectee.tag == Noise_Error)
+  if (projectee.tag == Noise_NX_Error)
     return projectee.val.case_Error;
   else
   {
@@ -33,17 +33,17 @@ Noise_error_code Noise___proj__Error__item___0(Noise_rcode projectee)
   }
 }
 
-bool Noise_uu___is_Stuck(Noise_rcode projectee)
+bool Noise_NX_uu___is_Stuck(Noise_NX_rcode projectee)
 {
-  if (projectee.tag == Noise_Stuck)
+  if (projectee.tag == Noise_NX_Stuck)
     return true;
   else
     return false;
 }
 
-Noise_error_code Noise___proj__Stuck__item___0(Noise_rcode projectee)
+Noise_NX_error_code Noise_NX___proj__Stuck__item___0(Noise_NX_rcode projectee)
 {
-  if (projectee.tag == Noise_Stuck)
+  if (projectee.tag == Noise_NX_Stuck)
     return projectee.val.case_Stuck;
   else
   {
@@ -55,17 +55,17 @@ Noise_error_code Noise___proj__Stuck__item___0(Noise_rcode projectee)
   }
 }
 
-bool Noise_uu___is_Auth_level(Noise_ac_level_t projectee)
+bool Noise_NX_uu___is_Auth_level(Noise_NX_ac_level_t projectee)
 {
-  if (projectee.tag == Noise_Auth_level)
+  if (projectee.tag == Noise_NX_Auth_level)
     return true;
   else
     return false;
 }
 
-uint8_t Noise___proj__Auth_level__item__l(Noise_ac_level_t projectee)
+uint8_t Noise_NX___proj__Auth_level__item__l(Noise_NX_ac_level_t projectee)
 {
-  if (projectee.tag == Noise_Auth_level)
+  if (projectee.tag == Noise_NX_Auth_level)
     return projectee.val.case_Auth_level;
   else
   {
@@ -77,17 +77,17 @@ uint8_t Noise___proj__Auth_level__item__l(Noise_ac_level_t projectee)
   }
 }
 
-bool Noise_uu___is_Conf_level(Noise_ac_level_t projectee)
+bool Noise_NX_uu___is_Conf_level(Noise_NX_ac_level_t projectee)
 {
-  if (projectee.tag == Noise_Conf_level)
+  if (projectee.tag == Noise_NX_Conf_level)
     return true;
   else
     return false;
 }
 
-uint8_t Noise___proj__Conf_level__item__l(Noise_ac_level_t projectee)
+uint8_t Noise_NX___proj__Conf_level__item__l(Noise_NX_ac_level_t projectee)
 {
-  if (projectee.tag == Noise_Conf_level)
+  if (projectee.tag == Noise_NX_Conf_level)
     return projectee.val.case_Conf_level;
   else
   {
@@ -99,43 +99,43 @@ uint8_t Noise___proj__Conf_level__item__l(Noise_ac_level_t projectee)
   }
 }
 
-bool Noise_uu___is_No_level(Noise_ac_level_t projectee)
+bool Noise_NX_uu___is_No_level(Noise_NX_ac_level_t projectee)
 {
-  if (projectee.tag == Noise_No_level)
+  if (projectee.tag == Noise_NX_No_level)
     return true;
   else
     return false;
 }
 
-typedef struct Noise_encap_message_t_s
+typedef struct Noise_NX_encap_message_t_s
 {
-  Noise_ac_level_t em_ac_level;
+  Noise_NX_ac_level_t em_ac_level;
   uint32_t em_message_len;
   uint8_t *em_message;
 }
-Noise_encap_message_t;
+Noise_NX_encap_message_t;
 
-Noise_encap_message_t
-*Noise___proj__Mkencap_message_p_or_null__item__emp(Noise_encap_message_t *projectee)
+Noise_NX_encap_message_t
+*Noise_NX___proj__Mkencap_message_p_or_null__item__emp(Noise_NX_encap_message_t *projectee)
 {
   return projectee;
 }
 
-bool Noise_encap_message_p_is_null(Noise_encap_message_t *emp)
+bool Noise_NX_encap_message_p_is_null(Noise_NX_encap_message_t *emp)
 {
   return emp == NULL;
 }
 
-void Noise_encap_message_p_free(Noise_encap_message_t *emp)
+void Noise_NX_encap_message_p_free(Noise_NX_encap_message_t *emp)
 {
-  Noise_encap_message_t em = emp[0U];
+  Noise_NX_encap_message_t em = emp[0U];
   if (!(em.em_message == NULL))
     KRML_HOST_FREE(em.em_message);
   KRML_HOST_FREE(emp);
 }
 
-Noise_encap_message_t
-*Noise_pack_message_with_conf_level(
+Noise_NX_encap_message_t
+*Noise_NX_pack_message_with_conf_level(
   uint8_t requested_conf_level,
   uint32_t msg_len,
   uint8_t *msg
@@ -151,14 +151,14 @@ Noise_encap_message_t
   }
   else
     msg_ = NULL;
-  KRML_CHECK_SIZE(sizeof (Noise_encap_message_t), (uint32_t)1U);
-  Noise_encap_message_t *emp_p = KRML_HOST_MALLOC(sizeof (Noise_encap_message_t));
+  KRML_CHECK_SIZE(sizeof (Noise_NX_encap_message_t), (uint32_t)1U);
+  Noise_NX_encap_message_t *emp_p = KRML_HOST_MALLOC(sizeof (Noise_NX_encap_message_t));
   emp_p[0U]
   =
     (
-      (Noise_encap_message_t){
+      (Noise_NX_encap_message_t){
         .em_ac_level = {
-          .tag = Noise_Conf_level,
+          .tag = Noise_NX_Conf_level,
           .val = { .case_Conf_level = requested_conf_level }
         },
         .em_message_len = msg_len,
@@ -168,24 +168,24 @@ Noise_encap_message_t
   return emp_p;
 }
 
-Noise_encap_message_t *Noise_pack_message(uint32_t msg_len, uint8_t *msg)
+Noise_NX_encap_message_t *Noise_NX_pack_message(uint32_t msg_len, uint8_t *msg)
 {
-  return Noise_pack_message_with_conf_level(NOISE_MAX_CONF_LEVEL, msg_len, msg);
+  return Noise_NX_pack_message_with_conf_level(NOISE_NX_MAX_CONF_LEVEL, msg_len, msg);
 }
 
 bool
-Noise_unpack_message_with_auth_level(
+Noise_NX_unpack_message_with_auth_level(
   uint32_t *out_msg_len,
   uint8_t **out_msg,
   uint8_t requested_auth_level,
-  Noise_encap_message_t *emp
+  Noise_NX_encap_message_t *emp
 )
 {
-  Noise_encap_message_t em = emp[0U];
+  Noise_NX_encap_message_t em = emp[0U];
   bool ok;
   if (em.em_message_len == (uint32_t)0U)
     ok = true;
-  else if (em.em_ac_level.tag == Noise_Auth_level)
+  else if (em.em_ac_level.tag == Noise_NX_Auth_level)
   {
     uint8_t l = em.em_ac_level.val.case_Auth_level;
     ok = l >= requested_auth_level;
@@ -215,20 +215,29 @@ Noise_unpack_message_with_auth_level(
   }
 }
 
-bool Noise_unpack_message(uint32_t *out_msg_len, uint8_t **out_msg, Noise_encap_message_t *emp)
+bool
+Noise_NX_unpack_message(
+  uint32_t *out_msg_len,
+  uint8_t **out_msg,
+  Noise_NX_encap_message_t *emp
+)
 {
-  return Noise_unpack_message_with_auth_level(out_msg_len, out_msg, NOISE_MAX_AUTH_LEVEL, emp);
+  return
+    Noise_NX_unpack_message_with_auth_level(out_msg_len,
+      out_msg,
+      NOISE_NX_MAX_AUTH_LEVEL,
+      emp);
 }
 
 void
-Noise_unsafe_unpack_message(
-  Noise_ac_level_t *out_ac_level,
+Noise_NX_unsafe_unpack_message(
+  Noise_NX_ac_level_t *out_ac_level,
   uint32_t *out_msg_len,
   uint8_t **out_msg,
-  Noise_encap_message_t *emp
+  Noise_NX_encap_message_t *emp
 )
 {
-  Noise_encap_message_t em = emp[0U];
+  Noise_NX_encap_message_t em = emp[0U];
   uint8_t *msg;
   if (em.em_message_len > (uint32_t)0U)
   {
@@ -244,35 +253,35 @@ Noise_unsafe_unpack_message(
   out_msg[0U] = msg;
 }
 
-Prims_int Noise_num_pattern_messages = (krml_checked_int_t)2;
+Prims_int Noise_NX_num_pattern_messages = (krml_checked_int_t)2;
 
-bool Noise_rcode_is_success(Noise_rcode c)
+bool Noise_NX_rcode_is_success(Noise_NX_rcode c)
 {
-  if (c.tag == Noise_Success)
+  if (c.tag == Noise_NX_Success)
     return true;
   else
     return false;
 }
 
-bool Noise_rcode_is_error(Noise_rcode c)
+bool Noise_NX_rcode_is_error(Noise_NX_rcode c)
 {
-  if (c.tag == Noise_Error)
+  if (c.tag == Noise_NX_Error)
     return true;
   else
     return false;
 }
 
-bool Noise_rcode_is_stuck(Noise_rcode c)
+bool Noise_NX_rcode_is_stuck(Noise_NX_rcode c)
 {
-  if (c.tag == Noise_Stuck)
+  if (c.tag == Noise_NX_Stuck)
     return true;
   else
     return false;
 }
 
-typedef struct Noise_resp_state_t_s
+typedef struct Noise_NX_resp_state_t_s
 {
-  Noise_resp_state_t_tags tag;
+  Noise_NX_resp_state_t_tags tag;
   union {
     struct 
     {
@@ -298,38 +307,38 @@ typedef struct Noise_resp_state_t_s
   }
   val;
 }
-Noise_resp_state_t;
+Noise_NX_resp_state_t;
 
-typedef struct Noise_peer_t_s
+typedef struct Noise_NX_peer_t_s
 {
   uint32_t p_id;
-  Noise_noise_string *p_info;
+  Noise_NX_noise_string *p_info;
   uint8_t *p_s;
 }
-Noise_peer_t;
+Noise_NX_peer_t;
 
-typedef Noise_peer_t *peer_p;
+typedef Noise_NX_peer_t *peer_p;
 
-typedef Noise_cell **t___Impl_Noise_API_Instances_X1N_25519_AESGCM_BLAKE2b_peer_p;
+typedef Noise_NX_cell **t___Impl_Noise_API_Instances_X1N_25519_AESGCM_BLAKE2b_peer_p;
 
-typedef struct Noise_device_t_s
+typedef struct Noise_NX_device_t_s
 {
-  Noise_noise_string *dv_info;
+  Noise_NX_noise_string *dv_info;
   uint8_t *dv_sk;
   uint8_t *dv_spriv;
   uint8_t *dv_spub;
-  Noise_sized_buffer dv_prologue;
+  Noise_NX_sized_buffer dv_prologue;
   uint32_t dv_states_counter;
-  Noise_cell **dv_peers;
+  Noise_NX_cell **dv_peers;
   uint32_t dv_peers_counter;
 }
-Noise_device_t;
+Noise_NX_device_t;
 
-typedef Noise_device_t *device_p;
+typedef Noise_NX_device_t *device_p;
 
-typedef struct Noise_init_state_t_s
+typedef struct Noise_NX_init_state_t_s
 {
-  Noise_resp_state_t_tags tag;
+  Noise_NX_resp_state_t_tags tag;
   union {
     struct 
     {
@@ -357,40 +366,40 @@ typedef struct Noise_init_state_t_s
   }
   val;
 }
-Noise_init_state_t;
+Noise_NX_init_state_t;
 
-typedef struct Noise_session_t_s
+typedef struct Noise_NX_session_t_s
 {
-  Noise_session_t_tags tag;
+  Noise_NX_session_t_tags tag;
   union {
     struct 
     {
-      Noise_resp_state_t state;
+      Noise_NX_resp_state_t state;
       uint32_t id;
-      Noise_noise_string *info;
+      Noise_NX_noise_string *info;
       uint32_t pid;
-      Noise_noise_string *pinfo;
-      Noise_device_t *dv;
+      Noise_NX_noise_string *pinfo;
+      Noise_NX_device_t *dv;
     }
     case_DS_Initiator;
     struct 
     {
-      Noise_init_state_t state;
+      Noise_NX_init_state_t state;
       uint32_t id;
-      Noise_noise_string *info;
+      Noise_NX_noise_string *info;
       uint8_t *spriv;
       uint8_t *spub;
       uint32_t pid;
-      Noise_noise_string *pinfo;
-      Noise_device_t *dv;
+      Noise_NX_noise_string *pinfo;
+      Noise_NX_device_t *dv;
     }
     case_DS_Responder;
   }
   val;
 }
-Noise_session_t;
+Noise_NX_session_t;
 
-typedef Noise_session_t *session_p;
+typedef Noise_NX_session_t *session_p;
 
 /*
   Create a device.
@@ -403,8 +412,8 @@ typedef Noise_session_t *session_p;
  
   May fail and return NULL if provided unvalid keys.
 */
-Noise_device_t
-*Noise_device_create(
+Noise_NX_device_t
+*Noise_NX_device_create(
   uint32_t prlg_len,
   uint8_t *prlg,
   uint8_t *info,
@@ -419,10 +428,10 @@ Noise_device_t
   memcpy(o1, spriv, (uint32_t)32U * sizeof (uint8_t));
   uint8_t *spriv_ = o1;
   uint8_t *spub_ = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-  Noise_error_code res = Noise_dh_secret_to_public(spub_, spriv_);
+  Noise_NX_error_code res = Noise_NX_dh_secret_to_public(spub_, spriv_);
   switch (res)
   {
-    case Noise_CSuccess:
+    case Noise_NX_CSuccess:
       {
         uint8_t *prlg_;
         if (prlg_len > (uint32_t)0U)
@@ -434,7 +443,7 @@ Noise_device_t
         }
         else
           prlg_ = NULL;
-        Noise_sized_buffer prlg_1 = { .size = prlg_len, .buffer = prlg_ };
+        Noise_NX_sized_buffer prlg_1 = { .size = prlg_len, .buffer = prlg_ };
         bool b = info == NULL;
         uint8_t *out_str;
         if (b)
@@ -483,20 +492,20 @@ Noise_device_t
         KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
         uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
         out_ptr[0U] = out_str;
-        Noise_noise_string *info_ = out_ptr;
-        KRML_CHECK_SIZE(sizeof (Noise_cell *), (uint32_t)1U);
-        Noise_cell **ptr = KRML_HOST_MALLOC(sizeof (Noise_cell *));
+        Noise_NX_noise_string *info_ = out_ptr;
+        KRML_CHECK_SIZE(sizeof (Noise_NX_cell *), (uint32_t)1U);
+        Noise_NX_cell **ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_cell *));
         ptr[0U] = NULL;
-        Noise_cell **peers = ptr;
-        Noise_device_t
+        Noise_NX_cell **peers = ptr;
+        Noise_NX_device_t
         dv =
           {
             .dv_info = info_, .dv_sk = sk_, .dv_spriv = spriv_, .dv_spub = spub_,
             .dv_prologue = prlg_1, .dv_states_counter = (uint32_t)1U, .dv_peers = peers,
             .dv_peers_counter = (uint32_t)1U
           };
-        KRML_CHECK_SIZE(sizeof (Noise_device_t), (uint32_t)1U);
-        Noise_device_t *dvp = KRML_HOST_MALLOC(sizeof (Noise_device_t));
+        KRML_CHECK_SIZE(sizeof (Noise_NX_device_t), (uint32_t)1U);
+        Noise_NX_device_t *dvp = KRML_HOST_MALLOC(sizeof (Noise_NX_device_t));
         dvp[0U] = dv;
         return dvp;
       }
@@ -524,8 +533,8 @@ __uint32_t__uint8_t_;
 
   May fail and return NULL if provided unvalid keys.
 */
-Noise_device_t
-*Noise_device_create_from_secret(
+Noise_NX_device_t
+*Noise_NX_device_create_from_secret(
   uint32_t prlg_len,
   uint8_t *prlg,
   uint8_t *info,
@@ -564,10 +573,10 @@ Noise_device_t
   uint8_t *name_raw = scrut.snd;
   uint8_t *n8 = spriv;
   uint8_t *c0 = spriv + (uint32_t)8U;
-  uint64_t n0 = Noise_bytes_to_nonce(n8);
-  Noise_error_code
-  res0 = Noise_aead_decrypt(sk, n0, name_raw_len, name_raw, (uint32_t)32U, spriv_, c0);
-  if (!(res0 == Noise_CSuccess))
+  uint64_t n0 = Noise_NX_bytes_to_nonce(n8);
+  Noise_NX_error_code
+  res0 = Noise_NX_aead_decrypt(sk, n0, name_raw_len, name_raw, (uint32_t)32U, spriv_, c0);
+  if (!(res0 == Noise_NX_CSuccess))
   {
     KRML_HOST_FREE(spriv_);
     return NULL;
@@ -578,7 +587,7 @@ Noise_device_t
     memcpy(o0, sk, (uint32_t)32U * sizeof (uint8_t));
     uint8_t *sk_ = o0;
     uint8_t *spub_ = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-    Noise_error_code res1 = Noise_dh_secret_to_public(spub_, spriv_);
+    Noise_NX_error_code res1 = Noise_NX_dh_secret_to_public(spub_, spriv_);
     uint8_t *prlg_;
     if (prlg_len > (uint32_t)0U)
     {
@@ -589,7 +598,7 @@ Noise_device_t
     }
     else
       prlg_ = NULL;
-    Noise_sized_buffer prlg_1 = { .size = prlg_len, .buffer = prlg_ };
+    Noise_NX_sized_buffer prlg_1 = { .size = prlg_len, .buffer = prlg_ };
     bool b = info == NULL;
     uint8_t *out_str;
     if (b)
@@ -638,19 +647,19 @@ Noise_device_t
     KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
     uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
     out_ptr[0U] = out_str;
-    Noise_noise_string *info_ = out_ptr;
-    KRML_CHECK_SIZE(sizeof (Noise_cell *), (uint32_t)1U);
-    Noise_cell **ptr = KRML_HOST_MALLOC(sizeof (Noise_cell *));
+    Noise_NX_noise_string *info_ = out_ptr;
+    KRML_CHECK_SIZE(sizeof (Noise_NX_cell *), (uint32_t)1U);
+    Noise_NX_cell **ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_cell *));
     ptr[0U] = NULL;
-    Noise_cell **peers = ptr;
-    Noise_device_t
+    Noise_NX_cell **peers = ptr;
+    Noise_NX_device_t
     dv =
       {
         .dv_info = info_, .dv_sk = sk_, .dv_spriv = spriv_, .dv_spub = spub_, .dv_prologue = prlg_1,
         .dv_states_counter = (uint32_t)1U, .dv_peers = peers, .dv_peers_counter = (uint32_t)1U
       };
-    KRML_CHECK_SIZE(sizeof (Noise_device_t), (uint32_t)1U);
-    Noise_device_t *dvp = KRML_HOST_MALLOC(sizeof (Noise_device_t));
+    KRML_CHECK_SIZE(sizeof (Noise_NX_device_t), (uint32_t)1U);
+    Noise_NX_device_t *dvp = KRML_HOST_MALLOC(sizeof (Noise_NX_device_t));
     dvp[0U] = dv;
     return dvp;
   }
@@ -658,7 +667,7 @@ Noise_device_t
 
 static void
 free___Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(
-  Noise_cell *l
+  Noise_NX_cell *l
 )
 {
   if (!(l == NULL))
@@ -670,7 +679,7 @@ free___Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_pe
 
 static void
 free__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(
-  Noise_cell **pl
+  Noise_NX_cell **pl
 )
 {
   free___Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(*pl);
@@ -683,9 +692,9 @@ free__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_pee
   Take care to free the device **AFTER** having freed all the sessions created
   from this device.
 */
-void Noise_device_free(Noise_device_t *dvp)
+void Noise_NX_device_free(Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   uint8_t *str = dv.dv_info[0U];
   if (!(str == NULL))
     KRML_HOST_FREE(str);
@@ -705,9 +714,9 @@ void Noise_device_free(Noise_device_t *dvp)
   Uses the device symmetric key to encrypt the device's secret key. Uses
   a randomly generated nonce together with the device name as authentication data.
 */
-void Noise_serialize_device_secret(uint32_t *outlen, uint8_t **out, Noise_device_t *dvp)
+void Noise_NX_serialize_device_secret(uint32_t *outlen, uint8_t **out, Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   uint8_t *outb = KRML_HOST_CALLOC((uint32_t)56U, sizeof (uint8_t));
   uint8_t *name = dv.dv_info[0U];
   __uint32_t__uint8_t_ scrut;
@@ -741,22 +750,22 @@ void Noise_serialize_device_secret(uint32_t *outlen, uint8_t **out, Noise_device
   uint8_t *n8 = outb;
   uint8_t *c = outb + (uint32_t)8U;
   Lib_RandomBuffer_System_crypto_random(n8, (uint32_t)8U);
-  uint64_t n = Noise_bytes_to_nonce(n8);
-  Noise_aead_encrypt(dv.dv_sk, n, name_raw_len, name_raw, (uint32_t)32U, dv.dv_spriv, c);
+  uint64_t n = Noise_NX_bytes_to_nonce(n8);
+  Noise_NX_aead_encrypt(dv.dv_sk, n, name_raw_len, name_raw, (uint32_t)32U, dv.dv_spriv, c);
   out[0U] = outb;
   outlen[0U] = (uint32_t)56U;
 }
 
 static void
 push__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(
-  Noise_cell **pl,
-  Noise_peer_t *x
+  Noise_NX_cell **pl,
+  Noise_NX_peer_t *x
 )
 {
-  Noise_cell *l = *pl;
-  Noise_cell c = { .next = l, .data = x };
-  KRML_CHECK_SIZE(sizeof (Noise_cell), (uint32_t)1U);
-  Noise_cell *pc = KRML_HOST_MALLOC(sizeof (Noise_cell));
+  Noise_NX_cell *l = *pl;
+  Noise_NX_cell c = { .next = l, .data = x };
+  KRML_CHECK_SIZE(sizeof (Noise_NX_cell), (uint32_t)1U);
+  Noise_NX_cell *pc = KRML_HOST_MALLOC(sizeof (Noise_NX_cell));
   pc[0U] = c;
   *pl = pc;
 }
@@ -772,52 +781,52 @@ push__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_pee
   For this reason, we advise to immediately use the returned pointer (to retrieve
   the peer id for instance), then forget it.
 */
-Noise_peer_t *Noise_device_add_peer(Noise_device_t *dvp, uint8_t *pinfo, uint8_t *rs)
+Noise_NX_peer_t *Noise_NX_device_add_peer(Noise_NX_device_t *dvp, uint8_t *pinfo, uint8_t *rs)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   uint32_t pcounter = dv.dv_peers_counter;
   bool b1 = pcounter == (uint32_t)4294967295U;
-  Noise_cell *llt = *dv.dv_peers;
-  Noise_cell *lltp = llt;
-  Noise_cell *llt10 = lltp;
+  Noise_NX_cell *llt = *dv.dv_peers;
+  Noise_NX_cell *lltp = llt;
+  Noise_NX_cell *llt10 = lltp;
   bool b0;
   if (llt10 == NULL)
     b0 = false;
   else
   {
-    Noise_cell c = llt10[0U];
-    Noise_peer_t x = c.data[0U];
-    bool b = Noise_lbytes_eq((uint32_t)32U, x.p_s, rs);
+    Noise_NX_cell c = llt10[0U];
+    Noise_NX_peer_t x = c.data[0U];
+    bool b = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, rs);
     bool b1 = b;
     b0 = !b1;
   }
   bool cond = b0;
   while (cond)
   {
-    Noise_cell *llt1 = lltp;
-    Noise_cell c0 = llt1[0U];
+    Noise_NX_cell *llt1 = lltp;
+    Noise_NX_cell c0 = llt1[0U];
     lltp = c0.next;
-    Noise_cell *llt10 = lltp;
+    Noise_NX_cell *llt10 = lltp;
     bool b;
     if (llt10 == NULL)
       b = false;
     else
     {
-      Noise_cell c = llt10[0U];
-      Noise_peer_t x = c.data[0U];
-      bool b0 = Noise_lbytes_eq((uint32_t)32U, x.p_s, rs);
+      Noise_NX_cell c = llt10[0U];
+      Noise_NX_peer_t x = c.data[0U];
+      bool b0 = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, rs);
       bool b1 = b0;
       b = !b1;
     }
     cond = b;
   }
-  Noise_cell *llt1 = *&lltp;
-  Noise_peer_t *res;
+  Noise_NX_cell *llt1 = *&lltp;
+  Noise_NX_peer_t *res;
   if (llt1 == NULL)
     res = NULL;
   else
   {
-    Noise_cell c = *llt1;
+    Noise_NX_cell c = *llt1;
     res = c.data;
   }
   bool b2 = !(res == NULL);
@@ -825,13 +834,13 @@ Noise_peer_t *Noise_device_add_peer(Noise_device_t *dvp, uint8_t *pinfo, uint8_t
     return NULL;
   else
   {
-    Noise_noise_string *info1 = dv.dv_info;
+    Noise_NX_noise_string *info1 = dv.dv_info;
     uint8_t *sk1 = dv.dv_sk;
     uint8_t *spriv1 = dv.dv_spriv;
     uint8_t *spub1 = dv.dv_spub;
-    Noise_sized_buffer prologue1 = dv.dv_prologue;
+    Noise_NX_sized_buffer prologue1 = dv.dv_prologue;
     uint32_t scounter1 = dv.dv_states_counter;
-    Noise_cell **peers1 = dv.dv_peers;
+    Noise_NX_cell **peers1 = dv.dv_peers;
     uint32_t pcounter1 = dv.dv_peers_counter;
     uint8_t *rs1 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
     memcpy(rs1, rs, (uint32_t)32U * sizeof (uint8_t));
@@ -883,18 +892,18 @@ Noise_peer_t *Noise_device_add_peer(Noise_device_t *dvp, uint8_t *pinfo, uint8_t
     KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
     uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
     out_ptr[0U] = out_str;
-    Noise_noise_string *pinfo1 = out_ptr;
-    Noise_peer_t x_ = { .p_id = pcounter1, .p_info = pinfo1, .p_s = rs1 };
-    KRML_CHECK_SIZE(sizeof (Noise_peer_t), (uint32_t)1U);
-    Noise_peer_t *xp_ = KRML_HOST_MALLOC(sizeof (Noise_peer_t));
+    Noise_NX_noise_string *pinfo1 = out_ptr;
+    Noise_NX_peer_t x_ = { .p_id = pcounter1, .p_info = pinfo1, .p_s = rs1 };
+    KRML_CHECK_SIZE(sizeof (Noise_NX_peer_t), (uint32_t)1U);
+    Noise_NX_peer_t *xp_ = KRML_HOST_MALLOC(sizeof (Noise_NX_peer_t));
     xp_[0U] = x_;
-    Noise_peer_t *x = xp_;
+    Noise_NX_peer_t *x = xp_;
     push__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(peers1,
       x);
-    Noise_peer_t *pp = x;
+    Noise_NX_peer_t *pp = x;
     dvp[0U] =
       (
-        (Noise_device_t){
+        (Noise_NX_device_t){
           .dv_info = info1,
           .dv_sk = sk1,
           .dv_spriv = spriv1,
@@ -905,19 +914,19 @@ Noise_peer_t *Noise_device_add_peer(Noise_device_t *dvp, uint8_t *pinfo, uint8_t
           .dv_peers_counter = pcounter1 + (uint32_t)1U
         }
       );
-    Noise_peer_t *pp0 = pp;
+    Noise_NX_peer_t *pp0 = pp;
     return pp0;
   }
 }
 
-static Noise_peer_t
+static Noise_NX_peer_t
 *pop__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(
-  Noise_cell **pl
+  Noise_NX_cell **pl
 )
 {
-  Noise_cell *l = *pl;
-  Noise_peer_t *r1 = (*l).data;
-  Noise_cell *next = (*l).next;
+  Noise_NX_cell *l = *pl;
+  Noise_NX_peer_t *r1 = (*l).data;
+  Noise_NX_cell *next = (*l).next;
   *pl = next;
   KRML_HOST_FREE(l);
   return r1;
@@ -926,57 +935,57 @@ static Noise_peer_t
 /*
   Remove a peer designated by its unique identifier.
 */
-void Noise_device_remove_peer(Noise_device_t *dvp, uint32_t pid)
+void Noise_NX_device_remove_peer(Noise_NX_device_t *dvp, uint32_t pid)
 {
   if (!(pid == (uint32_t)0U))
   {
-    Noise_device_t dv = dvp[0U];
-    Noise_cell *llt = *dv.dv_peers;
+    Noise_NX_device_t dv = dvp[0U];
+    Noise_NX_cell *llt = *dv.dv_peers;
     if (!(llt == NULL))
     {
-      Noise_cell c0 = *llt;
-      Noise_peer_t x = c0.data[0U];
+      Noise_NX_cell c0 = *llt;
+      Noise_NX_peer_t x = c0.data[0U];
       if (x.p_id != pid)
       {
-        Noise_cell *llt1 = *dv.dv_peers;
-        Noise_cell *lltp = llt1;
-        Noise_cell *llt20 = lltp;
-        Noise_cell *next = llt20->next;
+        Noise_NX_cell *llt1 = *dv.dv_peers;
+        Noise_NX_cell *lltp = llt1;
+        Noise_NX_cell *llt20 = lltp;
+        Noise_NX_cell *next = llt20->next;
         bool b0;
         if (next == NULL)
           b0 = false;
         else
         {
-          Noise_cell c = next[0U];
-          Noise_peer_t x = c.data[0U];
+          Noise_NX_cell c = next[0U];
+          Noise_NX_peer_t x = c.data[0U];
           b0 = x.p_id != pid;
         }
         bool cond = b0;
         while (cond)
         {
-          Noise_cell *llt2 = lltp;
-          Noise_cell c0 = llt2[0U];
+          Noise_NX_cell *llt2 = lltp;
+          Noise_NX_cell c0 = llt2[0U];
           lltp = c0.next;
-          Noise_cell *llt20 = lltp;
-          Noise_cell *next = llt20->next;
+          Noise_NX_cell *llt20 = lltp;
+          Noise_NX_cell *next = llt20->next;
           bool b;
           if (next == NULL)
             b = false;
           else
           {
-            Noise_cell c = next[0U];
-            Noise_peer_t x = c.data[0U];
+            Noise_NX_cell c = next[0U];
+            Noise_NX_peer_t x = c.data[0U];
             b = x.p_id != pid;
           }
           cond = b;
         }
-        Noise_cell *llt2 = *&lltp;
-        Noise_cell c01 = *llt2;
+        Noise_NX_cell *llt2 = *&lltp;
+        Noise_NX_cell c01 = *llt2;
         if (!(c01.next == NULL))
         {
-          Noise_cell c1 = *c01.next;
-          llt2[0U] = ((Noise_cell){ .next = c1.next, .data = c01.data });
-          Noise_peer_t p = c1.data[0U];
+          Noise_NX_cell c1 = *c01.next;
+          llt2[0U] = ((Noise_NX_cell){ .next = c1.next, .data = c01.data });
+          Noise_NX_peer_t p = c1.data[0U];
           uint8_t *str = p.p_info[0U];
           if (!(str == NULL))
             KRML_HOST_FREE(str);
@@ -989,10 +998,10 @@ void Noise_device_remove_peer(Noise_device_t *dvp, uint32_t pid)
       }
       else
       {
-        Noise_peer_t
+        Noise_NX_peer_t
         *elem1 =
           pop__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(dv.dv_peers);
-        Noise_peer_t p = elem1[0U];
+        Noise_NX_peer_t p = elem1[0U];
         uint8_t *str = p.p_info[0U];
         if (!(str == NULL))
           KRML_HOST_FREE(str);
@@ -1013,11 +1022,11 @@ void Noise_device_remove_peer(Noise_device_t *dvp, uint32_t pid)
   data.
 */
 void
-Noise_serialize_peer_secret(
+Noise_NX_serialize_peer_secret(
   uint32_t *outlen,
   uint8_t **out,
-  Noise_device_t *dvp,
-  Noise_peer_t *peer
+  Noise_NX_device_t *dvp,
+  Noise_NX_peer_t *peer
 )
 {
   if (peer == NULL)
@@ -1027,8 +1036,8 @@ Noise_serialize_peer_secret(
   }
   else
   {
-    Noise_device_t dv = dvp[0U];
-    Noise_peer_t p = peer[0U];
+    Noise_NX_device_t dv = dvp[0U];
+    Noise_NX_peer_t p = peer[0U];
     uint8_t *concat_keys = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
     uint8_t *outb = KRML_HOST_CALLOC((uint32_t)56U, sizeof (uint8_t));
     memcpy(concat_keys, p.p_s, (uint32_t)32U * sizeof (uint8_t));
@@ -1064,8 +1073,8 @@ Noise_serialize_peer_secret(
     uint8_t *n8 = outb;
     uint8_t *c = outb + (uint32_t)8U;
     Lib_RandomBuffer_System_crypto_random(n8, (uint32_t)8U);
-    uint64_t n = Noise_bytes_to_nonce(n8);
-    Noise_aead_encrypt(dv.dv_sk, n, name_raw_len, name_raw, (uint32_t)32U, concat_keys, c);
+    uint64_t n = Noise_NX_bytes_to_nonce(n8);
+    Noise_NX_aead_encrypt(dv.dv_sk, n, name_raw_len, name_raw, (uint32_t)32U, concat_keys, c);
     out[0U] = outb;
     outlen[0U] = (uint32_t)56U;
     KRML_HOST_FREE(concat_keys);
@@ -1075,15 +1084,15 @@ Noise_serialize_peer_secret(
 /*
   Decrypt and deserialize a peer's secret data and add it to the device.
 */
-Noise_peer_t
-*Noise_deserialize_peer_secret(
-  Noise_device_t *dvp,
+Noise_NX_peer_t
+*Noise_NX_deserialize_peer_secret(
+  Noise_NX_device_t *dvp,
   uint8_t *peer_name,
   uint32_t inlen,
   uint8_t *enc_keys
 )
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   if ((uint32_t)56U != inlen)
     return NULL;
   else
@@ -1119,71 +1128,78 @@ Noise_peer_t
     uint8_t *name_raw = scrut.snd;
     uint8_t *n8 = enc_keys;
     uint8_t *c0 = enc_keys + (uint32_t)8U;
-    uint64_t n0 = Noise_bytes_to_nonce(n8);
-    Noise_error_code
-    res = Noise_aead_decrypt(dv.dv_sk, n0, name_raw_len, name_raw, (uint32_t)32U, concat_keys, c0);
-    if (res == Noise_CSuccess)
+    uint64_t n0 = Noise_NX_bytes_to_nonce(n8);
+    Noise_NX_error_code
+    res =
+      Noise_NX_aead_decrypt(dv.dv_sk,
+        n0,
+        name_raw_len,
+        name_raw,
+        (uint32_t)32U,
+        concat_keys,
+        c0);
+    if (res == Noise_NX_CSuccess)
     {
       uint8_t *p_s = concat_keys;
-      Noise_device_t dv1 = dvp[0U];
+      Noise_NX_device_t dv1 = dvp[0U];
       uint32_t pcounter = dv1.dv_peers_counter;
       bool b1 = pcounter == (uint32_t)4294967295U;
-      Noise_cell *llt = *dv1.dv_peers;
-      Noise_cell *lltp = llt;
-      Noise_cell *llt10 = lltp;
+      Noise_NX_cell *llt = *dv1.dv_peers;
+      Noise_NX_cell *lltp = llt;
+      Noise_NX_cell *llt10 = lltp;
       bool b0;
       if (llt10 == NULL)
         b0 = false;
       else
       {
-        Noise_cell c = llt10[0U];
-        Noise_peer_t x = c.data[0U];
-        bool b = Noise_lbytes_eq((uint32_t)32U, x.p_s, p_s);
+        Noise_NX_cell c = llt10[0U];
+        Noise_NX_peer_t x = c.data[0U];
+        bool b = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, p_s);
         bool b1 = b;
         b0 = !b1;
       }
       bool cond = b0;
       while (cond)
       {
-        Noise_cell *llt1 = lltp;
-        Noise_cell c0 = llt1[0U];
+        Noise_NX_cell *llt1 = lltp;
+        Noise_NX_cell c0 = llt1[0U];
         lltp = c0.next;
-        Noise_cell *llt10 = lltp;
+        Noise_NX_cell *llt10 = lltp;
         bool b;
         if (llt10 == NULL)
           b = false;
         else
         {
-          Noise_cell c = llt10[0U];
-          Noise_peer_t x = c.data[0U];
-          bool b0 = Noise_lbytes_eq((uint32_t)32U, x.p_s, p_s);
+          Noise_NX_cell c = llt10[0U];
+          Noise_NX_peer_t x = c.data[0U];
+          bool b0 = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, p_s);
           bool b1 = b0;
           b = !b1;
         }
         cond = b;
       }
-      Noise_cell *llt1 = *&lltp;
-      Noise_peer_t *res1;
+      Noise_NX_cell *llt1 = *&lltp;
+      Noise_NX_peer_t *res1;
       if (llt1 == NULL)
         res1 = NULL;
       else
       {
-        Noise_cell c = *llt1;
+        Noise_NX_cell c = *llt1;
         res1 = c.data;
       }
       bool b2 = !(res1 == NULL);
-      Noise_peer_t *peer;
+      Noise_NX_peer_t *peer;
       if (b1 || b2)
         peer = NULL;
       else
       {
-        Noise_noise_string *info1 = dv1.dv_info;
+        Noise_NX_noise_string *info1 = dv1.dv_info;
         uint8_t *sk1 = dv1.dv_sk;
         uint8_t *spriv1 = dv1.dv_spriv;
         uint8_t *spub1 = dv1.dv_spub;
-        Noise_sized_buffer prologue1 = dv1.dv_prologue;
+        Noise_NX_sized_buffer prologue1 = dv1.dv_prologue;
         uint32_t scounter1 = dv1.dv_states_counter;
-        Noise_cell **peers1 = dv1.dv_peers;
+        Noise_NX_cell **peers1 = dv1.dv_peers;
         uint32_t pcounter1 = dv1.dv_peers_counter;
         uint8_t *rs = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
         memcpy(rs, p_s, (uint32_t)32U * sizeof (uint8_t));
@@ -1235,18 +1251,18 @@ Noise_peer_t
         KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
         uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
         out_ptr[0U] = out_str;
-        Noise_noise_string *pinfo = out_ptr;
-        Noise_peer_t x_ = { .p_id = pcounter1, .p_info = pinfo, .p_s = rs };
-        KRML_CHECK_SIZE(sizeof (Noise_peer_t), (uint32_t)1U);
-        Noise_peer_t *xp_ = KRML_HOST_MALLOC(sizeof (Noise_peer_t));
+        Noise_NX_noise_string *pinfo = out_ptr;
+        Noise_NX_peer_t x_ = { .p_id = pcounter1, .p_info = pinfo, .p_s = rs };
+        KRML_CHECK_SIZE(sizeof (Noise_NX_peer_t), (uint32_t)1U);
+        Noise_NX_peer_t *xp_ = KRML_HOST_MALLOC(sizeof (Noise_NX_peer_t));
         xp_[0U] = x_;
-        Noise_peer_t *x = xp_;
+        Noise_NX_peer_t *x = xp_;
         push__Impl_Noise_API_Device_raw_peer_p_or_null_raw_Impl_Noise_API_Device_raw_peer_t_raw_uint32_t_Impl_Noise_String_hstring__uint8_t____(peers1,
           x);
-        Noise_peer_t *pp = x;
+        Noise_NX_peer_t *pp = x;
         dvp[0U] =
           (
-            (Noise_device_t){
+            (Noise_NX_device_t){
               .dv_info = info1,
               .dv_sk = sk1,
               .dv_spriv = spriv1,
@@ -1257,7 +1273,7 @@ Noise_peer_t
               .dv_peers_counter = pcounter1 + (uint32_t)1U
             }
           );
-        Noise_peer_t *pp0 = pp;
+        Noise_NX_peer_t *pp0 = pp;
         peer = pp0;
       }
       KRML_HOST_FREE(concat_keys);
@@ -1281,51 +1297,51 @@ Noise_peer_t
   For this reason, we advise to immediately use the returned pointer (to retrieve
   the peer name, etc.), then forget it.
 */
-Noise_peer_t *Noise_device_lookup_peer_by_id(Noise_device_t *dvp, uint32_t id)
+Noise_NX_peer_t *Noise_NX_device_lookup_peer_by_id(Noise_NX_device_t *dvp, uint32_t id)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   if (id == (uint32_t)0U)
     return NULL;
   else
   {
-    Noise_cell *llt = *dv.dv_peers;
-    Noise_cell *lltp = llt;
-    Noise_cell *llt10 = lltp;
+    Noise_NX_cell *llt = *dv.dv_peers;
+    Noise_NX_cell *lltp = llt;
+    Noise_NX_cell *llt10 = lltp;
     bool b0;
     if (llt10 == NULL)
       b0 = false;
     else
     {
-      Noise_cell c = llt10[0U];
-      Noise_peer_t x = c.data[0U];
+      Noise_NX_cell c = llt10[0U];
+      Noise_NX_peer_t x = c.data[0U];
       bool b = x.p_id == id;
       b0 = !b;
     }
     bool cond = b0;
     while (cond)
     {
-      Noise_cell *llt1 = lltp;
-      Noise_cell c0 = llt1[0U];
+      Noise_NX_cell *llt1 = lltp;
+      Noise_NX_cell c0 = llt1[0U];
       lltp = c0.next;
-      Noise_cell *llt10 = lltp;
+      Noise_NX_cell *llt10 = lltp;
       bool b;
       if (llt10 == NULL)
         b = false;
       else
       {
-        Noise_cell c = llt10[0U];
-        Noise_peer_t x = c.data[0U];
+        Noise_NX_cell c = llt10[0U];
+        Noise_NX_peer_t x = c.data[0U];
         bool b0 = x.p_id == id;
         b = !b0;
       }
       cond = b;
     }
-    Noise_cell *llt1 = *&lltp;
+    Noise_NX_cell *llt1 = *&lltp;
     if (llt1 == NULL)
       return NULL;
     else
     {
-      Noise_cell c = *llt1;
+      Noise_NX_cell c = *llt1;
       return c.data;
     }
   }
@@ -1341,49 +1357,49 @@ Noise_peer_t *Noise_device_lookup_peer_by_id(Noise_device_t *dvp, uint32_t id)
   For this reason, we advise to immediately use the returned pointer (to retrieve
   the peer name, etc.), then forget it.
 */
-Noise_peer_t *Noise_device_lookup_peer_by_static(Noise_device_t *dvp, uint8_t *s)
+Noise_NX_peer_t *Noise_NX_device_lookup_peer_by_static(Noise_NX_device_t *dvp, uint8_t *s)
 {
-  Noise_device_t dv = dvp[0U];
-  Noise_cell *llt = *dv.dv_peers;
-  Noise_cell *lltp = llt;
-  Noise_cell *llt10 = lltp;
+  Noise_NX_device_t dv = dvp[0U];
+  Noise_NX_cell *llt = *dv.dv_peers;
+  Noise_NX_cell *lltp = llt;
+  Noise_NX_cell *llt10 = lltp;
   bool b0;
   if (llt10 == NULL)
     b0 = false;
   else
   {
-    Noise_cell c = llt10[0U];
-    Noise_peer_t x = c.data[0U];
-    bool b = Noise_lbytes_eq((uint32_t)32U, x.p_s, s);
+    Noise_NX_cell c = llt10[0U];
+    Noise_NX_peer_t x = c.data[0U];
+    bool b = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, s);
     bool b1 = b;
     b0 = !b1;
   }
   bool cond = b0;
   while (cond)
   {
-    Noise_cell *llt1 = lltp;
-    Noise_cell c0 = llt1[0U];
+    Noise_NX_cell *llt1 = lltp;
+    Noise_NX_cell c0 = llt1[0U];
     lltp = c0.next;
-    Noise_cell *llt10 = lltp;
+    Noise_NX_cell *llt10 = lltp;
     bool b;
     if (llt10 == NULL)
       b = false;
     else
     {
-      Noise_cell c = llt10[0U];
-      Noise_peer_t x = c.data[0U];
-      bool b0 = Noise_lbytes_eq((uint32_t)32U, x.p_s, s);
+      Noise_NX_cell c = llt10[0U];
+      Noise_NX_peer_t x = c.data[0U];
+      bool b0 = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, s);
       bool b1 = b0;
       b = !b1;
     }
     cond = b;
   }
-  Noise_cell *llt1 = *&lltp;
+  Noise_NX_cell *llt1 = *&lltp;
   if (llt1 == NULL)
     return NULL;
   else
   {
-    Noise_cell c = *llt1;
+    Noise_NX_cell c = *llt1;
     return c.data;
   }
 }
@@ -1391,9 +1407,9 @@ Noise_peer_t *Noise_device_lookup_peer_by_static(Noise_device_t *dvp, uint8_t *s
 /*
   Copy the peer information to the user provided pointer.
 */
-void Noise_device_get_info(Noise_noise_string *out, Noise_device_t *dvp)
+void Noise_NX_device_get_info(Noise_NX_noise_string *out, Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   uint8_t *input_str = dv.dv_info[0U];
   bool b = input_str == NULL;
   uint8_t *out_str;
@@ -1449,9 +1465,9 @@ void Noise_device_get_info(Noise_noise_string *out, Noise_device_t *dvp)
   The device keeps track of the number of sessions created so far, in order
   to give them unique identifiers.
 */
-uint32_t Noise_device_get_sessions_counter(Noise_device_t *dvp)
+uint32_t Noise_NX_device_get_sessions_counter(Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   return dv.dv_states_counter;
 }
 
@@ -1460,9 +1476,9 @@ uint32_t Noise_device_get_sessions_counter(Noise_device_t *dvp)
 
   It is not possible to create any more sessions if the counter is saturated.
 */
-bool Noise_device_sessions_counter_is_saturated(Noise_device_t *dvp)
+bool Noise_NX_device_sessions_counter_is_saturated(Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   uint32_t cnt = dv.dv_states_counter;
   return cnt == (uint32_t)4294967295U;
 }
@@ -1473,9 +1489,9 @@ bool Noise_device_sessions_counter_is_saturated(Noise_device_t *dvp)
   The device keeps track of the number of peers created so far, in order
   to give them unique identifiers.
 */
-uint32_t Noise_device_get_peers_counter(Noise_device_t *dvp)
+uint32_t Noise_NX_device_get_peers_counter(Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   return dv.dv_peers_counter;
 }
 
@@ -1484,9 +1500,9 @@ uint32_t Noise_device_get_peers_counter(Noise_device_t *dvp)
 
   It is not possible to add any more peers to the device if the counter is saturated.
 */
-bool Noise_device_peers_counter_is_saturated(Noise_device_t *dvp)
+bool Noise_NX_device_peers_counter_is_saturated(Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   uint32_t cnt = dv.dv_peers_counter;
   return cnt == (uint32_t)4294967295U;
 }
@@ -1494,36 +1510,36 @@ bool Noise_device_peers_counter_is_saturated(Noise_device_t *dvp)
 /*
   Copy the device static private key to the user provided buffer.
 */
-void Noise_device_get_static_priv(uint8_t *out, Noise_device_t *dvp)
+void Noise_NX_device_get_static_priv(uint8_t *out, Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   memcpy(out, dv.dv_spriv, (uint32_t)32U * sizeof (uint8_t));
 }
 
 /*
   Copy the device static public key to the user provided buffer.
 */
-void Noise_device_get_static_pub(uint8_t *out, Noise_device_t *dvp)
+void Noise_NX_device_get_static_pub(uint8_t *out, Noise_NX_device_t *dvp)
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   memcpy(out, dv.dv_spub, (uint32_t)32U * sizeof (uint8_t));
 }
 
 /*
   Return the unique peer identifier.
 */
-uint32_t Noise_peer_get_id(Noise_peer_t *pp)
+uint32_t Noise_NX_peer_get_id(Noise_NX_peer_t *pp)
 {
-  Noise_peer_t p = pp[0U];
+  Noise_NX_peer_t p = pp[0U];
   return p.p_id;
 }
 
 /*
   Copy the peer information to the user provided pointer.
 */
-void Noise_peer_get_info(Noise_noise_string *out, Noise_peer_t *pp)
+void Noise_NX_peer_get_info(Noise_NX_noise_string *out, Noise_NX_peer_t *pp)
 {
-  Noise_peer_t p = pp[0U];
+  Noise_NX_peer_t p = pp[0U];
   uint8_t *input_str = p.p_info[0U];
   bool b = input_str == NULL;
   uint8_t *out_str;
@@ -1576,9 +1592,9 @@ void Noise_peer_get_info(Noise_noise_string *out, Noise_peer_t *pp)
 /*
   Copy the peer static public key to the user provided buffer.
 */
-void Noise_peer_get_static(uint8_t *out, Noise_peer_t *pp)
+void Noise_NX_peer_get_static(uint8_t *out, Noise_NX_peer_t *pp)
 {
-  Noise_peer_t p = pp[0U];
+  Noise_NX_peer_t p = pp[0U];
   memcpy(out, p.p_s, (uint32_t)32U * sizeof (uint8_t));
 }
 
@@ -1593,8 +1609,8 @@ typedef struct result_session_t_s
 {
   result_session_t_tags tag;
   union {
-    Noise_session_t case_Res;
-    Noise_error_code case_Fail;
+    Noise_NX_session_t case_Res;
+    Noise_NX_error_code case_Fail;
   }
   val;
 }
@@ -1609,22 +1625,27 @@ typedef struct ________s {  } _______;
 
   May fail and return NULL in case of invalid keys, unknown peer, etc.
 */
-Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
+Noise_NX_session_t *Noise_NX_session_create_initiator(Noise_NX_device_t *dvp)
 {
   uint8_t epriv[32U] = { 0U };
   uint8_t epub[32U] = { 0U };
   Lib_RandomBuffer_System_crypto_random(epriv, (uint32_t)32U);
-  Noise_error_code res0 = Noise_dh_secret_to_public(epub, epriv);
-  Noise_session_t *res;
+  Noise_NX_error_code res0 = Noise_NX_dh_secret_to_public(epub, epriv);
+  Noise_NX_session_t *res;
   switch (res0)
   {
-    case Noise_CSuccess:
+    case Noise_NX_CSuccess:
       {
-        Noise_device_t dv = dvp[0U];
+        Noise_NX_device_t dv = dvp[0U];
         result_session_t res10;
         if (dv.dv_states_counter == (uint32_t)4294967295U)
           res10 =
-            ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+            (
+              (result_session_t){
+                .tag = Fail,
+                .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+              }
+            );
         else
         {
           uint8_t *str = dv.dv_info[0U];
@@ -1676,23 +1697,22 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
           KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
           uint8_t **out_ptr0 = KRML_HOST_MALLOC(sizeof (uint8_t *));
           out_ptr0[0U] = out_str;
-          Noise_noise_string *st_info = out_ptr0;
+          Noise_NX_noise_string *st_info = out_ptr0;
           KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
           uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
           out_ptr[0U] = NULL;
-          Noise_noise_string *st_pinfo = out_ptr;
-          Noise_device_t uu____0 = dv;
+          Noise_NX_noise_string *st_pinfo = out_ptr;
           dvp[0U] =
             (
-              (Noise_device_t){
-                .dv_info = uu____0.dv_info,
-                .dv_sk = uu____0.dv_sk,
-                .dv_spriv = uu____0.dv_spriv,
-                .dv_spub = uu____0.dv_spub,
-                .dv_prologue = uu____0.dv_prologue,
+              (Noise_NX_device_t){
+                .dv_info = dv.dv_info,
+                .dv_sk = dv.dv_sk,
+                .dv_spriv = dv.dv_spriv,
+                .dv_spub = dv.dv_spub,
+                .dv_prologue = dv.dv_prologue,
                 .dv_states_counter = dv.dv_states_counter + (uint32_t)1U,
-                .dv_peers = uu____0.dv_peers,
-                .dv_peers_counter = uu____0.dv_peers_counter
+                .dv_peers = dv.dv_peers,
+                .dv_peers_counter = dv.dv_peers_counter
               }
             );
           uint8_t *st_k = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
@@ -1702,10 +1722,10 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
           uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
           uint8_t *st_rs = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
           uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-          Noise_resp_state_t
+          Noise_NX_resp_state_t
           st =
             {
-              .tag = Noise_IMS_Handshake,
+              .tag = Noise_NX_IMS_Handshake,
               .val = {
                 .case_IMS_Handshake = {
                   .step = (uint32_t)0U, .cipher_key = st_k, .chaining_key = st_ck0, .h = st_h0,
@@ -1722,7 +1742,7 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
               (uint8_t)71U, (uint8_t)67U, (uint8_t)77U, (uint8_t)95U, (uint8_t)66U, (uint8_t)76U,
               (uint8_t)65U, (uint8_t)75U, (uint8_t)69U, (uint8_t)50U, (uint8_t)115U
             };
-          if (st.tag == Noise_IMS_Handshake)
+          if (st.tag == Noise_NX_IMS_Handshake)
           {
             uint8_t *st_epub = st.val.case_IMS_Handshake.epub;
             uint8_t *st_epriv = st.val.case_IMS_Handshake.epriv;
@@ -1731,9 +1751,9 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
             if ((uint32_t)29U <= (uint32_t)32U)
               memcpy(st_h, pname, (uint32_t)29U * sizeof (uint8_t));
             else
-              Noise_hash(st_h, (uint32_t)29U, pname);
+              Noise_NX_hash(st_h, (uint32_t)29U, pname);
             memcpy(st_ck, st_h, (uint32_t)32U * sizeof (uint8_t));
-            Noise_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
+            Noise_NX_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
             memcpy(st_epriv, epriv, (uint32_t)32U * sizeof (uint8_t));
             memcpy(st_epub, epub, (uint32_t)32U * sizeof (uint8_t));
           }
@@ -1745,14 +1765,14 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
               "unreachable (pattern matches are exhaustive in F*)");
             KRML_HOST_EXIT(255U);
           }
-          Noise_resp_state_t st0 = st;
+          Noise_NX_resp_state_t st0 = st;
           result_session_t
           res1 =
             {
               .tag = Res,
               .val = {
                 .case_Res = {
-                  .tag = Noise_DS_Initiator,
+                  .tag = Noise_NX_DS_Initiator,
                   .val = {
                     .case_DS_Initiator = {
                       .state = st0, .id = dv.dv_states_counter, .info = st_info, .pid = (uint32_t)0U,
@@ -1764,20 +1784,20 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
             };
           res10 = res1;
         }
-        Noise_session_t *res1;
+        Noise_NX_session_t *res1;
         if (res10.tag == Fail)
           res1 = NULL;
         else if (res10.tag == Res)
         {
-          Noise_session_t st = res10.val.case_Res;
-          KRML_CHECK_SIZE(sizeof (Noise_session_t), (uint32_t)1U);
-          Noise_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_session_t));
+          Noise_NX_session_t st = res10.val.case_Res;
+          KRML_CHECK_SIZE(sizeof (Noise_NX_session_t), (uint32_t)1U);
+          Noise_NX_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_session_t));
           ptr[0U] = st;
           res1 = ptr;
         }
         else
           res1 =
-            KRML_EABORT(Noise_session_t *,
+            KRML_EABORT(Noise_NX_session_t *,
               "unreachable (pattern matches are exhaustive in F*)");
         res = res1;
         break;
@@ -1789,7 +1809,7 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
   }
   Lib_Memzero0_memzero(epriv, (uint32_t)32U * sizeof (epriv[0U]));
   Lib_Memzero0_memzero(epub, (uint32_t)32U * sizeof (epub[0U]));
-  Noise_session_t *res1 = res;
+  Noise_NX_session_t *res1 = res;
   return res1;
 }
 
@@ -1798,22 +1818,27 @@ Noise_session_t *Noise_session_create_initiator(Noise_device_t *dvp)
 
   May fail and return NULL in case of invalid keys, unknown peer, etc.
 */
-Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
+Noise_NX_session_t *Noise_NX_session_create_responder(Noise_NX_device_t *dvp)
 {
   uint8_t epriv[32U] = { 0U };
   uint8_t epub[32U] = { 0U };
   Lib_RandomBuffer_System_crypto_random(epriv, (uint32_t)32U);
-  Noise_error_code res0 = Noise_dh_secret_to_public(epub, epriv);
-  Noise_session_t *res;
+  Noise_NX_error_code res0 = Noise_NX_dh_secret_to_public(epub, epriv);
+  Noise_NX_session_t *res;
   switch (res0)
   {
-    case Noise_CSuccess:
+    case Noise_NX_CSuccess:
       {
-        Noise_device_t dv = dvp[0U];
+        Noise_NX_device_t dv = dvp[0U];
         result_session_t res10;
         if (dv.dv_states_counter == (uint32_t)4294967295U)
           res10 =
-            ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+            (
+              (result_session_t){
+                .tag = Fail,
+                .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+              }
+            );
         else
         {
           uint8_t *o0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
@@ -1871,23 +1896,22 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
           KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
           uint8_t **out_ptr0 = KRML_HOST_MALLOC(sizeof (uint8_t *));
           out_ptr0[0U] = out_str;
-          Noise_noise_string *st_info = out_ptr0;
+          Noise_NX_noise_string *st_info = out_ptr0;
           KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
           uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
           out_ptr[0U] = NULL;
-          Noise_noise_string *st_pinfo = out_ptr;
-          Noise_device_t uu____0 = dv;
+          Noise_NX_noise_string *st_pinfo = out_ptr;
           dvp[0U] =
             (
-              (Noise_device_t){
-                .dv_info = uu____0.dv_info,
-                .dv_sk = uu____0.dv_sk,
-                .dv_spriv = uu____0.dv_spriv,
-                .dv_spub = uu____0.dv_spub,
-                .dv_prologue = uu____0.dv_prologue,
+              (Noise_NX_device_t){
+                .dv_info = dv.dv_info,
+                .dv_sk = dv.dv_sk,
+                .dv_spriv = dv.dv_spriv,
+                .dv_spub = dv.dv_spub,
+                .dv_prologue = dv.dv_prologue,
                 .dv_states_counter = dv.dv_states_counter + (uint32_t)1U,
-                .dv_peers = uu____0.dv_peers,
-                .dv_peers_counter = uu____0.dv_peers_counter
+                .dv_peers = dv.dv_peers,
+                .dv_peers_counter = dv.dv_peers_counter
               }
             );
           uint8_t *st_k = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
@@ -1898,10 +1922,10 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
           uint8_t *st_epriv0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
           uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
           uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-          Noise_init_state_t
+          Noise_NX_init_state_t
           st =
             {
-              .tag = Noise_IMS_Handshake,
+              .tag = Noise_NX_IMS_Handshake,
               .val = {
                 .case_IMS_Handshake = {
                   .step = (uint32_t)0U, .cipher_key = st_k, .chaining_key = st_ck0, .h = st_h0,
@@ -1919,7 +1943,7 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
               (uint8_t)71U, (uint8_t)67U, (uint8_t)77U, (uint8_t)95U, (uint8_t)66U, (uint8_t)76U,
               (uint8_t)65U, (uint8_t)75U, (uint8_t)69U, (uint8_t)50U, (uint8_t)115U
             };
-          if (st.tag == Noise_IMS_Handshake)
+          if (st.tag == Noise_NX_IMS_Handshake)
           {
             uint8_t *st_epub = st.val.case_IMS_Handshake.epub;
             uint8_t *st_epriv = st.val.case_IMS_Handshake.epriv;
@@ -1928,9 +1952,9 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
             if ((uint32_t)29U <= (uint32_t)32U)
               memcpy(st_h, pname, (uint32_t)29U * sizeof (uint8_t));
             else
-              Noise_hash(st_h, (uint32_t)29U, pname);
+              Noise_NX_hash(st_h, (uint32_t)29U, pname);
             memcpy(st_ck, st_h, (uint32_t)32U * sizeof (uint8_t));
-            Noise_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
+            Noise_NX_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
             memcpy(st_epriv, epriv, (uint32_t)32U * sizeof (uint8_t));
             memcpy(st_epub, epub, (uint32_t)32U * sizeof (uint8_t));
           }
@@ -1942,14 +1966,14 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
               "unreachable (pattern matches are exhaustive in F*)");
             KRML_HOST_EXIT(255U);
           }
-          Noise_init_state_t st0 = st;
+          Noise_NX_init_state_t st0 = st;
           result_session_t
           res1 =
             {
               .tag = Res,
               .val = {
                 .case_Res = {
-                  .tag = Noise_DS_Responder,
+                  .tag = Noise_NX_DS_Responder,
                   .val = {
                     .case_DS_Responder = {
                       .state = st0, .id = dv.dv_states_counter, .info = st_info, .spriv = st_spriv,
@@ -1961,20 +1985,20 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
             };
           res10 = res1;
         }
-        Noise_session_t *res1;
+        Noise_NX_session_t *res1;
         if (res10.tag == Fail)
           res1 = NULL;
         else if (res10.tag == Res)
         {
-          Noise_session_t st = res10.val.case_Res;
-          KRML_CHECK_SIZE(sizeof (Noise_session_t), (uint32_t)1U);
-          Noise_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_session_t));
+          Noise_NX_session_t st = res10.val.case_Res;
+          KRML_CHECK_SIZE(sizeof (Noise_NX_session_t), (uint32_t)1U);
+          Noise_NX_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_session_t));
           ptr[0U] = st;
           res1 = ptr;
         }
         else
           res1 =
-            KRML_EABORT(Noise_session_t *,
+            KRML_EABORT(Noise_NX_session_t *,
               "unreachable (pattern matches are exhaustive in F*)");
         res = res1;
         break;
@@ -1986,7 +2010,7 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
   }
   Lib_Memzero0_memzero(epriv, (uint32_t)32U * sizeof (epriv[0U]));
   Lib_Memzero0_memzero(epub, (uint32_t)32U * sizeof (epub[0U]));
-  Noise_session_t *res1 = res;
+  Noise_NX_session_t *res1 = res;
   return res1;
 }
 
@@ -1996,15 +2020,15 @@ Noise_session_t *Noise_session_create_responder(Noise_device_t *dvp)
   Be sure to free all sessions before freeing the device used to create
   those sessions.
 */
-void Noise_session_free(Noise_session_t *sn)
+void Noise_NX_session_free(Noise_NX_session_t *sn)
 {
-  Noise_session_t st = sn[0U];
-  if (st.tag == Noise_DS_Initiator)
+  Noise_NX_session_t st = sn[0U];
+  if (st.tag == Noise_NX_DS_Initiator)
   {
-    Noise_noise_string *pinfo = st.val.case_DS_Initiator.pinfo;
-    Noise_noise_string *info = st.val.case_DS_Initiator.info;
-    Noise_resp_state_t state = st.val.case_DS_Initiator.state;
-    if (state.tag == Noise_IMS_Handshake)
+    Noise_NX_noise_string *pinfo = st.val.case_DS_Initiator.pinfo;
+    Noise_NX_noise_string *info = st.val.case_DS_Initiator.info;
+    Noise_NX_resp_state_t state = st.val.case_DS_Initiator.state;
+    if (state.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_re = state.val.case_IMS_Handshake.re;
       uint8_t *st_rs = state.val.case_IMS_Handshake.rs;
@@ -2021,7 +2045,7 @@ void Noise_session_free(Noise_session_t *sn)
       KRML_HOST_FREE(st_rs);
       KRML_HOST_FREE(st_re);
     }
-    else if (state.tag == Noise_IMS_Transport)
+    else if (state.tag == Noise_NX_IMS_Transport)
     {
       uint8_t *receive_key = state.val.case_IMS_Transport.receive_key;
       uint8_t *send_key = state.val.case_IMS_Transport.send_key;
@@ -2047,14 +2071,14 @@ void Noise_session_free(Noise_session_t *sn)
       KRML_HOST_FREE(str0);
     KRML_HOST_FREE(pinfo);
   }
-  else if (st.tag == Noise_DS_Responder)
+  else if (st.tag == Noise_NX_DS_Responder)
   {
-    Noise_noise_string *pinfo = st.val.case_DS_Responder.pinfo;
+    Noise_NX_noise_string *pinfo = st.val.case_DS_Responder.pinfo;
     uint8_t *spub = st.val.case_DS_Responder.spub;
     uint8_t *spriv = st.val.case_DS_Responder.spriv;
-    Noise_noise_string *info = st.val.case_DS_Responder.info;
-    Noise_init_state_t state = st.val.case_DS_Responder.state;
-    if (state.tag == Noise_IMS_Handshake)
+    Noise_NX_noise_string *info = st.val.case_DS_Responder.info;
+    Noise_NX_init_state_t state = st.val.case_DS_Responder.state;
+    if (state.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_re = state.val.case_IMS_Handshake.re;
       uint8_t *st_epub = state.val.case_IMS_Handshake.epub;
@@ -2069,7 +2093,7 @@ void Noise_session_free(Noise_session_t *sn)
       KRML_HOST_FREE(st_epub);
       KRML_HOST_FREE(st_re);
     }
-    else if (state.tag == Noise_IMS_Transport)
+    else if (state.tag == Noise_NX_IMS_Transport)
     {
       uint8_t *receive_key = state.val.case_IMS_Transport.receive_key;
       uint8_t *send_key = state.val.case_IMS_Transport.send_key;
@@ -2117,8 +2141,8 @@ typedef struct result_resp_state_t_s
 {
   result_resp_state_t_tags tag;
   union {
-    Noise_resp_state_t case_Res;
-    Noise_error_code case_Fail;
+    Noise_NX_resp_state_t case_Res;
+    Noise_NX_error_code case_Fail;
   }
   val;
 }
@@ -2128,35 +2152,35 @@ typedef struct result_init_state_t_s
 {
   result_resp_state_t_tags tag;
   union {
-    Noise_init_state_t case_Res;
-    Noise_error_code case_Fail;
+    Noise_NX_init_state_t case_Res;
+    Noise_NX_error_code case_Fail;
   }
   val;
 }
 result_init_state_t;
 
-static Noise_error_code
+static Noise_NX_error_code
 state_handshake_write(
   uint32_t payload_len,
   uint8_t *payload,
-  Noise_session_t *dst_p,
+  Noise_NX_session_t *dst_p,
   uint32_t outlen,
   uint8_t *out
 )
 {
-  Noise_session_t *dst_p1 = dst_p;
-  Noise_session_t *stp = dst_p1;
-  Noise_session_t dst = stp[0U];
+  Noise_NX_session_t *dst_p1 = dst_p;
+  Noise_NX_session_t *stp = dst_p1;
+  Noise_NX_session_t dst = stp[0U];
   result_session_t res0;
-  if (dst.tag == Noise_DS_Initiator)
+  if (dst.tag == Noise_NX_DS_Initiator)
   {
-    Noise_device_t *dst_dv = dst.val.case_DS_Initiator.dv;
-    Noise_noise_string *dst_pinfo = dst.val.case_DS_Initiator.pinfo;
+    Noise_NX_device_t *dst_dv = dst.val.case_DS_Initiator.dv;
+    Noise_NX_noise_string *dst_pinfo = dst.val.case_DS_Initiator.pinfo;
     uint32_t dst_pid = dst.val.case_DS_Initiator.pid;
-    Noise_noise_string *dst_info = dst.val.case_DS_Initiator.info;
+    Noise_NX_noise_string *dst_info = dst.val.case_DS_Initiator.info;
     uint32_t dst_id = dst.val.case_DS_Initiator.id;
-    Noise_resp_state_t dst_st = dst.val.case_DS_Initiator.state;
-    if (dst_st.tag == Noise_IMS_Handshake)
+    Noise_NX_resp_state_t dst_st = dst.val.case_DS_Initiator.state;
+    if (dst_st.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
       uint8_t *st_rs = dst_st.val.case_IMS_Handshake.rs;
@@ -2168,31 +2192,42 @@ state_handshake_write(
       uint32_t st_step = dst_st.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)2U)
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else if (!(true == (st_step % (uint32_t)2U == (uint32_t)0U)))
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else
       {
         result_resp_state_t res;
         if (!(payload_len <= (uint32_t)2147483648U && outlen == (uint32_t)32U + payload_len))
-          res = ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CInput_size } });
+          res =
+            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_NX_CInput_size } });
         else
         {
           uint32_t pat_outlen = (uint32_t)32U;
           uint8_t *pat_out = out;
           uint8_t *payload_out = out + pat_outlen;
-          Noise_mix_hash(st_h, (uint32_t)32U, st_epub);
+          Noise_NX_mix_hash(st_h, (uint32_t)32U, st_epub);
           memcpy(pat_out, st_epub, (uint32_t)32U * sizeof (uint8_t));
           memcpy(payload_out, payload, payload_len * sizeof (uint8_t));
-          Noise_mix_hash(st_h, payload_len, payload_out);
+          Noise_NX_mix_hash(st_h, payload_len, payload_out);
           res =
             (
               (result_resp_state_t){
                 .tag = Res0,
                 .val = {
                   .case_Res = {
-                    .tag = Noise_IMS_Handshake,
+                    .tag = Noise_NX_IMS_Handshake,
                     .val = {
                       .case_IMS_Handshake = {
                         .step = st_step + (uint32_t)1U, .cipher_key = st_cipher,
@@ -2209,17 +2244,17 @@ state_handshake_write(
         result_resp_state_t res2 = res1;
         if (res2.tag == Fail0)
         {
-          Noise_error_code e = res2.val.case_Fail;
+          Noise_NX_error_code e = res2.val.case_Fail;
           res0 = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
         else if (res2.tag == Res0)
         {
-          Noise_resp_state_t st1 = res2.val.case_Res;
-          Noise_session_t ite;
+          Noise_NX_resp_state_t st1 = res2.val.case_Res;
+          Noise_NX_session_t ite;
           if (st_step == (uint32_t)1U)
           {
-            Noise_resp_state_t st11;
-            if (st1.tag == Noise_IMS_Handshake)
+            Noise_NX_resp_state_t st11;
+            if (st1.tag == Noise_NX_IMS_Handshake)
             {
               uint8_t *st_re1 = st1.val.case_IMS_Handshake.re;
               uint8_t *st_rs1 = st1.val.case_IMS_Handshake.rs;
@@ -2230,7 +2265,7 @@ state_handshake_write(
               uint8_t *st_k = st1.val.case_IMS_Handshake.cipher_key;
               uint8_t *k1 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
               uint8_t *k2 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-              Noise_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
+              Noise_NX_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
               KRML_HOST_FREE(st_k);
               KRML_HOST_FREE(st_ck1);
               KRML_HOST_FREE(st_epriv1);
@@ -2239,8 +2274,8 @@ state_handshake_write(
               KRML_HOST_FREE(st_re1);
               st11 =
                 (
-                  (Noise_resp_state_t){
-                    .tag = Noise_IMS_Transport,
+                  (Noise_NX_resp_state_t){
+                    .tag = Noise_NX_IMS_Transport,
                     .val = {
                       .case_IMS_Transport = {
                         .h = st_h1, .send_key = k1, .send_nonce = (uint64_t)0U, .receive_key = k2,
@@ -2252,12 +2287,12 @@ state_handshake_write(
             }
             else
               st11 =
-                KRML_EABORT(Noise_resp_state_t,
+                KRML_EABORT(Noise_NX_resp_state_t,
                   "unreachable (pattern matches are exhaustive in F*)");
             ite =
               (
-                (Noise_session_t){
-                  .tag = Noise_DS_Initiator,
+                (Noise_NX_session_t){
+                  .tag = Noise_NX_DS_Initiator,
                   .val = {
                     .case_DS_Initiator = {
                       .state = st11, .id = dst_id, .info = dst_info, .pid = dst_pid,
@@ -2270,8 +2305,8 @@ state_handshake_write(
           else
             ite =
               (
-                (Noise_session_t){
-                  .tag = Noise_DS_Initiator,
+                (Noise_NX_session_t){
+                  .tag = Noise_NX_DS_Initiator,
                   .val = {
                     .case_DS_Initiator = {
                       .state = st1, .id = dst_id, .info = dst_info, .pid = dst_pid,
@@ -2286,23 +2321,23 @@ state_handshake_write(
           res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
       }
     }
-    else if (dst_st.tag == Noise_IMS_Transport)
+    else if (dst_st.tag == Noise_NX_IMS_Transport)
       res0 =
-        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
     else
       res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
   }
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
   {
-    Noise_device_t *dst_dv = dst.val.case_DS_Responder.dv;
-    Noise_noise_string *dst_pinfo = dst.val.case_DS_Responder.pinfo;
+    Noise_NX_device_t *dst_dv = dst.val.case_DS_Responder.dv;
+    Noise_NX_noise_string *dst_pinfo = dst.val.case_DS_Responder.pinfo;
     uint32_t dst_pid = dst.val.case_DS_Responder.pid;
     uint8_t *dst_spub = dst.val.case_DS_Responder.spub;
     uint8_t *dst_spriv = dst.val.case_DS_Responder.spriv;
-    Noise_noise_string *dst_info = dst.val.case_DS_Responder.info;
+    Noise_NX_noise_string *dst_info = dst.val.case_DS_Responder.info;
     uint32_t dst_id = dst.val.case_DS_Responder.id;
-    Noise_init_state_t dst_st = dst.val.case_DS_Responder.state;
-    if (dst_st.tag == Noise_IMS_Handshake)
+    Noise_NX_init_state_t dst_st = dst.val.case_DS_Responder.state;
+    if (dst_st.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
       uint8_t *st_epub = dst_st.val.case_IMS_Handshake.epub;
@@ -2315,61 +2350,77 @@ state_handshake_write(
       uint32_t st_step = dst_st.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)2U)
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else if (!(false == (st_step % (uint32_t)2U == (uint32_t)0U)))
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else
       {
         result_init_state_t res;
         if (!(payload_len <= (uint32_t)2147483648U && outlen == (uint32_t)96U + payload_len))
-          res = ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CInput_size } });
+          res =
+            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_NX_CInput_size } });
         else
         {
           uint32_t pat_outlen = (uint32_t)80U;
           uint8_t *pat_out = out;
           uint8_t *payload_out = out + pat_outlen;
           uint8_t *tk_out = pat_out;
-          Noise_mix_hash(st_h, (uint32_t)32U, st_epub);
+          Noise_NX_mix_hash(st_h, (uint32_t)32U, st_epub);
           memcpy(tk_out, st_epub, (uint32_t)32U * sizeof (uint8_t));
           uint8_t *out_ = pat_out + (uint32_t)32U;
-          Noise_error_code r11 = Noise_mix_dh(st_epriv, st_re, st_cipher, st_ck, st_h);
-          Noise_error_code r2;
-          if (r11 == Noise_CSuccess)
+          Noise_NX_error_code r11 = Noise_NX_mix_dh(st_epriv, st_re, st_cipher, st_ck, st_h);
+          Noise_NX_error_code r2;
+          if (r11 == Noise_NX_CSuccess)
           {
             uint8_t *out_1 = out_;
             uint8_t *tk_out2 = out_1;
-            Noise_encrypt_and_hash((uint32_t)32U, st_spub, tk_out2, st_cipher, st_h, (uint64_t)0U);
-            Noise_error_code r = Noise_mix_dh(st_spriv, st_re, st_cipher, st_ck, st_h);
-            Noise_error_code r20 = r;
-            Noise_error_code r21 = r20;
+            Noise_NX_encrypt_and_hash((uint32_t)32U,
+              st_spub,
+              tk_out2,
+              st_cipher,
+              st_h,
+              (uint64_t)0U);
+            Noise_NX_error_code r = Noise_NX_mix_dh(st_spriv, st_re, st_cipher, st_ck, st_h);
+            Noise_NX_error_code r20 = r;
+            Noise_NX_error_code r21 = r20;
             r2 = r21;
           }
           else
             r2 = r11;
-          Noise_error_code r1 = r2;
-          Noise_error_code r;
-          if (!(r1 == Noise_CSuccess))
+          Noise_NX_error_code r1 = r2;
+          Noise_NX_error_code r;
+          if (!(r1 == Noise_NX_CSuccess))
             r = r1;
           else
           {
-            Noise_encrypt_and_hash(payload_len,
+            Noise_NX_encrypt_and_hash(payload_len,
               payload,
               payload_out,
               st_cipher,
               st_h,
               (uint64_t)0U);
-            r = Noise_CSuccess;
+            r = Noise_NX_CSuccess;
           }
-          Noise_error_code res0 = r;
-          if (res0 == Noise_CSuccess)
+          Noise_NX_error_code res0 = r;
+          if (res0 == Noise_NX_CSuccess)
             res =
               (
                 (result_init_state_t){
                   .tag = Res0,
                   .val = {
                     .case_Res = {
-                      .tag = Noise_IMS_Handshake,
+                      .tag = Noise_NX_IMS_Handshake,
                       .val = {
                         .case_IMS_Handshake = {
                           .step = st_step + (uint32_t)1U, .cipher_key = st_cipher,
@@ -2384,10 +2435,15 @@ state_handshake_write(
           else
             switch (res0)
             {
-              case Noise_CDH_error:
+              case Noise_NX_CDH_error:
                 {
                   res =
-                    ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CDH_error } });
+                    (
+                      (result_init_state_t){
+                        .tag = Fail0,
+                        .val = { .case_Fail = Noise_NX_CDH_error }
+                      }
+                    );
                   break;
                 }
               default:
@@ -2401,17 +2457,17 @@ state_handshake_write(
         result_init_state_t res2 = res1;
         if (res2.tag == Fail0)
         {
-          Noise_error_code e = res2.val.case_Fail;
+          Noise_NX_error_code e = res2.val.case_Fail;
           res0 = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
         else if (res2.tag == Res0)
         {
-          Noise_init_state_t st1 = res2.val.case_Res;
-          Noise_session_t ite;
+          Noise_NX_init_state_t st1 = res2.val.case_Res;
+          Noise_NX_session_t ite;
           if (st_step == (uint32_t)1U)
           {
-            Noise_init_state_t st11;
-            if (st1.tag == Noise_IMS_Handshake)
+            Noise_NX_init_state_t st11;
+            if (st1.tag == Noise_NX_IMS_Handshake)
             {
               uint8_t *st_re1 = st1.val.case_IMS_Handshake.re;
               uint8_t *st_epub1 = st1.val.case_IMS_Handshake.epub;
@@ -2421,7 +2477,7 @@ state_handshake_write(
               uint8_t *st_k = st1.val.case_IMS_Handshake.cipher_key;
               uint8_t *k1 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
               uint8_t *k2 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-              Noise_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
+              Noise_NX_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
               KRML_HOST_FREE(st_k);
               KRML_HOST_FREE(st_ck1);
               KRML_HOST_FREE(st_epriv1);
@@ -2429,8 +2485,8 @@ state_handshake_write(
               KRML_HOST_FREE(st_re1);
               st11 =
                 (
-                  (Noise_init_state_t){
-                    .tag = Noise_IMS_Transport,
+                  (Noise_NX_init_state_t){
+                    .tag = Noise_NX_IMS_Transport,
                     .val = {
                       .case_IMS_Transport = {
                         .h = st_h1, .recv_transport_message = false, .send_key = k2,
@@ -2442,12 +2498,12 @@ state_handshake_write(
             }
             else
               st11 =
-                KRML_EABORT(Noise_init_state_t,
+                KRML_EABORT(Noise_NX_init_state_t,
                   "unreachable (pattern matches are exhaustive in F*)");
             ite =
               (
-                (Noise_session_t){
-                  .tag = Noise_DS_Responder,
+                (Noise_NX_session_t){
+                  .tag = Noise_NX_DS_Responder,
                   .val = {
                     .case_DS_Responder = {
                       .state = st11, .id = dst_id, .info = dst_info, .spriv = dst_spriv,
@@ -2460,8 +2516,8 @@ state_handshake_write(
           else
             ite =
               (
-                (Noise_session_t){
-                  .tag = Noise_DS_Responder,
+                (Noise_NX_session_t){
+                  .tag = Noise_NX_DS_Responder,
                   .val = {
                     .case_DS_Responder = {
                       .state = st1, .id = dst_id, .info = dst_info, .spriv = dst_spriv,
@@ -2476,9 +2532,9 @@ state_handshake_write(
           res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
       }
     }
-    else if (dst_st.tag == Noise_IMS_Transport)
+    else if (dst_st.tag == Noise_NX_IMS_Transport)
       res0 =
-        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
     else
       res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
   }
@@ -2486,18 +2542,18 @@ state_handshake_write(
     res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
   if (res0.tag == Fail)
   {
-    Noise_error_code e = res0.val.case_Fail;
-    Noise_session_t dst1 = dst_p1[0U];
-    if (dst1.tag == Noise_DS_Initiator)
+    Noise_NX_error_code e = res0.val.case_Fail;
+    Noise_NX_session_t dst1 = dst_p1[0U];
+    if (dst1.tag == Noise_NX_DS_Initiator)
     {
-      Noise_device_t *dv = dst1.val.case_DS_Initiator.dv;
-      Noise_noise_string *pinfo = dst1.val.case_DS_Initiator.pinfo;
+      Noise_NX_device_t *dv = dst1.val.case_DS_Initiator.dv;
+      Noise_NX_noise_string *pinfo = dst1.val.case_DS_Initiator.pinfo;
       uint32_t pid = dst1.val.case_DS_Initiator.pid;
-      Noise_noise_string *info = dst1.val.case_DS_Initiator.info;
+      Noise_NX_noise_string *info = dst1.val.case_DS_Initiator.info;
       uint32_t id = dst1.val.case_DS_Initiator.id;
-      Noise_resp_state_t st = dst1.val.case_DS_Initiator.state;
-      Noise_resp_state_t ite;
-      if (st.tag == Noise_IMS_Handshake)
+      Noise_NX_resp_state_t st = dst1.val.case_DS_Initiator.state;
+      Noise_NX_resp_state_t ite;
+      if (st.tag == Noise_NX_IMS_Handshake)
       {
         uint8_t *re = st.val.case_IMS_Handshake.re;
         uint8_t *rs = st.val.case_IMS_Handshake.rs;
@@ -2508,8 +2564,8 @@ state_handshake_write(
         uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
         ite =
           (
-            (Noise_resp_state_t){
-              .tag = Noise_IMS_Handshake,
+            (Noise_NX_resp_state_t){
+              .tag = Noise_NX_IMS_Handshake,
               .val = {
                 .case_IMS_Handshake = {
                   .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h3, .epriv = epriv,
@@ -2519,7 +2575,7 @@ state_handshake_write(
             }
           );
       }
-      else if (st.tag == Noise_IMS_Transport)
+      else if (st.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
@@ -2528,8 +2584,8 @@ state_handshake_write(
         uint8_t *h3 = st.val.case_IMS_Transport.h;
         ite =
           (
-            (Noise_resp_state_t){
-              .tag = Noise_IMS_Transport,
+            (Noise_NX_resp_state_t){
+              .tag = Noise_NX_IMS_Transport,
               .val = {
                 .case_IMS_Transport = {
                   .h = h3, .send_key = send_key, .send_nonce = send_nonce,
@@ -2540,11 +2596,13 @@ state_handshake_write(
           );
       }
       else
-        ite = KRML_EABORT(Noise_resp_state_t, "unreachable (pattern matches are exhaustive in F*)");
+        ite =
+          KRML_EABORT(Noise_NX_resp_state_t,
+            "unreachable (pattern matches are exhaustive in F*)");
       dst_p1[0U] =
         (
-          (Noise_session_t){
-            .tag = Noise_DS_Initiator,
+          (Noise_NX_session_t){
+            .tag = Noise_NX_DS_Initiator,
             .val = {
               .case_DS_Initiator = {
                 .state = ite, .id = id, .info = info, .pid = pid, .pinfo = pinfo, .dv = dv
@@ -2553,18 +2611,18 @@ state_handshake_write(
           }
         );
     }
-    else if (dst1.tag == Noise_DS_Responder)
+    else if (dst1.tag == Noise_NX_DS_Responder)
     {
-      Noise_device_t *dv = dst1.val.case_DS_Responder.dv;
-      Noise_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
+      Noise_NX_device_t *dv = dst1.val.case_DS_Responder.dv;
+      Noise_NX_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
       uint32_t pid = dst1.val.case_DS_Responder.pid;
       uint8_t *spub = dst1.val.case_DS_Responder.spub;
       uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
-      Noise_noise_string *info = dst1.val.case_DS_Responder.info;
+      Noise_NX_noise_string *info = dst1.val.case_DS_Responder.info;
       uint32_t id = dst1.val.case_DS_Responder.id;
-      Noise_init_state_t st = dst1.val.case_DS_Responder.state;
-      Noise_init_state_t ite;
-      if (st.tag == Noise_IMS_Handshake)
+      Noise_NX_init_state_t st = dst1.val.case_DS_Responder.state;
+      Noise_NX_init_state_t ite;
+      if (st.tag == Noise_NX_IMS_Handshake)
       {
         uint8_t *re = st.val.case_IMS_Handshake.re;
         uint8_t *epub = st.val.case_IMS_Handshake.epub;
@@ -2576,8 +2634,8 @@ state_handshake_write(
         uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
         ite =
           (
-            (Noise_init_state_t){
-              .tag = Noise_IMS_Handshake,
+            (Noise_NX_init_state_t){
+              .tag = Noise_NX_IMS_Handshake,
               .val = {
                 .case_IMS_Handshake = {
                   .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h3,
@@ -2587,7 +2645,7 @@ state_handshake_write(
             }
           );
       }
-      else if (st.tag == Noise_IMS_Transport)
+      else if (st.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
@@ -2597,8 +2655,8 @@ state_handshake_write(
         uint8_t *h3 = st.val.case_IMS_Transport.h;
         ite =
           (
-            (Noise_init_state_t){
-              .tag = Noise_IMS_Transport,
+            (Noise_NX_init_state_t){
+              .tag = Noise_NX_IMS_Transport,
               .val = {
                 .case_IMS_Transport = {
                   .h = h3, .recv_transport_message = recv_tpt_msg, .send_key = send_key,
@@ -2610,11 +2668,13 @@ state_handshake_write(
           );
       }
       else
-        ite = KRML_EABORT(Noise_init_state_t, "unreachable (pattern matches are exhaustive in F*)");
+        ite =
+          KRML_EABORT(Noise_NX_init_state_t,
+            "unreachable (pattern matches are exhaustive in F*)");
       dst_p1[0U] =
         (
-          (Noise_session_t){
-            .tag = Noise_DS_Responder,
+          (Noise_NX_session_t){
+            .tag = Noise_NX_DS_Responder,
             .val = {
               .case_DS_Responder = {
                 .state = ite, .id = id, .info = info, .spriv = spriv, .spub = spub, .pid = pid,
@@ -2636,9 +2696,9 @@ state_handshake_write(
   }
   else if (res0.tag == Res)
   {
-    Noise_session_t dst1 = res0.val.case_Res;
+    Noise_NX_session_t dst1 = res0.val.case_Res;
     dst_p1[0U] = dst1;
-    return Noise_CSuccess;
+    return Noise_NX_CSuccess;
   }
   else
   {
@@ -2658,39 +2718,39 @@ typedef uint8_t result_unit_error_tags;
 typedef struct result_unit_error_s
 {
   result_unit_error_tags tag;
-  Noise_error_code v;
+  Noise_NX_error_code v;
 }
 result_unit_error;
 
-static Noise_error_code
+static Noise_NX_error_code
 state_handshake_read(
   uint32_t payload_outlen,
   uint8_t *payload_out,
-  Noise_session_t *dst_p,
+  Noise_NX_session_t *dst_p,
   uint32_t inlen,
   uint8_t *input
 )
 {
-  Noise_session_t dst = dst_p[0U];
+  Noise_NX_session_t dst = dst_p[0U];
   uint32_t pid;
-  if (dst.tag == Noise_DS_Initiator)
+  if (dst.tag == Noise_NX_DS_Initiator)
     pid = dst.val.case_DS_Initiator.pid;
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
     pid = dst.val.case_DS_Responder.pid;
   else
     pid = KRML_EABORT(uint32_t, "unreachable (pattern matches are exhaustive in F*)");
   uint32_t *pid_ptr = KRML_HOST_MALLOC(sizeof (uint32_t));
   pid_ptr[0U] = pid;
   result_session_t res0;
-  if (dst.tag == Noise_DS_Initiator)
+  if (dst.tag == Noise_NX_DS_Initiator)
   {
-    Noise_device_t *dst_dv = dst.val.case_DS_Initiator.dv;
-    Noise_noise_string *dst_pinfo = dst.val.case_DS_Initiator.pinfo;
+    Noise_NX_device_t *dst_dv = dst.val.case_DS_Initiator.dv;
+    Noise_NX_noise_string *dst_pinfo = dst.val.case_DS_Initiator.pinfo;
     uint32_t dst_pid = dst.val.case_DS_Initiator.pid;
-    Noise_noise_string *dst_info = dst.val.case_DS_Initiator.info;
+    Noise_NX_noise_string *dst_info = dst.val.case_DS_Initiator.info;
     uint32_t dst_id = dst.val.case_DS_Initiator.id;
-    Noise_resp_state_t dst_st = dst.val.case_DS_Initiator.state;
-    if (dst_st.tag == Noise_IMS_Handshake)
+    Noise_NX_resp_state_t dst_st = dst.val.case_DS_Initiator.state;
+    if (dst_st.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
       uint8_t *st_rs = dst_st.val.case_IMS_Handshake.rs;
@@ -2702,87 +2762,103 @@ state_handshake_read(
       uint32_t st_step = dst_st.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)2U)
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else if (!(true == (st_step % (uint32_t)2U == (uint32_t)1U)))
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else
       {
-        Noise_device_t dv0 = dst_dv[0U];
+        Noise_NX_device_t dv0 = dst_dv[0U];
         result_unit_error r0;
         if (!(payload_outlen <= (uint32_t)2147483648U && inlen == (uint32_t)96U + payload_outlen))
-          r0 = ((result_unit_error){ .tag = Fail1, .v = Noise_CInput_size });
+          r0 = ((result_unit_error){ .tag = Fail1, .v = Noise_NX_CInput_size });
         else
         {
           uint8_t *msg1 = input;
           uint8_t *msg2 = input + (uint32_t)80U;
           uint8_t *tk_input = msg1;
-          Noise_mix_hash(st_h, (uint32_t)32U, tk_input);
+          Noise_NX_mix_hash(st_h, (uint32_t)32U, tk_input);
           memcpy(st_re, tk_input, (uint32_t)32U * sizeof (uint8_t));
           uint8_t *input_ = msg1 + (uint32_t)32U;
-          Noise_error_code r110 = Noise_mix_dh(st_epriv, st_re, st_cipher, st_ck, st_h);
-          Noise_error_code r20;
-          if (r110 == Noise_CSuccess)
+          Noise_NX_error_code r110 = Noise_NX_mix_dh(st_epriv, st_re, st_cipher, st_ck, st_h);
+          Noise_NX_error_code r20;
+          if (r110 == Noise_NX_CSuccess)
           {
             uint8_t *input_1 = input_;
-            Noise_error_code
-            r = Noise_decrypt_and_hash((uint32_t)32U, st_rs, input_1, st_cipher, st_h, (uint64_t)0U);
-            Noise_error_code r2 = r;
+            Noise_NX_error_code
+            r =
+              Noise_NX_decrypt_and_hash((uint32_t)32U,
+                st_rs,
+                input_1,
+                st_cipher,
+                st_h,
+                (uint64_t)0U);
+            Noise_NX_error_code r2 = r;
             r20 = r2;
           }
           else
             r20 = r110;
-          Noise_error_code r1 = r20;
-          Noise_error_code r10 = r1;
-          if (r10 == Noise_CSuccess)
+          Noise_NX_error_code r1 = r20;
+          Noise_NX_error_code r10 = r1;
+          if (r10 == Noise_NX_CSuccess)
           {
-            Noise_cell **peers1 = dv0.dv_peers;
-            Noise_cell *llt = *peers1;
-            Noise_cell *lltp = llt;
-            Noise_cell *llt10 = lltp;
+            Noise_NX_cell **peers1 = dv0.dv_peers;
+            Noise_NX_cell *llt = *peers1;
+            Noise_NX_cell *lltp = llt;
+            Noise_NX_cell *llt10 = lltp;
             bool b0;
             if (llt10 == NULL)
               b0 = false;
             else
             {
-              Noise_cell c = llt10[0U];
-              Noise_peer_t x = c.data[0U];
-              bool b = Noise_lbytes_eq((uint32_t)32U, x.p_s, st_rs);
+              Noise_NX_cell c = llt10[0U];
+              Noise_NX_peer_t x = c.data[0U];
+              bool b = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, st_rs);
               b0 = !b;
             }
             bool cond = b0;
             while (cond)
             {
-              Noise_cell *llt1 = lltp;
-              Noise_cell c0 = llt1[0U];
+              Noise_NX_cell *llt1 = lltp;
+              Noise_NX_cell c0 = llt1[0U];
               lltp = c0.next;
-              Noise_cell *llt10 = lltp;
+              Noise_NX_cell *llt10 = lltp;
               bool b;
               if (llt10 == NULL)
                 b = false;
               else
               {
-                Noise_cell c = llt10[0U];
-                Noise_peer_t x = c.data[0U];
-                bool b0 = Noise_lbytes_eq((uint32_t)32U, x.p_s, st_rs);
+                Noise_NX_cell c = llt10[0U];
+                Noise_NX_peer_t x = c.data[0U];
+                bool b0 = Noise_NX_lbytes_eq((uint32_t)32U, x.p_s, st_rs);
                 b = !b0;
               }
               cond = b;
             }
-            Noise_cell *llt1 = *&lltp;
-            Noise_peer_t *res;
+            Noise_NX_cell *llt1 = *&lltp;
+            Noise_NX_peer_t *res;
             if (llt1 == NULL)
               res = NULL;
             else
             {
-              Noise_cell c = *llt1;
+              Noise_NX_cell c = *llt1;
               res = c.data;
             }
-            Noise_peer_t *peer_ptr = res;
+            Noise_NX_peer_t *peer_ptr = res;
             bool b1;
             if (!(peer_ptr == NULL))
             {
-              Noise_peer_t peer = peer_ptr[0U];
+              Noise_NX_peer_t peer = peer_ptr[0U];
               uint8_t *input_str = peer.p_info[0U];
               bool b = input_str == NULL;
               uint8_t *out_str;
@@ -2842,15 +2918,15 @@ state_handshake_read(
             if (r1)
             {
               uint8_t *payload_input = msg2;
-              Noise_error_code r11 = Noise_mix_dh(st_epriv, st_rs, st_cipher, st_ck, st_h);
-              Noise_error_code r;
-              if (!(r11 == Noise_CSuccess))
+              Noise_NX_error_code r11 = Noise_NX_mix_dh(st_epriv, st_rs, st_cipher, st_ck, st_h);
+              Noise_NX_error_code r;
+              if (!(r11 == Noise_NX_CSuccess))
                 r = r11;
               else
               {
-                Noise_error_code
+                Noise_NX_error_code
                 r2 =
-                  Noise_decrypt_and_hash(payload_outlen,
+                  Noise_NX_decrypt_and_hash(payload_outlen,
                     payload_out,
                     payload_input,
                     st_cipher,
@@ -2858,15 +2934,15 @@ state_handshake_read(
                     (uint64_t)0U);
                 r = r2;
               }
-              Noise_error_code r1 = r;
-              Noise_error_code r2 = r1;
-              if (r2 == Noise_CSuccess)
+              Noise_NX_error_code r1 = r;
+              Noise_NX_error_code r2 = r1;
+              if (r2 == Noise_NX_CSuccess)
                 r0 = ((result_unit_error){ .tag = Res1 });
               else
                 r0 = ((result_unit_error){ .tag = Fail1, .v = r2 });
             }
             else
-              r0 = ((result_unit_error){ .tag = Fail1, .v = Noise_CRs_rejected_by_policy });
+              r0 = ((result_unit_error){ .tag = Fail1, .v = Noise_NX_CRs_rejected_by_policy });
           }
           else
             r0 = ((result_unit_error){ .tag = Fail1, .v = r10 });
@@ -2879,7 +2955,7 @@ state_handshake_read(
                 .tag = Res0,
                 .val = {
                   .case_Res = {
-                    .tag = Noise_IMS_Handshake,
+                    .tag = Noise_NX_IMS_Handshake,
                     .val = {
                       .case_IMS_Handshake = {
                         .step = st_step + (uint32_t)1U, .cipher_key = st_cipher,
@@ -2893,7 +2969,7 @@ state_handshake_read(
             );
         else if (r0.tag == Fail1)
         {
-          Noise_error_code e = r0.v;
+          Noise_NX_error_code e = r0.v;
           res1 = ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = e } });
         }
         else
@@ -2904,12 +2980,12 @@ state_handshake_read(
         result_session_t res;
         if (res2.tag == Fail0)
         {
-          Noise_error_code e = res2.val.case_Fail;
+          Noise_NX_error_code e = res2.val.case_Fail;
           res = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
         else if (res2.tag == Res0)
         {
-          Noise_resp_state_t st1 = res2.val.case_Res;
+          Noise_NX_resp_state_t st1 = res2.val.case_Res;
           if (!(st_step == (uint32_t)1U))
             res =
               (
@@ -2917,7 +2993,7 @@ state_handshake_read(
                   .tag = Res,
                   .val = {
                     .case_Res = {
-                      .tag = Noise_DS_Initiator,
+                      .tag = Noise_NX_DS_Initiator,
                       .val = {
                         .case_DS_Initiator = {
                           .state = st1, .id = dst_id, .info = dst_info, .pid = dst_pid,
@@ -2937,7 +3013,7 @@ state_handshake_read(
                   .tag = Res,
                   .val = {
                     .case_Res = {
-                      .tag = Noise_DS_Initiator,
+                      .tag = Noise_NX_DS_Initiator,
                       .val = {
                         .case_DS_Initiator = {
                           .state = st1, .id = dst_id, .info = dst_info, .pid = pid1,
@@ -2954,25 +3030,25 @@ state_handshake_read(
           res = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
         if (res.tag == Fail)
         {
-          Noise_error_code e = res.val.case_Fail;
+          Noise_NX_error_code e = res.val.case_Fail;
           res0 = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
         else if (res.tag == Res)
         {
-          Noise_session_t dst1 = res.val.case_Res;
-          Noise_session_t dst2;
-          if (dst1.tag == Noise_DS_Initiator)
+          Noise_NX_session_t dst1 = res.val.case_Res;
+          Noise_NX_session_t dst2;
+          if (dst1.tag == Noise_NX_DS_Initiator)
           {
-            Noise_device_t *dv = dst1.val.case_DS_Initiator.dv;
-            Noise_noise_string *pinfo = dst1.val.case_DS_Initiator.pinfo;
+            Noise_NX_device_t *dv = dst1.val.case_DS_Initiator.dv;
+            Noise_NX_noise_string *pinfo = dst1.val.case_DS_Initiator.pinfo;
             uint32_t pid1 = dst1.val.case_DS_Initiator.pid;
-            Noise_noise_string *info = dst1.val.case_DS_Initiator.info;
+            Noise_NX_noise_string *info = dst1.val.case_DS_Initiator.info;
             uint32_t id = dst1.val.case_DS_Initiator.id;
-            Noise_resp_state_t st = dst1.val.case_DS_Initiator.state;
+            Noise_NX_resp_state_t st = dst1.val.case_DS_Initiator.state;
             if (st_step == (uint32_t)1U)
             {
-              Noise_resp_state_t st1;
-              if (st.tag == Noise_IMS_Handshake)
+              Noise_NX_resp_state_t st1;
+              if (st.tag == Noise_NX_IMS_Handshake)
               {
                 uint8_t *st_re1 = st.val.case_IMS_Handshake.re;
                 uint8_t *st_rs1 = st.val.case_IMS_Handshake.rs;
@@ -2983,7 +3059,7 @@ state_handshake_read(
                 uint8_t *st_k = st.val.case_IMS_Handshake.cipher_key;
                 uint8_t *k1 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
                 uint8_t *k2 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-                Noise_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
+                Noise_NX_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
                 KRML_HOST_FREE(st_k);
                 KRML_HOST_FREE(st_ck1);
                 KRML_HOST_FREE(st_epriv1);
@@ -2992,8 +3068,8 @@ state_handshake_read(
                 KRML_HOST_FREE(st_re1);
                 st1 =
                   (
-                    (Noise_resp_state_t){
-                      .tag = Noise_IMS_Transport,
+                    (Noise_NX_resp_state_t){
+                      .tag = Noise_NX_IMS_Transport,
                       .val = {
                         .case_IMS_Transport = {
                           .h = st_h1, .send_key = k1, .send_nonce = (uint64_t)0U, .receive_key = k2,
@@ -3005,12 +3081,12 @@ state_handshake_read(
               }
               else
                 st1 =
-                  KRML_EABORT(Noise_resp_state_t,
+                  KRML_EABORT(Noise_NX_resp_state_t,
                     "unreachable (pattern matches are exhaustive in F*)");
               dst2 =
                 (
-                  (Noise_session_t){
-                    .tag = Noise_DS_Initiator,
+                  (Noise_NX_session_t){
+                    .tag = Noise_NX_DS_Initiator,
                     .val = {
                       .case_DS_Initiator = {
                         .state = st1, .id = id, .info = info, .pid = pid1, .pinfo = pinfo, .dv = dv
@@ -3022,8 +3098,8 @@ state_handshake_read(
             else
               dst2 =
                 (
-                  (Noise_session_t){
-                    .tag = Noise_DS_Initiator,
+                  (Noise_NX_session_t){
+                    .tag = Noise_NX_DS_Initiator,
                     .val = {
                       .case_DS_Initiator = {
                         .state = st, .id = id, .info = info, .pid = pid1, .pinfo = pinfo, .dv = dv
@@ -3034,7 +3110,7 @@ state_handshake_read(
           }
           else
             dst2 =
-              KRML_EABORT(Noise_session_t,
+              KRML_EABORT(Noise_NX_session_t,
                 "unreachable (pattern matches are exhaustive in F*)");
           res0 = ((result_session_t){ .tag = Res, .val = { .case_Res = dst2 } });
         }
@@ -3042,23 +3118,23 @@ state_handshake_read(
           res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
       }
     }
-    else if (dst_st.tag == Noise_IMS_Transport)
+    else if (dst_st.tag == Noise_NX_IMS_Transport)
       res0 =
-        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
     else
       res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
   }
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
   {
-    Noise_device_t *dst_dv = dst.val.case_DS_Responder.dv;
-    Noise_noise_string *dst_pinfo = dst.val.case_DS_Responder.pinfo;
+    Noise_NX_device_t *dst_dv = dst.val.case_DS_Responder.dv;
+    Noise_NX_noise_string *dst_pinfo = dst.val.case_DS_Responder.pinfo;
     uint32_t dst_pid = dst.val.case_DS_Responder.pid;
     uint8_t *dst_spub = dst.val.case_DS_Responder.spub;
     uint8_t *dst_spriv = dst.val.case_DS_Responder.spriv;
-    Noise_noise_string *dst_info = dst.val.case_DS_Responder.info;
+    Noise_NX_noise_string *dst_info = dst.val.case_DS_Responder.info;
     uint32_t dst_id = dst.val.case_DS_Responder.id;
-    Noise_init_state_t dst_st = dst.val.case_DS_Responder.state;
-    if (dst_st.tag == Noise_IMS_Handshake)
+    Noise_NX_init_state_t dst_st = dst.val.case_DS_Responder.state;
+    if (dst_st.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
       uint8_t *st_epub = dst_st.val.case_IMS_Handshake.epub;
@@ -3071,30 +3147,40 @@ state_handshake_read(
       uint32_t st_step = dst_st.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)2U)
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else if (!(false == (st_step % (uint32_t)2U == (uint32_t)1U)))
         res0 =
-          ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+          (
+            (result_session_t){
+              .tag = Fail,
+              .val = { .case_Fail = Noise_NX_CIncorrect_transition }
+            }
+          );
       else
       {
-        Noise_error_code r0;
+        Noise_NX_error_code r0;
         if (!(payload_outlen <= (uint32_t)2147483648U && inlen == (uint32_t)32U + payload_outlen))
-          r0 = Noise_CInput_size;
+          r0 = Noise_NX_CInput_size;
         else
         {
           uint8_t *msg_input = input;
           uint8_t *payload_input = input + (uint32_t)32U;
-          Noise_mix_hash(st_h, (uint32_t)32U, msg_input);
+          Noise_NX_mix_hash(st_h, (uint32_t)32U, msg_input);
           memcpy(st_re, msg_input, (uint32_t)32U * sizeof (uint8_t));
           memcpy(payload_out, payload_input, payload_outlen * sizeof (uint8_t));
-          Noise_mix_hash(st_h, payload_outlen, payload_input);
-          r0 = Noise_CSuccess;
+          Noise_NX_mix_hash(st_h, payload_outlen, payload_input);
+          r0 = Noise_NX_CSuccess;
         }
-        Noise_error_code r1 = r0;
+        Noise_NX_error_code r1 = r0;
         result_init_state_t r;
         switch (r1)
         {
-          case Noise_CSuccess:
+          case Noise_NX_CSuccess:
             {
               r =
                 (
@@ -3102,7 +3188,7 @@ state_handshake_read(
                     .tag = Res0,
                     .val = {
                       .case_Res = {
-                        .tag = Noise_IMS_Handshake,
+                        .tag = Noise_NX_IMS_Handshake,
                         .val = {
                           .case_IMS_Handshake = {
                             .step = st_step + (uint32_t)1U, .cipher_key = st_cipher,
@@ -3126,12 +3212,12 @@ state_handshake_read(
         result_session_t res;
         if (res2.tag == Fail0)
         {
-          Noise_error_code e = res2.val.case_Fail;
+          Noise_NX_error_code e = res2.val.case_Fail;
           res = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
         else if (res2.tag == Res0)
         {
-          Noise_init_state_t st1 = res2.val.case_Res;
+          Noise_NX_init_state_t st1 = res2.val.case_Res;
           if (!(st_step == (uint32_t)1U))
             res =
               (
@@ -3139,7 +3225,7 @@ state_handshake_read(
                   .tag = Res,
                   .val = {
                     .case_Res = {
-                      .tag = Noise_DS_Responder,
+                      .tag = Noise_NX_DS_Responder,
                       .val = {
                         .case_DS_Responder = {
                           .state = st1, .id = dst_id, .info = dst_info, .spriv = dst_spriv,
@@ -3159,7 +3245,7 @@ state_handshake_read(
                   .tag = Res,
                   .val = {
                     .case_Res = {
-                      .tag = Noise_DS_Responder,
+                      .tag = Noise_NX_DS_Responder,
                       .val = {
                         .case_DS_Responder = {
                           .state = st1, .id = dst_id, .info = dst_info, .spriv = dst_spriv,
@@ -3176,27 +3262,27 @@ state_handshake_read(
           res = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
         if (res.tag == Fail)
         {
-          Noise_error_code e = res.val.case_Fail;
+          Noise_NX_error_code e = res.val.case_Fail;
           res0 = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
         else if (res.tag == Res)
         {
-          Noise_session_t dst1 = res.val.case_Res;
-          Noise_session_t dst2;
-          if (dst1.tag == Noise_DS_Responder)
+          Noise_NX_session_t dst1 = res.val.case_Res;
+          Noise_NX_session_t dst2;
+          if (dst1.tag == Noise_NX_DS_Responder)
           {
-            Noise_device_t *dv = dst1.val.case_DS_Responder.dv;
-            Noise_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
+            Noise_NX_device_t *dv = dst1.val.case_DS_Responder.dv;
+            Noise_NX_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
             uint32_t pid1 = dst1.val.case_DS_Responder.pid;
             uint8_t *spub = dst1.val.case_DS_Responder.spub;
             uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
-            Noise_noise_string *info = dst1.val.case_DS_Responder.info;
+            Noise_NX_noise_string *info = dst1.val.case_DS_Responder.info;
             uint32_t id = dst1.val.case_DS_Responder.id;
-            Noise_init_state_t st = dst1.val.case_DS_Responder.state;
+            Noise_NX_init_state_t st = dst1.val.case_DS_Responder.state;
             if (st_step == (uint32_t)1U)
             {
-              Noise_init_state_t st1;
-              if (st.tag == Noise_IMS_Handshake)
+              Noise_NX_init_state_t st1;
+              if (st.tag == Noise_NX_IMS_Handshake)
               {
                 uint8_t *st_re1 = st.val.case_IMS_Handshake.re;
                 uint8_t *st_epub1 = st.val.case_IMS_Handshake.epub;
@@ -3206,7 +3292,7 @@ state_handshake_read(
                 uint8_t *st_k = st.val.case_IMS_Handshake.cipher_key;
                 uint8_t *k1 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
                 uint8_t *k2 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-                Noise_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
+                Noise_NX_kdf(st_ck1, (uint32_t)0U, NULL, k1, k2, NULL);
                 KRML_HOST_FREE(st_k);
                 KRML_HOST_FREE(st_ck1);
                 KRML_HOST_FREE(st_epriv1);
@@ -3214,8 +3300,8 @@ state_handshake_read(
                 KRML_HOST_FREE(st_re1);
                 st1 =
                   (
-                    (Noise_init_state_t){
-                      .tag = Noise_IMS_Transport,
+                    (Noise_NX_init_state_t){
+                      .tag = Noise_NX_IMS_Transport,
                       .val = {
                         .case_IMS_Transport = {
                           .h = st_h1, .recv_transport_message = false, .send_key = k2,
@@ -3228,12 +3314,12 @@ state_handshake_read(
               }
               else
                 st1 =
-                  KRML_EABORT(Noise_init_state_t,
+                  KRML_EABORT(Noise_NX_init_state_t,
                     "unreachable (pattern matches are exhaustive in F*)");
               dst2 =
                 (
-                  (Noise_session_t){
-                    .tag = Noise_DS_Responder,
+                  (Noise_NX_session_t){
+                    .tag = Noise_NX_DS_Responder,
                     .val = {
                       .case_DS_Responder = {
                         .state = st1, .id = id, .info = info, .spriv = spriv, .spub = spub,
@@ -3246,8 +3332,8 @@ state_handshake_read(
             else
               dst2 =
                 (
-                  (Noise_session_t){
-                    .tag = Noise_DS_Responder,
+                  (Noise_NX_session_t){
+                    .tag = Noise_NX_DS_Responder,
                     .val = {
                       .case_DS_Responder = {
                         .state = st, .id = id, .info = info, .spriv = spriv, .spub = spub,
@@ -3259,7 +3345,7 @@ state_handshake_read(
           }
           else
             dst2 =
-              KRML_EABORT(Noise_session_t,
+              KRML_EABORT(Noise_NX_session_t,
                 "unreachable (pattern matches are exhaustive in F*)");
           res0 = ((result_session_t){ .tag = Res, .val = { .case_Res = dst2 } });
         }
@@ -3267,9 +3353,9 @@ state_handshake_read(
           res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
       }
     }
-    else if (dst_st.tag == Noise_IMS_Transport)
+    else if (dst_st.tag == Noise_NX_IMS_Transport)
       res0 =
-        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
     else
       res0 = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
   }
@@ -3278,18 +3364,18 @@ state_handshake_read(
   KRML_HOST_FREE(pid_ptr);
   if (res0.tag == Fail)
   {
-    Noise_error_code e = res0.val.case_Fail;
-    Noise_session_t dst1 = dst_p[0U];
-    if (dst1.tag == Noise_DS_Initiator)
+    Noise_NX_error_code e = res0.val.case_Fail;
+    Noise_NX_session_t dst1 = dst_p[0U];
+    if (dst1.tag == Noise_NX_DS_Initiator)
     {
-      Noise_device_t *dv = dst1.val.case_DS_Initiator.dv;
-      Noise_noise_string *pinfo = dst1.val.case_DS_Initiator.pinfo;
+      Noise_NX_device_t *dv = dst1.val.case_DS_Initiator.dv;
+      Noise_NX_noise_string *pinfo = dst1.val.case_DS_Initiator.pinfo;
       uint32_t pid1 = dst1.val.case_DS_Initiator.pid;
-      Noise_noise_string *info = dst1.val.case_DS_Initiator.info;
+      Noise_NX_noise_string *info = dst1.val.case_DS_Initiator.info;
       uint32_t id = dst1.val.case_DS_Initiator.id;
-      Noise_resp_state_t st = dst1.val.case_DS_Initiator.state;
-      Noise_resp_state_t ite;
-      if (st.tag == Noise_IMS_Handshake)
+      Noise_NX_resp_state_t st = dst1.val.case_DS_Initiator.state;
+      Noise_NX_resp_state_t ite;
+      if (st.tag == Noise_NX_IMS_Handshake)
       {
         uint8_t *re = st.val.case_IMS_Handshake.re;
         uint8_t *rs = st.val.case_IMS_Handshake.rs;
@@ -3300,8 +3386,8 @@ state_handshake_read(
         uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
         ite =
           (
-            (Noise_resp_state_t){
-              .tag = Noise_IMS_Handshake,
+            (Noise_NX_resp_state_t){
+              .tag = Noise_NX_IMS_Handshake,
               .val = {
                 .case_IMS_Handshake = {
                   .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h4, .epriv = epriv,
@@ -3311,7 +3397,7 @@ state_handshake_read(
             }
           );
       }
-      else if (st.tag == Noise_IMS_Transport)
+      else if (st.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
@@ -3320,8 +3406,8 @@ state_handshake_read(
         uint8_t *h4 = st.val.case_IMS_Transport.h;
         ite =
           (
-            (Noise_resp_state_t){
-              .tag = Noise_IMS_Transport,
+            (Noise_NX_resp_state_t){
+              .tag = Noise_NX_IMS_Transport,
               .val = {
                 .case_IMS_Transport = {
                   .h = h4, .send_key = send_key, .send_nonce = send_nonce,
@@ -3332,11 +3418,13 @@ state_handshake_read(
           );
       }
       else
-        ite = KRML_EABORT(Noise_resp_state_t, "unreachable (pattern matches are exhaustive in F*)");
+        ite =
+          KRML_EABORT(Noise_NX_resp_state_t,
+            "unreachable (pattern matches are exhaustive in F*)");
       dst_p[0U] =
         (
-          (Noise_session_t){
-            .tag = Noise_DS_Initiator,
+          (Noise_NX_session_t){
+            .tag = Noise_NX_DS_Initiator,
             .val = {
               .case_DS_Initiator = {
                 .state = ite, .id = id, .info = info, .pid = pid1, .pinfo = pinfo, .dv = dv
@@ -3345,18 +3433,18 @@ state_handshake_read(
           }
         );
     }
-    else if (dst1.tag == Noise_DS_Responder)
+    else if (dst1.tag == Noise_NX_DS_Responder)
     {
-      Noise_device_t *dv = dst1.val.case_DS_Responder.dv;
-      Noise_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
+      Noise_NX_device_t *dv = dst1.val.case_DS_Responder.dv;
+      Noise_NX_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
       uint32_t pid1 = dst1.val.case_DS_Responder.pid;
       uint8_t *spub = dst1.val.case_DS_Responder.spub;
       uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
-      Noise_noise_string *info = dst1.val.case_DS_Responder.info;
+      Noise_NX_noise_string *info = dst1.val.case_DS_Responder.info;
       uint32_t id = dst1.val.case_DS_Responder.id;
-      Noise_init_state_t st = dst1.val.case_DS_Responder.state;
-      Noise_init_state_t ite;
-      if (st.tag == Noise_IMS_Handshake)
+      Noise_NX_init_state_t st = dst1.val.case_DS_Responder.state;
+      Noise_NX_init_state_t ite;
+      if (st.tag == Noise_NX_IMS_Handshake)
       {
         uint8_t *re = st.val.case_IMS_Handshake.re;
         uint8_t *epub = st.val.case_IMS_Handshake.epub;
@@ -3368,8 +3456,8 @@ state_handshake_read(
         uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
         ite =
           (
-            (Noise_init_state_t){
-              .tag = Noise_IMS_Handshake,
+            (Noise_NX_init_state_t){
+              .tag = Noise_NX_IMS_Handshake,
               .val = {
                 .case_IMS_Handshake = {
                   .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h4,
@@ -3379,7 +3467,7 @@ state_handshake_read(
             }
           );
       }
-      else if (st.tag == Noise_IMS_Transport)
+      else if (st.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
@@ -3389,8 +3477,8 @@ state_handshake_read(
         uint8_t *h4 = st.val.case_IMS_Transport.h;
         ite =
           (
-            (Noise_init_state_t){
-              .tag = Noise_IMS_Transport,
+            (Noise_NX_init_state_t){
+              .tag = Noise_NX_IMS_Transport,
               .val = {
                 .case_IMS_Transport = {
                   .h = h4, .recv_transport_message = recv_tpt_msg, .send_key = send_key,
@@ -3402,11 +3490,13 @@ state_handshake_read(
           );
       }
       else
-        ite = KRML_EABORT(Noise_init_state_t, "unreachable (pattern matches are exhaustive in F*)");
+        ite =
+          KRML_EABORT(Noise_NX_init_state_t,
+            "unreachable (pattern matches are exhaustive in F*)");
       dst_p[0U] =
         (
-          (Noise_session_t){
-            .tag = Noise_DS_Responder,
+          (Noise_NX_session_t){
+            .tag = Noise_NX_DS_Responder,
             .val = {
               .case_DS_Responder = {
                 .state = ite, .id = id, .info = info, .spriv = spriv, .spub = spub, .pid = pid1,
@@ -3428,9 +3518,9 @@ state_handshake_read(
   }
   else if (res0.tag == Res)
   {
-    Noise_session_t dst1 = res0.val.case_Res;
+    Noise_NX_session_t dst1 = res0.val.case_Res;
     dst_p[0U] = dst1;
-    return Noise_CSuccess;
+    return Noise_NX_CSuccess;
   }
   else
   {
@@ -3442,34 +3532,34 @@ state_handshake_read(
   }
 }
 
-static Noise_error_code
+static Noise_NX_error_code
 state_transport_write(
   uint32_t plen,
   uint8_t *p,
   uint32_t clen,
   uint8_t *c,
-  Noise_session_t *dst_p
+  Noise_NX_session_t *dst_p
 )
 {
-  Noise_session_t dst = dst_p[0U];
+  Noise_NX_session_t dst = dst_p[0U];
   result_session_t r;
-  if (dst.tag == Noise_DS_Initiator)
+  if (dst.tag == Noise_NX_DS_Initiator)
   {
-    Noise_device_t *dv = dst.val.case_DS_Initiator.dv;
-    Noise_noise_string *pinfo = dst.val.case_DS_Initiator.pinfo;
+    Noise_NX_device_t *dv = dst.val.case_DS_Initiator.dv;
+    Noise_NX_noise_string *pinfo = dst.val.case_DS_Initiator.pinfo;
     uint32_t pid = dst.val.case_DS_Initiator.pid;
-    Noise_noise_string *info = dst.val.case_DS_Initiator.info;
+    Noise_NX_noise_string *info = dst.val.case_DS_Initiator.info;
     uint32_t id = dst.val.case_DS_Initiator.id;
-    Noise_resp_state_t state = dst.val.case_DS_Initiator.state;
+    Noise_NX_resp_state_t state = dst.val.case_DS_Initiator.state;
     bool ite;
-    if (state.tag == Noise_IMS_Handshake)
+    if (state.tag == Noise_NX_IMS_Handshake)
       ite = true;
     else
       ite = false;
     if (!ite)
     {
       result_resp_state_t scrut;
-      if (state.tag == Noise_IMS_Transport)
+      if (state.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = state.val.case_IMS_Transport.receive_key;
@@ -3477,20 +3567,26 @@ state_transport_write(
         uint8_t *send_key = state.val.case_IMS_Transport.send_key;
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)2147483648U && clen == plen + (uint32_t)16U))
-          scrut = ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CInput_size } });
+          scrut =
+            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_NX_CInput_size } });
         else if (send_nonce >= (uint64_t)18446744073709551615U)
           scrut =
-            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CSaturated_nonce } });
+            (
+              (result_resp_state_t){
+                .tag = Fail0,
+                .val = { .case_Fail = Noise_NX_CSaturated_nonce }
+              }
+            );
         else
         {
-          Noise_aead_encrypt(send_key, send_nonce, (uint32_t)0U, NULL, plen, p, c);
+          Noise_NX_aead_encrypt(send_key, send_nonce, (uint32_t)0U, NULL, plen, p, c);
           scrut =
             (
               (result_resp_state_t){
                 .tag = Res0,
                 .val = {
                   .case_Res = {
-                    .tag = Noise_IMS_Transport,
+                    .tag = Noise_NX_IMS_Transport,
                     .val = {
                       .case_IMS_Transport = {
                         .h = h, .send_key = send_key, .send_nonce = send_nonce + (uint64_t)1U,
@@ -3509,19 +3605,19 @@ state_transport_write(
             "unreachable (pattern matches are exhaustive in F*)");
       if (scrut.tag == Fail0)
       {
-        Noise_error_code e = scrut.val.case_Fail;
+        Noise_NX_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
       else if (scrut.tag == Res0)
       {
-        Noise_resp_state_t state_ = scrut.val.case_Res;
+        Noise_NX_resp_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
               .tag = Res,
               .val = {
                 .case_Res = {
-                  .tag = Noise_DS_Initiator,
+                  .tag = Noise_NX_DS_Initiator,
                   .val = {
                     .case_DS_Initiator = {
                       .state = state_, .id = id, .info = info, .pid = pid, .pinfo = pinfo, .dv = dv
@@ -3536,27 +3632,28 @@ state_transport_write(
         r = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
     }
     else
-      r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+      r =
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
   }
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
   {
-    Noise_device_t *dv = dst.val.case_DS_Responder.dv;
-    Noise_noise_string *pinfo = dst.val.case_DS_Responder.pinfo;
+    Noise_NX_device_t *dv = dst.val.case_DS_Responder.dv;
+    Noise_NX_noise_string *pinfo = dst.val.case_DS_Responder.pinfo;
     uint32_t pid = dst.val.case_DS_Responder.pid;
     uint8_t *spub = dst.val.case_DS_Responder.spub;
     uint8_t *spriv = dst.val.case_DS_Responder.spriv;
-    Noise_noise_string *info = dst.val.case_DS_Responder.info;
+    Noise_NX_noise_string *info = dst.val.case_DS_Responder.info;
     uint32_t id = dst.val.case_DS_Responder.id;
-    Noise_init_state_t state = dst.val.case_DS_Responder.state;
+    Noise_NX_init_state_t state = dst.val.case_DS_Responder.state;
     bool ite;
-    if (state.tag == Noise_IMS_Handshake)
+    if (state.tag == Noise_NX_IMS_Handshake)
       ite = true;
     else
       ite = false;
     if (!ite)
     {
       result_init_state_t scrut;
-      if (state.tag == Noise_IMS_Transport)
+      if (state.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = state.val.case_IMS_Transport.receive_key;
@@ -3565,20 +3662,26 @@ state_transport_write(
         bool recv_tpt_msg = state.val.case_IMS_Transport.recv_transport_message;
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)2147483648U && clen == plen + (uint32_t)16U))
-          scrut = ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CInput_size } });
+          scrut =
+            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_NX_CInput_size } });
         else if (send_nonce >= (uint64_t)18446744073709551615U)
           scrut =
-            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CSaturated_nonce } });
+            (
+              (result_init_state_t){
+                .tag = Fail0,
+                .val = { .case_Fail = Noise_NX_CSaturated_nonce }
+              }
+            );
         else
         {
-          Noise_aead_encrypt(send_key, send_nonce, (uint32_t)0U, NULL, plen, p, c);
+          Noise_NX_aead_encrypt(send_key, send_nonce, (uint32_t)0U, NULL, plen, p, c);
           scrut =
             (
               (result_init_state_t){
                 .tag = Res0,
                 .val = {
                   .case_Res = {
-                    .tag = Noise_IMS_Transport,
+                    .tag = Noise_NX_IMS_Transport,
                     .val = {
                       .case_IMS_Transport = {
                         .h = h, .recv_transport_message = recv_tpt_msg, .send_key = send_key,
@@ -3598,19 +3701,19 @@ state_transport_write(
             "unreachable (pattern matches are exhaustive in F*)");
       if (scrut.tag == Fail0)
       {
-        Noise_error_code e = scrut.val.case_Fail;
+        Noise_NX_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
       else if (scrut.tag == Res0)
       {
-        Noise_init_state_t state_ = scrut.val.case_Res;
+        Noise_NX_init_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
               .tag = Res,
               .val = {
                 .case_Res = {
-                  .tag = Noise_DS_Responder,
+                  .tag = Noise_NX_DS_Responder,
                   .val = {
                     .case_DS_Responder = {
                       .state = state_, .id = id, .info = info, .spriv = spriv, .spub = spub,
@@ -3626,7 +3729,8 @@ state_transport_write(
         r = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
     }
     else
-      r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+      r =
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
   }
   else
     r = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
@@ -3634,9 +3738,9 @@ state_transport_write(
     return r.val.case_Fail;
   else if (r.tag == Res)
   {
-    Noise_session_t dst_ = r.val.case_Res;
+    Noise_NX_session_t dst_ = r.val.case_Res;
     dst_p[0U] = dst_;
-    return Noise_CSuccess;
+    return Noise_NX_CSuccess;
   }
   else
   {
@@ -3648,34 +3752,34 @@ state_transport_write(
   }
 }
 
-static Noise_error_code
+static Noise_NX_error_code
 state_transport_read(
   uint32_t plen,
   uint8_t *p,
   uint32_t clen,
   uint8_t *c,
-  Noise_session_t *dst_p
+  Noise_NX_session_t *dst_p
 )
 {
-  Noise_session_t dst = dst_p[0U];
+  Noise_NX_session_t dst = dst_p[0U];
   result_session_t r;
-  if (dst.tag == Noise_DS_Initiator)
+  if (dst.tag == Noise_NX_DS_Initiator)
   {
-    Noise_device_t *dv = dst.val.case_DS_Initiator.dv;
-    Noise_noise_string *pinfo = dst.val.case_DS_Initiator.pinfo;
+    Noise_NX_device_t *dv = dst.val.case_DS_Initiator.dv;
+    Noise_NX_noise_string *pinfo = dst.val.case_DS_Initiator.pinfo;
     uint32_t pid = dst.val.case_DS_Initiator.pid;
-    Noise_noise_string *info = dst.val.case_DS_Initiator.info;
+    Noise_NX_noise_string *info = dst.val.case_DS_Initiator.info;
     uint32_t id = dst.val.case_DS_Initiator.id;
-    Noise_resp_state_t state = dst.val.case_DS_Initiator.state;
+    Noise_NX_resp_state_t state = dst.val.case_DS_Initiator.state;
     bool ite;
-    if (state.tag == Noise_IMS_Handshake)
+    if (state.tag == Noise_NX_IMS_Handshake)
       ite = true;
     else
       ite = false;
     if (!ite)
     {
       result_resp_state_t scrut;
-      if (state.tag == Noise_IMS_Transport)
+      if (state.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = state.val.case_IMS_Transport.receive_key;
@@ -3683,25 +3787,31 @@ state_transport_read(
         uint8_t *send_key = state.val.case_IMS_Transport.send_key;
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)2147483648U && clen == plen + (uint32_t)16U))
-          scrut = ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CInput_size } });
+          scrut =
+            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_NX_CInput_size } });
         else if (receive_nonce >= (uint64_t)18446744073709551615U)
           scrut =
-            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CSaturated_nonce } });
+            (
+              (result_resp_state_t){
+                .tag = Fail0,
+                .val = { .case_Fail = Noise_NX_CSaturated_nonce }
+              }
+            );
         else
-          switch (Noise_aead_decrypt(receive_key, receive_nonce, (uint32_t)0U, NULL, plen, p, c))
+          switch (Noise_NX_aead_decrypt(receive_key, receive_nonce, (uint32_t)0U, NULL, plen, p, c))
           {
-            case Noise_CDecrypt_error:
+            case Noise_NX_CDecrypt_error:
               {
                 scrut =
                   (
                     (result_resp_state_t){
                       .tag = Fail0,
-                      .val = { .case_Fail = Noise_CDecrypt_error }
+                      .val = { .case_Fail = Noise_NX_CDecrypt_error }
                     }
                   );
                 break;
               }
-            case Noise_CSuccess:
+            case Noise_NX_CSuccess:
               {
                 scrut =
                   (
@@ -3709,7 +3819,7 @@ state_transport_read(
                       .tag = Res0,
                       .val = {
                         .case_Res = {
-                          .tag = Noise_IMS_Transport,
+                          .tag = Noise_NX_IMS_Transport,
                           .val = {
                             .case_IMS_Transport = {
                               .h = h, .send_key = send_key, .send_nonce = send_nonce,
@@ -3736,19 +3846,19 @@ state_transport_read(
             "unreachable (pattern matches are exhaustive in F*)");
       if (scrut.tag == Fail0)
       {
-        Noise_error_code e = scrut.val.case_Fail;
+        Noise_NX_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
       else if (scrut.tag == Res0)
       {
-        Noise_resp_state_t state_ = scrut.val.case_Res;
+        Noise_NX_resp_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
               .tag = Res,
               .val = {
                 .case_Res = {
-                  .tag = Noise_DS_Initiator,
+                  .tag = Noise_NX_DS_Initiator,
                   .val = {
                     .case_DS_Initiator = {
                       .state = state_, .id = id, .info = info, .pid = pid, .pinfo = pinfo, .dv = dv
@@ -3763,27 +3873,28 @@ state_transport_read(
         r = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
     }
     else
-      r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+      r =
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
   }
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
   {
-    Noise_device_t *dv = dst.val.case_DS_Responder.dv;
-    Noise_noise_string *pinfo = dst.val.case_DS_Responder.pinfo;
+    Noise_NX_device_t *dv = dst.val.case_DS_Responder.dv;
+    Noise_NX_noise_string *pinfo = dst.val.case_DS_Responder.pinfo;
     uint32_t pid = dst.val.case_DS_Responder.pid;
     uint8_t *spub = dst.val.case_DS_Responder.spub;
     uint8_t *spriv = dst.val.case_DS_Responder.spriv;
-    Noise_noise_string *info = dst.val.case_DS_Responder.info;
+    Noise_NX_noise_string *info = dst.val.case_DS_Responder.info;
     uint32_t id = dst.val.case_DS_Responder.id;
-    Noise_init_state_t state = dst.val.case_DS_Responder.state;
+    Noise_NX_init_state_t state = dst.val.case_DS_Responder.state;
     bool ite;
-    if (state.tag == Noise_IMS_Handshake)
+    if (state.tag == Noise_NX_IMS_Handshake)
       ite = true;
     else
       ite = false;
     if (!ite)
     {
       result_init_state_t scrut;
-      if (state.tag == Noise_IMS_Transport)
+      if (state.tag == Noise_NX_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
         uint8_t *receive_key = state.val.case_IMS_Transport.receive_key;
@@ -3791,25 +3902,31 @@ state_transport_read(
         uint8_t *send_key = state.val.case_IMS_Transport.send_key;
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)2147483648U && clen == plen + (uint32_t)16U))
-          scrut = ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CInput_size } });
+          scrut =
+            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_NX_CInput_size } });
         else if (receive_nonce >= (uint64_t)18446744073709551615U)
           scrut =
-            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_CSaturated_nonce } });
+            (
+              (result_init_state_t){
+                .tag = Fail0,
+                .val = { .case_Fail = Noise_NX_CSaturated_nonce }
+              }
+            );
         else
-          switch (Noise_aead_decrypt(receive_key, receive_nonce, (uint32_t)0U, NULL, plen, p, c))
+          switch (Noise_NX_aead_decrypt(receive_key, receive_nonce, (uint32_t)0U, NULL, plen, p, c))
           {
-            case Noise_CDecrypt_error:
+            case Noise_NX_CDecrypt_error:
               {
                 scrut =
                   (
                     (result_init_state_t){
                       .tag = Fail0,
-                      .val = { .case_Fail = Noise_CDecrypt_error }
+                      .val = { .case_Fail = Noise_NX_CDecrypt_error }
                     }
                   );
                 break;
               }
-            case Noise_CSuccess:
+            case Noise_NX_CSuccess:
               {
                 scrut =
                   (
@@ -3817,7 +3934,7 @@ state_transport_read(
                       .tag = Res0,
                       .val = {
                         .case_Res = {
-                          .tag = Noise_IMS_Transport,
+                          .tag = Noise_NX_IMS_Transport,
                           .val = {
                             .case_IMS_Transport = {
                               .h = h, .recv_transport_message = true, .send_key = send_key,
@@ -3844,19 +3961,19 @@ state_transport_read(
             "unreachable (pattern matches are exhaustive in F*)");
       if (scrut.tag == Fail0)
       {
-        Noise_error_code e = scrut.val.case_Fail;
+        Noise_NX_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
       else if (scrut.tag == Res0)
       {
-        Noise_init_state_t state_ = scrut.val.case_Res;
+        Noise_NX_init_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
               .tag = Res,
               .val = {
                 .case_Res = {
-                  .tag = Noise_DS_Responder,
+                  .tag = Noise_NX_DS_Responder,
                   .val = {
                     .case_DS_Responder = {
                       .state = state_, .id = id, .info = info, .spriv = spriv, .spub = spub,
@@ -3872,7 +3989,8 @@ state_transport_read(
         r = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
     }
     else
-      r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+      r =
+        ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
   }
   else
     r = KRML_EABORT(result_session_t, "unreachable (pattern matches are exhaustive in F*)");
@@ -3880,9 +3998,9 @@ state_transport_read(
     return r.val.case_Fail;
   else if (r.tag == Res)
   {
-    Noise_session_t dst_ = r.val.case_Res;
+    Noise_NX_session_t dst_ = r.val.case_Res;
     dst_p[0U] = dst_;
-    return Noise_CSuccess;
+    return Noise_NX_CSuccess;
   }
   else
   {
@@ -3914,23 +4032,23 @@ option__uint32_t;
   using `out` and `out_len` is always safe: if the function fails, it will set
   `*outlen` to 0 and `*out` to NULL.
 */
-Noise_rcode
-Noise_session_write(
-  Noise_encap_message_t *payload,
-  Noise_session_t *sn_p,
+Noise_NX_rcode
+Noise_NX_session_write(
+  Noise_NX_encap_message_t *payload,
+  Noise_NX_session_t *sn_p,
   uint32_t *out_len,
   uint8_t **out
 )
 {
-  Noise_session_t *sn_p1 = sn_p;
-  Noise_session_t *snp = sn_p1;
-  Noise_session_t sn = snp[0U];
-  if (sn.tag == Noise_DS_Initiator)
+  Noise_NX_session_t *sn_p1 = sn_p;
+  Noise_NX_session_t *snp = sn_p1;
+  Noise_NX_session_t sn = snp[0U];
+  if (sn.tag == Noise_NX_DS_Initiator)
   {
-    Noise_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
-    if (sn_state.tag == Noise_IMS_Transport)
+    Noise_NX_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
+    if (sn_state.tag == Noise_NX_IMS_Transport)
     {
-      Noise_encap_message_t encap_payload = payload[0U];
+      Noise_NX_encap_message_t encap_payload = payload[0U];
       bool next_length_ok;
       if (encap_payload.em_message_len <= (uint32_t)4294967279U)
       {
@@ -3947,7 +4065,7 @@ Noise_session_write(
         else
         {
           uint8_t clevel = (uint8_t)5U;
-          if (encap_payload.em_ac_level.tag == Noise_Conf_level)
+          if (encap_payload.em_ac_level.tag == Noise_NX_Conf_level)
           {
             uint8_t req_level = encap_payload.em_ac_level.val.case_Conf_level;
             sec_ok =
@@ -3963,25 +4081,25 @@ Noise_session_write(
           uint32_t outlen = out_len[0U];
           KRML_CHECK_SIZE(sizeof (uint8_t), outlen);
           uint8_t *out1 = KRML_HOST_CALLOC(outlen, sizeof (uint8_t));
-          Noise_error_code
+          Noise_NX_error_code
           res =
             state_transport_write(encap_payload.em_message_len,
               encap_payload.em_message,
               outlen,
               out1,
               sn_p1);
-          if (res == Noise_CSuccess)
+          if (res == Noise_NX_CSuccess)
           {
             out[0U] = out1;
-            return ((Noise_rcode){ .tag = Noise_Success });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
           }
           else
           {
-            Noise_error_code e = res;
+            Noise_NX_error_code e = res;
             KRML_HOST_FREE(out1);
             out_len[0U] = (uint32_t)0U;
             out[0U] = NULL;
-            return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = e } });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = e } });
           }
         }
         else
@@ -3989,17 +4107,23 @@ Noise_session_write(
           out_len[0U] = (uint32_t)0U;
           out[0U] = NULL;
           return
-            ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CSecurity_level } });
+            (
+              (Noise_NX_rcode){
+                .tag = Noise_NX_Error,
+                .val = { .case_Error = Noise_NX_CSecurity_level }
+              }
+            );
         }
       }
       else
       {
         out_len[0U] = (uint32_t)0U;
         out[0U] = NULL;
-        return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+        return
+          ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = Noise_NX_CInput_size } });
       }
     }
-    else if (sn_state.tag == Noise_IMS_Handshake)
+    else if (sn_state.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t st_step = sn_state.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)3U)
@@ -4008,15 +4132,15 @@ Noise_session_write(
         out[0U] = NULL;
         return
           (
-            (Noise_rcode){
-              .tag = Noise_Stuck,
-              .val = { .case_Stuck = Noise_CIncorrect_transition }
+            (Noise_NX_rcode){
+              .tag = Noise_NX_Stuck,
+              .val = { .case_Stuck = Noise_NX_CIncorrect_transition }
             }
           );
       }
       else
       {
-        Noise_encap_message_t encap_payload = payload[0U];
+        Noise_NX_encap_message_t encap_payload = payload[0U];
         option__uint32_t scrut;
         if ((uint32_t)0U == st_step)
           if (encap_payload.em_message_len <= (uint32_t)2147483648U)
@@ -4053,7 +4177,7 @@ Noise_session_write(
               clevel = (uint8_t)0U;
             else
               clevel = (uint8_t)1U;
-            if (encap_payload.em_ac_level.tag == Noise_Conf_level)
+            if (encap_payload.em_ac_level.tag == Noise_NX_Conf_level)
             {
               uint8_t req_level = encap_payload.em_ac_level.val.case_Conf_level;
               sec_ok =
@@ -4069,25 +4193,25 @@ Noise_session_write(
             uint32_t outlen = out_len[0U];
             KRML_CHECK_SIZE(sizeof (uint8_t), outlen);
             uint8_t *out1 = KRML_HOST_CALLOC(outlen, sizeof (uint8_t));
-            Noise_error_code
+            Noise_NX_error_code
             res =
               state_handshake_write(encap_payload.em_message_len,
                 encap_payload.em_message,
                 sn_p1,
                 outlen,
                 out1);
-            if (res == Noise_CSuccess)
+            if (res == Noise_NX_CSuccess)
             {
               out[0U] = out1;
-              return ((Noise_rcode){ .tag = Noise_Success });
+              return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
             }
             else
             {
-              Noise_error_code e = res;
+              Noise_NX_error_code e = res;
               KRML_HOST_FREE(out1);
               out_len[0U] = (uint32_t)0U;
               out[0U] = NULL;
-              return ((Noise_rcode){ .tag = Noise_Stuck, .val = { .case_Stuck = e } });
+              return ((Noise_NX_rcode){ .tag = Noise_NX_Stuck, .val = { .case_Stuck = e } });
             }
           }
           else
@@ -4095,14 +4219,25 @@ Noise_session_write(
             out_len[0U] = (uint32_t)0U;
             out[0U] = NULL;
             return
-              ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CSecurity_level } });
+              (
+                (Noise_NX_rcode){
+                  .tag = Noise_NX_Error,
+                  .val = { .case_Error = Noise_NX_CSecurity_level }
+                }
+              );
           }
         }
         else
         {
           out_len[0U] = (uint32_t)0U;
           out[0U] = NULL;
-          return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+          return
+            (
+              (Noise_NX_rcode){
+                .tag = Noise_NX_Error,
+                .val = { .case_Error = Noise_NX_CInput_size }
+              }
+            );
         }
       }
     }
@@ -4115,13 +4250,13 @@ Noise_session_write(
       KRML_HOST_EXIT(255U);
     }
   }
-  else if (sn.tag == Noise_DS_Responder)
+  else if (sn.tag == Noise_NX_DS_Responder)
   {
-    Noise_init_state_t sn_state = sn.val.case_DS_Responder.state;
-    if (sn_state.tag == Noise_IMS_Transport)
+    Noise_NX_init_state_t sn_state = sn.val.case_DS_Responder.state;
+    if (sn_state.tag == Noise_NX_IMS_Transport)
     {
       bool recv_tpt_msg = sn_state.val.case_IMS_Transport.recv_transport_message;
-      Noise_encap_message_t encap_payload = payload[0U];
+      Noise_NX_encap_message_t encap_payload = payload[0U];
       bool next_length_ok;
       if (encap_payload.em_message_len <= (uint32_t)4294967279U)
       {
@@ -4142,7 +4277,7 @@ Noise_session_write(
             clevel = (uint8_t)1U;
           else
             clevel = (uint8_t)1U;
-          if (encap_payload.em_ac_level.tag == Noise_Conf_level)
+          if (encap_payload.em_ac_level.tag == Noise_NX_Conf_level)
           {
             uint8_t req_level = encap_payload.em_ac_level.val.case_Conf_level;
             sec_ok =
@@ -4158,25 +4293,25 @@ Noise_session_write(
           uint32_t outlen = out_len[0U];
           KRML_CHECK_SIZE(sizeof (uint8_t), outlen);
           uint8_t *out1 = KRML_HOST_CALLOC(outlen, sizeof (uint8_t));
-          Noise_error_code
+          Noise_NX_error_code
           res =
             state_transport_write(encap_payload.em_message_len,
               encap_payload.em_message,
               outlen,
               out1,
               sn_p1);
-          if (res == Noise_CSuccess)
+          if (res == Noise_NX_CSuccess)
           {
             out[0U] = out1;
-            return ((Noise_rcode){ .tag = Noise_Success });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
           }
           else
           {
-            Noise_error_code e = res;
+            Noise_NX_error_code e = res;
             KRML_HOST_FREE(out1);
             out_len[0U] = (uint32_t)0U;
             out[0U] = NULL;
-            return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = e } });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = e } });
           }
         }
         else
@@ -4184,17 +4319,23 @@ Noise_session_write(
           out_len[0U] = (uint32_t)0U;
           out[0U] = NULL;
           return
-            ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CSecurity_level } });
+            (
+              (Noise_NX_rcode){
+                .tag = Noise_NX_Error,
+                .val = { .case_Error = Noise_NX_CSecurity_level }
+              }
+            );
         }
       }
       else
       {
         out_len[0U] = (uint32_t)0U;
         out[0U] = NULL;
-        return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+        return
+          ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = Noise_NX_CInput_size } });
       }
     }
-    else if (sn_state.tag == Noise_IMS_Handshake)
+    else if (sn_state.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t st_step = sn_state.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)3U)
@@ -4203,15 +4344,15 @@ Noise_session_write(
         out[0U] = NULL;
         return
           (
-            (Noise_rcode){
-              .tag = Noise_Stuck,
-              .val = { .case_Stuck = Noise_CIncorrect_transition }
+            (Noise_NX_rcode){
+              .tag = Noise_NX_Stuck,
+              .val = { .case_Stuck = Noise_NX_CIncorrect_transition }
             }
           );
       }
       else
       {
-        Noise_encap_message_t encap_payload = payload[0U];
+        Noise_NX_encap_message_t encap_payload = payload[0U];
         option__uint32_t scrut;
         if ((uint32_t)0U == st_step)
           if (encap_payload.em_message_len <= (uint32_t)2147483648U)
@@ -4248,7 +4389,7 @@ Noise_session_write(
               clevel = (uint8_t)0U;
             else
               clevel = (uint8_t)1U;
-            if (encap_payload.em_ac_level.tag == Noise_Conf_level)
+            if (encap_payload.em_ac_level.tag == Noise_NX_Conf_level)
             {
               uint8_t req_level = encap_payload.em_ac_level.val.case_Conf_level;
               sec_ok =
@@ -4264,25 +4405,25 @@ Noise_session_write(
             uint32_t outlen = out_len[0U];
             KRML_CHECK_SIZE(sizeof (uint8_t), outlen);
             uint8_t *out1 = KRML_HOST_CALLOC(outlen, sizeof (uint8_t));
-            Noise_error_code
+            Noise_NX_error_code
             res =
               state_handshake_write(encap_payload.em_message_len,
                 encap_payload.em_message,
                 sn_p1,
                 outlen,
                 out1);
-            if (res == Noise_CSuccess)
+            if (res == Noise_NX_CSuccess)
             {
               out[0U] = out1;
-              return ((Noise_rcode){ .tag = Noise_Success });
+              return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
             }
             else
             {
-              Noise_error_code e = res;
+              Noise_NX_error_code e = res;
               KRML_HOST_FREE(out1);
               out_len[0U] = (uint32_t)0U;
               out[0U] = NULL;
-              return ((Noise_rcode){ .tag = Noise_Stuck, .val = { .case_Stuck = e } });
+              return ((Noise_NX_rcode){ .tag = Noise_NX_Stuck, .val = { .case_Stuck = e } });
             }
           }
           else
@@ -4290,14 +4431,25 @@ Noise_session_write(
             out_len[0U] = (uint32_t)0U;
             out[0U] = NULL;
             return
-              ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CSecurity_level } });
+              (
+                (Noise_NX_rcode){
+                  .tag = Noise_NX_Error,
+                  .val = { .case_Error = Noise_NX_CSecurity_level }
+                }
+              );
           }
         }
         else
         {
           out_len[0U] = (uint32_t)0U;
           out[0U] = NULL;
-          return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+          return
+            (
+              (Noise_NX_rcode){
+                .tag = Noise_NX_Error,
+                .val = { .case_Error = Noise_NX_CInput_size }
+              }
+            );
         }
       }
     }
@@ -4327,21 +4479,21 @@ Noise_session_write(
   in `*payload_out`. Note that using `payload_out` is always safe: if the
   function fails, it will set `*payload_out` to NULL.
 */
-Noise_rcode
-Noise_session_read(
-  Noise_encap_message_t **payload_out,
-  Noise_session_t *sn_p,
+Noise_NX_rcode
+Noise_NX_session_read(
+  Noise_NX_encap_message_t **payload_out,
+  Noise_NX_session_t *sn_p,
   uint32_t inlen,
   uint8_t *input
 )
 {
-  Noise_session_t *sn_p1 = sn_p;
-  Noise_session_t *snp = sn_p1;
-  Noise_session_t sn = snp[0U];
-  if (sn.tag == Noise_DS_Initiator)
+  Noise_NX_session_t *sn_p1 = sn_p;
+  Noise_NX_session_t *snp = sn_p1;
+  Noise_NX_session_t sn = snp[0U];
+  if (sn.tag == Noise_NX_DS_Initiator)
   {
-    Noise_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
-    if (sn_state.tag == Noise_IMS_Transport)
+    Noise_NX_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
+    if (sn_state.tag == Noise_NX_IMS_Transport)
     {
       option__uint32_t scrut;
       if (inlen >= (uint32_t)16U)
@@ -4360,43 +4512,44 @@ Noise_session_read(
         }
         else
           out = NULL;
-        Noise_error_code res = state_transport_read(outlen, out, inlen, input, sn_p1);
-        if (res == Noise_CSuccess)
+        Noise_NX_error_code res = state_transport_read(outlen, out, inlen, input, sn_p1);
+        if (res == Noise_NX_CSuccess)
         {
-          KRML_CHECK_SIZE(sizeof (Noise_encap_message_t), (uint32_t)1U);
-          Noise_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_encap_message_t));
+          KRML_CHECK_SIZE(sizeof (Noise_NX_encap_message_t), (uint32_t)1U);
+          Noise_NX_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_encap_message_t));
           em_ptr[0U]
           =
             (
-              (Noise_encap_message_t){
+              (Noise_NX_encap_message_t){
                 .em_ac_level = {
-                  .tag = Noise_Auth_level,
+                  .tag = Noise_NX_Auth_level,
                   .val = { .case_Auth_level = (uint8_t)2U }
                 },
                 .em_message_len = outlen,
                 .em_message = out
               }
             );
-          Noise_encap_message_t *emp = em_ptr;
+          Noise_NX_encap_message_t *emp = em_ptr;
           payload_out[0U] = emp;
-          return ((Noise_rcode){ .tag = Noise_Success });
+          return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
         }
         else
         {
-          Noise_error_code e = res;
+          Noise_NX_error_code e = res;
           if (!(out == NULL))
             KRML_HOST_FREE(out);
           payload_out[0U] = NULL;
-          return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = e } });
+          return ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = e } });
         }
       }
       else
       {
         payload_out[0U] = NULL;
-        return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+        return
+          ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = Noise_NX_CInput_size } });
       }
     }
-    else if (sn_state.tag == Noise_IMS_Handshake)
+    else if (sn_state.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t st_step = sn_state.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)3U)
@@ -4404,9 +4557,9 @@ Noise_session_read(
         payload_out[0U] = NULL;
         return
           (
-            (Noise_rcode){
-              .tag = Noise_Stuck,
-              .val = { .case_Stuck = Noise_CIncorrect_transition }
+            (Noise_NX_rcode){
+              .tag = Noise_NX_Stuck,
+              .val = { .case_Stuck = Noise_NX_CIncorrect_transition }
             }
           );
       }
@@ -4442,37 +4595,46 @@ Noise_session_read(
           }
           else
             out = NULL;
-          Noise_error_code res = state_handshake_read(outlen, out, sn_p1, inlen, input);
-          if (res == Noise_CSuccess)
+          Noise_NX_error_code res = state_handshake_read(outlen, out, sn_p1, inlen, input);
+          if (res == Noise_NX_CSuccess)
           {
-            KRML_CHECK_SIZE(sizeof (Noise_encap_message_t), (uint32_t)1U);
-            Noise_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_encap_message_t));
+            KRML_CHECK_SIZE(sizeof (Noise_NX_encap_message_t), (uint32_t)1U);
+            Noise_NX_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_encap_message_t));
             em_ptr[0U]
             =
               (
-                (Noise_encap_message_t){
-                  .em_ac_level = { .tag = Noise_Auth_level, .val = { .case_Auth_level = alevel } },
+                (Noise_NX_encap_message_t){
+                  .em_ac_level = {
+                    .tag = Noise_NX_Auth_level,
+                    .val = { .case_Auth_level = alevel }
+                  },
                   .em_message_len = outlen,
                   .em_message = out
                 }
               );
-            Noise_encap_message_t *emp = em_ptr;
+            Noise_NX_encap_message_t *emp = em_ptr;
             payload_out[0U] = emp;
-            return ((Noise_rcode){ .tag = Noise_Success });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
           }
           else
           {
-            Noise_error_code e = res;
+            Noise_NX_error_code e = res;
             if (!(out == NULL))
               KRML_HOST_FREE(out);
             payload_out[0U] = NULL;
-            return ((Noise_rcode){ .tag = Noise_Stuck, .val = { .case_Stuck = e } });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Stuck, .val = { .case_Stuck = e } });
           }
         }
         else
         {
           payload_out[0U] = NULL;
-          return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+          return
+            (
+              (Noise_NX_rcode){
+                .tag = Noise_NX_Error,
+                .val = { .case_Error = Noise_NX_CInput_size }
+              }
+            );
         }
       }
       else
@@ -4480,9 +4642,9 @@ Noise_session_read(
         payload_out[0U] = NULL;
         return
           (
-            (Noise_rcode){
-              .tag = Noise_Error,
-              .val = { .case_Error = Noise_CIncorrect_transition }
+            (Noise_NX_rcode){
+              .tag = Noise_NX_Error,
+              .val = { .case_Error = Noise_NX_CIncorrect_transition }
             }
           );
       }
@@ -4496,10 +4658,10 @@ Noise_session_read(
       KRML_HOST_EXIT(255U);
     }
   }
-  else if (sn.tag == Noise_DS_Responder)
+  else if (sn.tag == Noise_NX_DS_Responder)
   {
-    Noise_init_state_t sn_state = sn.val.case_DS_Responder.state;
-    if (sn_state.tag == Noise_IMS_Transport)
+    Noise_NX_init_state_t sn_state = sn.val.case_DS_Responder.state;
+    if (sn_state.tag == Noise_NX_IMS_Transport)
     {
       option__uint32_t scrut;
       if (inlen >= (uint32_t)16U)
@@ -4518,43 +4680,44 @@ Noise_session_read(
         }
         else
           out = NULL;
-        Noise_error_code res = state_transport_read(outlen, out, inlen, input, sn_p1);
-        if (res == Noise_CSuccess)
+        Noise_NX_error_code res = state_transport_read(outlen, out, inlen, input, sn_p1);
+        if (res == Noise_NX_CSuccess)
         {
-          KRML_CHECK_SIZE(sizeof (Noise_encap_message_t), (uint32_t)1U);
-          Noise_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_encap_message_t));
+          KRML_CHECK_SIZE(sizeof (Noise_NX_encap_message_t), (uint32_t)1U);
+          Noise_NX_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_encap_message_t));
           em_ptr[0U]
           =
             (
-              (Noise_encap_message_t){
+              (Noise_NX_encap_message_t){
                 .em_ac_level = {
-                  .tag = Noise_Auth_level,
+                  .tag = Noise_NX_Auth_level,
                   .val = { .case_Auth_level = (uint8_t)0U }
                 },
                 .em_message_len = outlen,
                 .em_message = out
               }
             );
-          Noise_encap_message_t *emp = em_ptr;
+          Noise_NX_encap_message_t *emp = em_ptr;
           payload_out[0U] = emp;
-          return ((Noise_rcode){ .tag = Noise_Success });
+          return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
         }
         else
         {
-          Noise_error_code e = res;
+          Noise_NX_error_code e = res;
           if (!(out == NULL))
             KRML_HOST_FREE(out);
           payload_out[0U] = NULL;
-          return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = e } });
+          return ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = e } });
         }
       }
       else
       {
         payload_out[0U] = NULL;
-        return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+        return
+          ((Noise_NX_rcode){ .tag = Noise_NX_Error, .val = { .case_Error = Noise_NX_CInput_size } });
       }
     }
-    else if (sn_state.tag == Noise_IMS_Handshake)
+    else if (sn_state.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t st_step = sn_state.val.case_IMS_Handshake.step;
       if (st_step >= (uint32_t)3U)
@@ -4562,9 +4725,9 @@ Noise_session_read(
         payload_out[0U] = NULL;
         return
           (
-            (Noise_rcode){
-              .tag = Noise_Stuck,
-              .val = { .case_Stuck = Noise_CIncorrect_transition }
+            (Noise_NX_rcode){
+              .tag = Noise_NX_Stuck,
+              .val = { .case_Stuck = Noise_NX_CIncorrect_transition }
             }
           );
       }
@@ -4600,37 +4763,46 @@ Noise_session_read(
           }
           else
             out = NULL;
-          Noise_error_code res = state_handshake_read(outlen, out, sn_p1, inlen, input);
-          if (res == Noise_CSuccess)
+          Noise_NX_error_code res = state_handshake_read(outlen, out, sn_p1, inlen, input);
+          if (res == Noise_NX_CSuccess)
           {
-            KRML_CHECK_SIZE(sizeof (Noise_encap_message_t), (uint32_t)1U);
-            Noise_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_encap_message_t));
+            KRML_CHECK_SIZE(sizeof (Noise_NX_encap_message_t), (uint32_t)1U);
+            Noise_NX_encap_message_t *em_ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_encap_message_t));
             em_ptr[0U]
             =
               (
-                (Noise_encap_message_t){
-                  .em_ac_level = { .tag = Noise_Auth_level, .val = { .case_Auth_level = alevel } },
+                (Noise_NX_encap_message_t){
+                  .em_ac_level = {
+                    .tag = Noise_NX_Auth_level,
+                    .val = { .case_Auth_level = alevel }
+                  },
                   .em_message_len = outlen,
                   .em_message = out
                 }
               );
-            Noise_encap_message_t *emp = em_ptr;
+            Noise_NX_encap_message_t *emp = em_ptr;
             payload_out[0U] = emp;
-            return ((Noise_rcode){ .tag = Noise_Success });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Success });
           }
           else
           {
-            Noise_error_code e = res;
+            Noise_NX_error_code e = res;
             if (!(out == NULL))
               KRML_HOST_FREE(out);
             payload_out[0U] = NULL;
-            return ((Noise_rcode){ .tag = Noise_Stuck, .val = { .case_Stuck = e } });
+            return ((Noise_NX_rcode){ .tag = Noise_NX_Stuck, .val = { .case_Stuck = e } });
           }
         }
         else
         {
           payload_out[0U] = NULL;
-          return ((Noise_rcode){ .tag = Noise_Error, .val = { .case_Error = Noise_CInput_size } });
+          return
+            (
+              (Noise_NX_rcode){
+                .tag = Noise_NX_Error,
+                .val = { .case_Error = Noise_NX_CInput_size }
+              }
+            );
         }
       }
       else
@@ -4638,9 +4810,9 @@ Noise_session_read(
         payload_out[0U] = NULL;
         return
           (
-            (Noise_rcode){
-              .tag = Noise_Error,
-              .val = { .case_Error = Noise_CIncorrect_transition }
+            (Noise_NX_rcode){
+              .tag = Noise_NX_Error,
+              .val = { .case_Error = Noise_NX_CIncorrect_transition }
             }
           );
       }
@@ -4674,17 +4846,17 @@ Noise_session_read(
   payload length + a value depending only on the current step.
 */
 bool
-Noise_session_compute_next_message_len(
+Noise_NX_session_compute_next_message_len(
   uint32_t *out,
-  Noise_session_t *sn,
+  Noise_NX_session_t *sn,
   uint32_t payload_len
 )
 {
-  Noise_session_t dst = sn[0U];
-  if (dst.tag == Noise_DS_Initiator)
+  Noise_NX_session_t dst = sn[0U];
+  if (dst.tag == Noise_NX_DS_Initiator)
   {
-    Noise_resp_state_t st = dst.val.case_DS_Initiator.state;
-    if (st.tag == Noise_IMS_Handshake)
+    Noise_NX_resp_state_t st = dst.val.case_DS_Initiator.state;
+    if (st.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
       option__uint32_t scrut;
@@ -4709,7 +4881,7 @@ Noise_session_compute_next_message_len(
       else
         return false;
     }
-    else if (st.tag == Noise_IMS_Transport)
+    else if (st.tag == Noise_NX_IMS_Transport)
       if (payload_len <= (uint32_t)4294967279U)
       {
         out[0U] = payload_len + (uint32_t)16U;
@@ -4726,10 +4898,10 @@ Noise_session_compute_next_message_len(
       KRML_HOST_EXIT(255U);
     }
   }
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
   {
-    Noise_init_state_t st = dst.val.case_DS_Responder.state;
-    if (st.tag == Noise_IMS_Handshake)
+    Noise_NX_init_state_t st = dst.val.case_DS_Responder.state;
+    if (st.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
       option__uint32_t scrut;
@@ -4754,7 +4926,7 @@ Noise_session_compute_next_message_len(
       else
         return false;
     }
-    else if (st.tag == Noise_IMS_Transport)
+    else if (st.tag == Noise_NX_IMS_Transport)
       if (payload_len <= (uint32_t)4294967279U)
       {
         out[0U] = payload_len + (uint32_t)16U;
@@ -4784,22 +4956,22 @@ Noise_session_compute_next_message_len(
 /*
   Return the current status.
 */
-Noise_status Noise_session_get_status(Noise_session_t *sn)
+Noise_NX_status Noise_NX_session_get_status(Noise_NX_session_t *sn)
 {
-  Noise_session_t dst = sn[0U];
-  if (dst.tag == Noise_DS_Initiator)
+  Noise_NX_session_t dst = sn[0U];
+  if (dst.tag == Noise_NX_DS_Initiator)
   {
-    Noise_resp_state_t st = dst.val.case_DS_Initiator.state;
-    if (st.tag == Noise_IMS_Handshake)
+    Noise_NX_resp_state_t st = dst.val.case_DS_Initiator.state;
+    if (st.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
       if (step % (uint32_t)2U == (uint32_t)0U)
-        return Noise_Handshake_write;
+        return Noise_NX_Handshake_write;
       else
-        return Noise_Handshake_read;
+        return Noise_NX_Handshake_read;
     }
-    else if (st.tag == Noise_IMS_Transport)
-      return Noise_Transport;
+    else if (st.tag == Noise_NX_IMS_Transport)
+      return Noise_NX_Transport;
     else
     {
       KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
@@ -4809,19 +4981,19 @@ Noise_status Noise_session_get_status(Noise_session_t *sn)
       KRML_HOST_EXIT(255U);
     }
   }
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
   {
-    Noise_init_state_t st = dst.val.case_DS_Responder.state;
-    if (st.tag == Noise_IMS_Handshake)
+    Noise_NX_init_state_t st = dst.val.case_DS_Responder.state;
+    if (st.tag == Noise_NX_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
       if (step % (uint32_t)2U == (uint32_t)0U)
-        return Noise_Handshake_read;
+        return Noise_NX_Handshake_read;
       else
-        return Noise_Handshake_write;
+        return Noise_NX_Handshake_write;
     }
-    else if (st.tag == Noise_IMS_Transport)
-      return Noise_Transport;
+    else if (st.tag == Noise_NX_IMS_Transport)
+      return Noise_NX_Transport;
     else
     {
       KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
@@ -4849,26 +5021,26 @@ Noise_status Noise_session_get_status(Noise_session_t *sn)
   Using the session hash might be pertinent once the session has reached the
   transport phase.
 */
-void Noise_session_get_hash(uint8_t *out, Noise_session_t *sn)
+void Noise_NX_session_get_hash(uint8_t *out, Noise_NX_session_t *sn)
 {
-  Noise_session_t dst = sn[0U];
+  Noise_NX_session_t dst = sn[0U];
   uint8_t *h;
-  if (dst.tag == Noise_DS_Initiator)
+  if (dst.tag == Noise_NX_DS_Initiator)
   {
-    Noise_resp_state_t st = dst.val.case_DS_Initiator.state;
-    if (st.tag == Noise_IMS_Handshake)
+    Noise_NX_resp_state_t st = dst.val.case_DS_Initiator.state;
+    if (st.tag == Noise_NX_IMS_Handshake)
       h = st.val.case_IMS_Handshake.h;
-    else if (st.tag == Noise_IMS_Transport)
+    else if (st.tag == Noise_NX_IMS_Transport)
       h = st.val.case_IMS_Transport.h;
     else
       h = KRML_EABORT(uint8_t *, "unreachable (pattern matches are exhaustive in F*)");
   }
-  else if (dst.tag == Noise_DS_Responder)
+  else if (dst.tag == Noise_NX_DS_Responder)
   {
-    Noise_init_state_t st = dst.val.case_DS_Responder.state;
-    if (st.tag == Noise_IMS_Handshake)
+    Noise_NX_init_state_t st = dst.val.case_DS_Responder.state;
+    if (st.tag == Noise_NX_IMS_Handshake)
       h = st.val.case_IMS_Handshake.h;
-    else if (st.tag == Noise_IMS_Transport)
+    else if (st.tag == Noise_NX_IMS_Transport)
       h = st.val.case_IMS_Transport.h;
     else
       h = KRML_EABORT(uint8_t *, "unreachable (pattern matches are exhaustive in F*)");
@@ -4881,12 +5053,12 @@ void Noise_session_get_hash(uint8_t *out, Noise_session_t *sn)
 /*
   Return the session unique identifier.
 */
-uint32_t Noise_session_get_id(Noise_session_t *sn)
+uint32_t Noise_NX_session_get_id(Noise_NX_session_t *sn)
 {
-  Noise_session_t st = sn[0U];
-  if (st.tag == Noise_DS_Initiator)
+  Noise_NX_session_t st = sn[0U];
+  if (st.tag == Noise_NX_DS_Initiator)
     return st.val.case_DS_Initiator.id;
-  else if (st.tag == Noise_DS_Responder)
+  else if (st.tag == Noise_NX_DS_Responder)
     return st.val.case_DS_Responder.id;
   else
   {
@@ -4901,12 +5073,12 @@ uint32_t Noise_session_get_id(Noise_session_t *sn)
 /*
   Copy the session information to the user provided pointer.
 */
-void Noise_session_get_info(Noise_noise_string *out, Noise_session_t *sn)
+void Noise_NX_session_get_info(Noise_NX_noise_string *out, Noise_NX_session_t *sn)
 {
-  Noise_session_t st = sn[0U];
-  if (st.tag == Noise_DS_Initiator)
+  Noise_NX_session_t st = sn[0U];
+  if (st.tag == Noise_NX_DS_Initiator)
   {
-    Noise_noise_string *info = st.val.case_DS_Initiator.info;
+    Noise_NX_noise_string *info = st.val.case_DS_Initiator.info;
     uint8_t *input_str = info[0U];
     bool b = input_str == NULL;
     uint8_t *out_str;
@@ -4955,9 +5127,9 @@ void Noise_session_get_info(Noise_noise_string *out, Noise_session_t *sn)
     }
     out[0U] = out_str;
   }
-  else if (st.tag == Noise_DS_Responder)
+  else if (st.tag == Noise_NX_DS_Responder)
   {
-    Noise_noise_string *info = st.val.case_DS_Responder.info;
+    Noise_NX_noise_string *info = st.val.case_DS_Responder.info;
     uint8_t *input_str = info[0U];
     bool b = input_str == NULL;
     uint8_t *out_str;
@@ -5026,12 +5198,12 @@ void Noise_session_get_info(Noise_noise_string *out, Noise_session_t *sn)
   NULL, and trying to create a session with peer id 0 will cleanly fail
   by also returning NULL.
 */
-uint32_t Noise_session_get_peer_id(Noise_session_t *sn)
+uint32_t Noise_NX_session_get_peer_id(Noise_NX_session_t *sn)
 {
-  Noise_session_t st = sn[0U];
-  if (st.tag == Noise_DS_Initiator)
+  Noise_NX_session_t st = sn[0U];
+  if (st.tag == Noise_NX_DS_Initiator)
     return st.val.case_DS_Initiator.pid;
-  else if (st.tag == Noise_DS_Responder)
+  else if (st.tag == Noise_NX_DS_Responder)
     return st.val.case_DS_Responder.pid;
   else
   {
@@ -5049,12 +5221,12 @@ uint32_t Noise_session_get_peer_id(Noise_session_t *sn)
   The remote may be unknown yet, in which case there is no peer information
   in the device and the function will return false.
 */
-bool Noise_session_get_peer_info(Noise_noise_string *out, Noise_session_t *sn)
+bool Noise_NX_session_get_peer_info(Noise_NX_noise_string *out, Noise_NX_session_t *sn)
 {
-  Noise_session_t st = sn[0U];
-  if (st.tag == Noise_DS_Initiator)
+  Noise_NX_session_t st = sn[0U];
+  if (st.tag == Noise_NX_DS_Initiator)
   {
-    Noise_noise_string *pinfo = st.val.case_DS_Initiator.pinfo;
+    Noise_NX_noise_string *pinfo = st.val.case_DS_Initiator.pinfo;
     uint32_t pid = st.val.case_DS_Initiator.pid;
     if (pid != (uint32_t)0U)
     {
@@ -5110,9 +5282,9 @@ bool Noise_session_get_peer_info(Noise_noise_string *out, Noise_session_t *sn)
     else
       return false;
   }
-  else if (st.tag == Noise_DS_Responder)
+  else if (st.tag == Noise_NX_DS_Responder)
   {
-    Noise_noise_string *pinfo = st.val.case_DS_Responder.pinfo;
+    Noise_NX_noise_string *pinfo = st.val.case_DS_Responder.pinfo;
     uint32_t pid = st.val.case_DS_Responder.pid;
     if (pid != (uint32_t)0U)
     {
@@ -5193,15 +5365,15 @@ bool Noise_session_get_peer_info(Noise_noise_string *out, Noise_session_t *sn)
   we have no way to know whether the remote was itself able to finish the
   handshake.
 */
-bool Noise_session_reached_max_security(Noise_session_t *snp)
+bool Noise_NX_session_reached_max_security(Noise_NX_session_t *snp)
 {
-  Noise_session_t sn = snp[0U];
-  if (sn.tag == Noise_DS_Initiator)
+  Noise_NX_session_t sn = snp[0U];
+  if (sn.tag == Noise_NX_DS_Initiator)
   {
-    Noise_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
-    if (sn_state.tag == Noise_IMS_Transport)
+    Noise_NX_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
+    if (sn_state.tag == Noise_NX_IMS_Transport)
       return true;
-    else if (sn_state.tag == Noise_IMS_Handshake)
+    else if (sn_state.tag == Noise_NX_IMS_Handshake)
       return false;
     else
     {
@@ -5212,12 +5384,12 @@ bool Noise_session_reached_max_security(Noise_session_t *snp)
       KRML_HOST_EXIT(255U);
     }
   }
-  else if (sn.tag == Noise_DS_Responder)
+  else if (sn.tag == Noise_NX_DS_Responder)
   {
-    Noise_init_state_t sn_state = sn.val.case_DS_Responder.state;
-    if (sn_state.tag == Noise_IMS_Transport)
+    Noise_NX_init_state_t sn_state = sn.val.case_DS_Responder.state;
+    if (sn_state.tag == Noise_NX_IMS_Transport)
       return sn_state.val.case_IMS_Transport.recv_transport_message;
-    else if (sn_state.tag == Noise_IMS_Handshake)
+    else if (sn_state.tag == Noise_NX_IMS_Handshake)
       return false;
     else
     {
@@ -5241,17 +5413,18 @@ bool Noise_session_reached_max_security(Noise_session_t *snp)
 /*
   DO NOT use this: for tests and benchmarks only
 */
-Noise_session_t
-*Noise__session_create_initiator_with_ephemeral(
-  Noise_device_t *dvp,
+Noise_NX_session_t
+*Noise_NX__session_create_initiator_with_ephemeral(
+  Noise_NX_device_t *dvp,
   uint8_t *epriv,
   uint8_t *epub
 )
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   result_session_t res;
   if (dv.dv_states_counter == (uint32_t)4294967295U)
-    res = ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+    res =
+      ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
   else
   {
     uint8_t *str = dv.dv_info[0U];
@@ -5303,23 +5476,22 @@ Noise_session_t
     KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
     uint8_t **out_ptr0 = KRML_HOST_MALLOC(sizeof (uint8_t *));
     out_ptr0[0U] = out_str;
-    Noise_noise_string *st_info = out_ptr0;
+    Noise_NX_noise_string *st_info = out_ptr0;
     KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
     uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
     out_ptr[0U] = NULL;
-    Noise_noise_string *st_pinfo = out_ptr;
-    Noise_device_t uu____0 = dv;
+    Noise_NX_noise_string *st_pinfo = out_ptr;
     dvp[0U] =
       (
-        (Noise_device_t){
-          .dv_info = uu____0.dv_info,
-          .dv_sk = uu____0.dv_sk,
-          .dv_spriv = uu____0.dv_spriv,
-          .dv_spub = uu____0.dv_spub,
-          .dv_prologue = uu____0.dv_prologue,
+        (Noise_NX_device_t){
+          .dv_info = dv.dv_info,
+          .dv_sk = dv.dv_sk,
+          .dv_spriv = dv.dv_spriv,
+          .dv_spub = dv.dv_spub,
+          .dv_prologue = dv.dv_prologue,
           .dv_states_counter = dv.dv_states_counter + (uint32_t)1U,
-          .dv_peers = uu____0.dv_peers,
-          .dv_peers_counter = uu____0.dv_peers_counter
+          .dv_peers = dv.dv_peers,
+          .dv_peers_counter = dv.dv_peers_counter
         }
       );
     uint8_t *st_k = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
@@ -5329,10 +5501,10 @@ Noise_session_t
     uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
     uint8_t *st_rs = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
     uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-    Noise_resp_state_t
+    Noise_NX_resp_state_t
     st =
       {
-        .tag = Noise_IMS_Handshake,
+        .tag = Noise_NX_IMS_Handshake,
         .val = {
           .case_IMS_Handshake = {
             .step = (uint32_t)0U, .cipher_key = st_k, .chaining_key = st_ck0, .h = st_h0,
@@ -5349,7 +5521,7 @@ Noise_session_t
         (uint8_t)71U, (uint8_t)67U, (uint8_t)77U, (uint8_t)95U, (uint8_t)66U, (uint8_t)76U,
         (uint8_t)65U, (uint8_t)75U, (uint8_t)69U, (uint8_t)50U, (uint8_t)115U
       };
-    if (st.tag == Noise_IMS_Handshake)
+    if (st.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_epub = st.val.case_IMS_Handshake.epub;
       uint8_t *st_epriv = st.val.case_IMS_Handshake.epriv;
@@ -5358,9 +5530,9 @@ Noise_session_t
       if ((uint32_t)29U <= (uint32_t)32U)
         memcpy(st_h, pname, (uint32_t)29U * sizeof (uint8_t));
       else
-        Noise_hash(st_h, (uint32_t)29U, pname);
+        Noise_NX_hash(st_h, (uint32_t)29U, pname);
       memcpy(st_ck, st_h, (uint32_t)32U * sizeof (uint8_t));
-      Noise_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
+      Noise_NX_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
       memcpy(st_epriv, epriv, (uint32_t)32U * sizeof (uint8_t));
       memcpy(st_epub, epub, (uint32_t)32U * sizeof (uint8_t));
     }
@@ -5372,14 +5544,14 @@ Noise_session_t
         "unreachable (pattern matches are exhaustive in F*)");
       KRML_HOST_EXIT(255U);
     }
-    Noise_resp_state_t st0 = st;
+    Noise_NX_resp_state_t st0 = st;
     result_session_t
     res0 =
       {
         .tag = Res,
         .val = {
           .case_Res = {
-            .tag = Noise_DS_Initiator,
+            .tag = Noise_NX_DS_Initiator,
             .val = {
               .case_DS_Initiator = {
                 .state = st0, .id = dv.dv_states_counter, .info = st_info, .pid = (uint32_t)0U,
@@ -5395,9 +5567,9 @@ Noise_session_t
     return NULL;
   else if (res.tag == Res)
   {
-    Noise_session_t st = res.val.case_Res;
-    KRML_CHECK_SIZE(sizeof (Noise_session_t), (uint32_t)1U);
-    Noise_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_session_t));
+    Noise_NX_session_t st = res.val.case_Res;
+    KRML_CHECK_SIZE(sizeof (Noise_NX_session_t), (uint32_t)1U);
+    Noise_NX_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_session_t));
     ptr[0U] = st;
     return ptr;
   }
@@ -5414,17 +5586,18 @@ Noise_session_t
 /*
   DO NOT use this: for tests and benchmarks only
 */
-Noise_session_t
-*Noise__session_create_responder_with_ephemeral(
-  Noise_device_t *dvp,
+Noise_NX_session_t
+*Noise_NX__session_create_responder_with_ephemeral(
+  Noise_NX_device_t *dvp,
   uint8_t *epriv,
   uint8_t *epub
 )
 {
-  Noise_device_t dv = dvp[0U];
+  Noise_NX_device_t dv = dvp[0U];
   result_session_t res;
   if (dv.dv_states_counter == (uint32_t)4294967295U)
-    res = ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_CIncorrect_transition } });
+    res =
+      ((result_session_t){ .tag = Fail, .val = { .case_Fail = Noise_NX_CIncorrect_transition } });
   else
   {
     uint8_t *o0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
@@ -5482,23 +5655,22 @@ Noise_session_t
     KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
     uint8_t **out_ptr0 = KRML_HOST_MALLOC(sizeof (uint8_t *));
     out_ptr0[0U] = out_str;
-    Noise_noise_string *st_info = out_ptr0;
+    Noise_NX_noise_string *st_info = out_ptr0;
     KRML_CHECK_SIZE(sizeof (uint8_t *), (uint32_t)1U);
     uint8_t **out_ptr = KRML_HOST_MALLOC(sizeof (uint8_t *));
     out_ptr[0U] = NULL;
-    Noise_noise_string *st_pinfo = out_ptr;
-    Noise_device_t uu____0 = dv;
+    Noise_NX_noise_string *st_pinfo = out_ptr;
     dvp[0U] =
       (
-        (Noise_device_t){
-          .dv_info = uu____0.dv_info,
-          .dv_sk = uu____0.dv_sk,
-          .dv_spriv = uu____0.dv_spriv,
-          .dv_spub = uu____0.dv_spub,
-          .dv_prologue = uu____0.dv_prologue,
+        (Noise_NX_device_t){
+          .dv_info = dv.dv_info,
+          .dv_sk = dv.dv_sk,
+          .dv_spriv = dv.dv_spriv,
+          .dv_spub = dv.dv_spub,
+          .dv_prologue = dv.dv_prologue,
           .dv_states_counter = dv.dv_states_counter + (uint32_t)1U,
-          .dv_peers = uu____0.dv_peers,
-          .dv_peers_counter = uu____0.dv_peers_counter
+          .dv_peers = dv.dv_peers,
+          .dv_peers_counter = dv.dv_peers_counter
         }
       );
     uint8_t *st_k = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
@@ -5509,10 +5681,10 @@ Noise_session_t
     uint8_t *st_epriv0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
     uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
     uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-    Noise_init_state_t
+    Noise_NX_init_state_t
     st =
       {
-        .tag = Noise_IMS_Handshake,
+        .tag = Noise_NX_IMS_Handshake,
         .val = {
           .case_IMS_Handshake = {
             .step = (uint32_t)0U, .cipher_key = st_k, .chaining_key = st_ck0, .h = st_h0,
@@ -5529,7 +5701,7 @@ Noise_session_t
         (uint8_t)71U, (uint8_t)67U, (uint8_t)77U, (uint8_t)95U, (uint8_t)66U, (uint8_t)76U,
         (uint8_t)65U, (uint8_t)75U, (uint8_t)69U, (uint8_t)50U, (uint8_t)115U
       };
-    if (st.tag == Noise_IMS_Handshake)
+    if (st.tag == Noise_NX_IMS_Handshake)
     {
       uint8_t *st_epub = st.val.case_IMS_Handshake.epub;
       uint8_t *st_epriv = st.val.case_IMS_Handshake.epriv;
@@ -5538,9 +5710,9 @@ Noise_session_t
       if ((uint32_t)29U <= (uint32_t)32U)
         memcpy(st_h, pname, (uint32_t)29U * sizeof (uint8_t));
       else
-        Noise_hash(st_h, (uint32_t)29U, pname);
+        Noise_NX_hash(st_h, (uint32_t)29U, pname);
       memcpy(st_ck, st_h, (uint32_t)32U * sizeof (uint8_t));
-      Noise_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
+      Noise_NX_mix_hash(st_h, dv.dv_prologue.size, dv.dv_prologue.buffer);
       memcpy(st_epriv, epriv, (uint32_t)32U * sizeof (uint8_t));
       memcpy(st_epub, epub, (uint32_t)32U * sizeof (uint8_t));
     }
@@ -5552,14 +5724,14 @@ Noise_session_t
         "unreachable (pattern matches are exhaustive in F*)");
       KRML_HOST_EXIT(255U);
     }
-    Noise_init_state_t st0 = st;
+    Noise_NX_init_state_t st0 = st;
     result_session_t
     res0 =
       {
         .tag = Res,
         .val = {
           .case_Res = {
-            .tag = Noise_DS_Responder,
+            .tag = Noise_NX_DS_Responder,
             .val = {
               .case_DS_Responder = {
                 .state = st0, .id = dv.dv_states_counter, .info = st_info, .spriv = st_spriv,
@@ -5575,9 +5747,9 @@ Noise_session_t
     return NULL;
   else if (res.tag == Res)
   {
-    Noise_session_t st = res.val.case_Res;
-    KRML_CHECK_SIZE(sizeof (Noise_session_t), (uint32_t)1U);
-    Noise_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_session_t));
+    Noise_NX_session_t st = res.val.case_Res;
+    KRML_CHECK_SIZE(sizeof (Noise_NX_session_t), (uint32_t)1U);
+    Noise_NX_session_t *ptr = KRML_HOST_MALLOC(sizeof (Noise_NX_session_t));
     ptr[0U] = st;
     return ptr;
   }

@@ -1,5 +1,5 @@
 USER_TARGET=libnoiseapi.a
 USER_CFLAGS=
 USER_C_FILES=
-ALL_C_FILES=Noise.c K1K1.c
-ALL_H_FILES=Hacl.h Noise.h K1K1.h
+ALL_C_FILES=Noise_K1K1.c K1K1.c
+ALL_H_FILES=Hacl.h Noise_K1K1.h K1K1.h
