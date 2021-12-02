@@ -1,5 +1,5 @@
 USER_TARGET=libnoiseapi.a
 USER_CFLAGS=
 USER_C_FILES=
-ALL_C_FILES=Noise.c XNpsk3.c
-ALL_H_FILES=EverCrypt.h Hacl.h Noise.h XNpsk3.h
+ALL_C_FILES=Noise_XNpsk3.c XNpsk3.c
+ALL_H_FILES=EverCrypt.h Hacl.h Noise_XNpsk3.h XNpsk3.h
