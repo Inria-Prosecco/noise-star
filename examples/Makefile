@@ -13,7 +13,7 @@ LIBS = $(NOISE_STAR_LIBS) $(HACL_LIBS)
 
 ## Targets
 .PHONY: all
-all: ikpsk2-ex.test kk-ex.test
+all: ikpsk2-ex.test kk-ex.test nk-ex.test
 
 .PHONY: %.test
 %.test: %.exe
