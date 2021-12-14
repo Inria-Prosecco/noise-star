@@ -67,9 +67,9 @@ Hacl_Chacha20Poly1305_32_aead_decrypt(
   uint8_t *mac
 );
 
-extern void Hacl_Curve25519_64_secret_to_public(uint8_t *pub, uint8_t *priv);
+extern void Hacl_Curve25519_51_secret_to_public(uint8_t *pub, uint8_t *priv);
 
-extern bool Hacl_Curve25519_64_ecdh(uint8_t *out, uint8_t *priv, uint8_t *pub);
+extern bool Hacl_Curve25519_51_ecdh(uint8_t *out, uint8_t *priv, uint8_t *pub);
 
 extern void Lib_RandomBuffer_System_crypto_random(uint8_t *buf, uint32_t len);
 

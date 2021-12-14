@@ -155,13 +155,6 @@ This instanciation uses the following features:
 
 typedef Noise_NK_status Noise_NK_status0;
 
-#define Noise_NK_IMS_Handshake 0
-#define Noise_NK_IMS_Transport 1
-
-typedef uint8_t Noise_NK_resp_state_t_tags;
-
-typedef struct Noise_NK_resp_state_t_s Noise_NK_resp_state_t;
-
 typedef struct Noise_NK_peer_t_s Noise_NK_peer_t;
 
 typedef struct Noise_NK_cell_s Noise_NK_cell;
@@ -174,19 +167,6 @@ typedef struct Noise_NK_cell_s
 Noise_NK_cell;
 
 typedef struct Noise_NK_device_t_s Noise_NK_device_t;
-
-typedef struct Noise_NK_init_state_t_s Noise_NK_init_state_t;
-
-#define Noise_NK_DS_Initiator 0
-#define Noise_NK_DS_Responder 1
-
-typedef uint8_t Noise_NK_session_t_tags;
-
-typedef struct Noise_NK_session_t_s Noise_NK_session_t;
-
-typedef Noise_NK_session_t Noise_NK_session_t0;
-
-typedef Noise_NK_session_t *Noise_NK_session_p;
 
 typedef Noise_NK_device_t Noise_NK_device_t0;
 
@@ -378,6 +358,22 @@ void Noise_NK_peer_get_info(Noise_NK_noise_string *out, Noise_NK_peer_t *pp);
   Copy the peer static public key to the user provided buffer.
 */
 void Noise_NK_peer_get_static(uint8_t *out, Noise_NK_peer_t *pp);
+
+#define Noise_NK_IMS_Handshake 0
+#define Noise_NK_IMS_Transport 1
+
+typedef uint8_t Noise_NK_init_state_t_tags;
+
+typedef struct Noise_NK_init_state_t_s Noise_NK_init_state_t;
+
+typedef struct Noise_NK_resp_state_t_s Noise_NK_resp_state_t;
+
+#define Noise_NK_DS_Initiator 0
+#define Noise_NK_DS_Responder 1
+
+typedef uint8_t Noise_NK_session_t_tags;
+
+typedef struct Noise_NK_session_t_s Noise_NK_session_t;
 
 /*
   Create an initiator session.

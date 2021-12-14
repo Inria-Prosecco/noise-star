@@ -28,13 +28,13 @@ uint64_t Noise_NK_bytes_to_nonce(uint8_t *n8)
 
 Noise_NK_error_code Noise_NK_dh_secret_to_public(uint8_t *dest, uint8_t *priv)
 {
-  Hacl_Curve25519_64_secret_to_public(dest, priv);
+  Hacl_Curve25519_51_secret_to_public(dest, priv);
   return Noise_NK_CSuccess;
 }
 
 Noise_NK_error_code Noise_NK_dh(uint8_t *dest, uint8_t *priv, uint8_t *pub)
 {
-  bool b = Hacl_Curve25519_64_ecdh(dest, priv, pub);
+  bool b = Hacl_Curve25519_51_ecdh(dest, priv, pub);
   if (b)
     return Noise_NK_CSuccess;
   else

@@ -279,38 +279,6 @@ bool Noise_KK_rcode_is_stuck(Noise_KK_rcode c)
     return false;
 }
 
-typedef struct Noise_KK_resp_state_t_s
-{
-  Noise_KK_resp_state_t_tags tag;
-  union {
-    struct 
-    {
-      uint32_t step;
-      uint8_t *cipher_key;
-      uint8_t *chaining_key;
-      uint8_t *h;
-      uint8_t *spriv;
-      uint8_t *spub;
-      uint8_t *epriv;
-      uint8_t *epub;
-      uint8_t *rs;
-      uint8_t *re;
-    }
-    case_IMS_Handshake;
-    struct 
-    {
-      uint8_t *h;
-      uint8_t *send_key;
-      uint64_t send_nonce;
-      uint8_t *receive_key;
-      uint64_t receive_nonce;
-    }
-    case_IMS_Transport;
-  }
-  val;
-}
-Noise_KK_resp_state_t;
-
 typedef struct Noise_KK_peer_t_s
 {
   uint32_t p_id;
@@ -321,7 +289,7 @@ Noise_KK_peer_t;
 
 typedef Noise_KK_peer_t *peer_p;
 
-typedef Noise_KK_cell **t___Impl_Noise_API_Instances_X1N_25519_AESGCM_BLAKE2b_peer_p;
+typedef Noise_KK_cell **t___Impl_Noise_API_Instances_KK_25519_ChaChaPoly_SHA256_peer_p;
 
 typedef struct Noise_KK_device_t_s
 {
@@ -337,74 +305,6 @@ typedef struct Noise_KK_device_t_s
 Noise_KK_device_t;
 
 typedef Noise_KK_device_t *device_p;
-
-typedef struct Noise_KK_init_state_t_s
-{
-  Noise_KK_resp_state_t_tags tag;
-  union {
-    struct 
-    {
-      uint32_t step;
-      uint8_t *cipher_key;
-      uint8_t *chaining_key;
-      uint8_t *h;
-      uint8_t *spriv;
-      uint8_t *spub;
-      uint8_t *epriv;
-      uint8_t *epub;
-      uint8_t *rs;
-      uint8_t *re;
-    }
-    case_IMS_Handshake;
-    struct 
-    {
-      uint8_t *h;
-      bool recv_transport_message;
-      uint8_t *send_key;
-      uint64_t send_nonce;
-      uint8_t *receive_key;
-      uint64_t receive_nonce;
-    }
-    case_IMS_Transport;
-  }
-  val;
-}
-Noise_KK_init_state_t;
-
-typedef struct Noise_KK_session_t_s
-{
-  Noise_KK_session_t_tags tag;
-  union {
-    struct 
-    {
-      Noise_KK_resp_state_t state;
-      uint32_t id;
-      Noise_KK_noise_string *info;
-      uint8_t *spriv;
-      uint8_t *spub;
-      uint32_t pid;
-      Noise_KK_noise_string *pinfo;
-      Noise_KK_device_t *dv;
-    }
-    case_DS_Initiator;
-    struct 
-    {
-      Noise_KK_init_state_t state;
-      uint32_t id;
-      Noise_KK_noise_string *info;
-      uint8_t *spriv;
-      uint8_t *spub;
-      uint32_t pid;
-      Noise_KK_noise_string *pinfo;
-      Noise_KK_device_t *dv;
-    }
-    case_DS_Responder;
-  }
-  val;
-}
-Noise_KK_session_t;
-
-typedef Noise_KK_session_t *session_p;
 
 /*
   Create a device.
@@ -1603,6 +1503,106 @@ void Noise_KK_peer_get_static(uint8_t *out, Noise_KK_peer_t *pp)
   memcpy(out, p.p_s, (uint32_t)32U * sizeof (uint8_t));
 }
 
+typedef struct Noise_KK_init_state_t_s
+{
+  Noise_KK_init_state_t_tags tag;
+  union {
+    struct 
+    {
+      uint32_t step;
+      uint8_t *cipher_key;
+      uint8_t *chaining_key;
+      uint8_t *h;
+      uint8_t *spriv;
+      uint8_t *spub;
+      uint8_t *epriv;
+      uint8_t *epub;
+      uint8_t *rs;
+      uint8_t *re;
+    }
+    case_IMS_Handshake;
+    struct 
+    {
+      uint8_t *h;
+      uint8_t *send_key;
+      uint64_t send_nonce;
+      uint8_t *receive_key;
+      uint64_t receive_nonce;
+    }
+    case_IMS_Transport;
+  }
+  val;
+}
+Noise_KK_init_state_t;
+
+typedef struct Noise_KK_resp_state_t_s
+{
+  Noise_KK_init_state_t_tags tag;
+  union {
+    struct 
+    {
+      uint32_t step;
+      uint8_t *cipher_key;
+      uint8_t *chaining_key;
+      uint8_t *h;
+      uint8_t *spriv;
+      uint8_t *spub;
+      uint8_t *epriv;
+      uint8_t *epub;
+      uint8_t *rs;
+      uint8_t *re;
+    }
+    case_IMS_Handshake;
+    struct 
+    {
+      uint8_t *h;
+      bool recv_transport_message;
+      uint8_t *send_key;
+      uint64_t send_nonce;
+      uint8_t *receive_key;
+      uint64_t receive_nonce;
+    }
+    case_IMS_Transport;
+  }
+  val;
+}
+Noise_KK_resp_state_t;
+
+typedef struct Noise_KK_session_t_s
+{
+  Noise_KK_session_t_tags tag;
+  union {
+    struct 
+    {
+      Noise_KK_init_state_t state;
+      uint32_t id;
+      Noise_KK_noise_string *info;
+      uint8_t *spriv;
+      uint8_t *spub;
+      uint32_t pid;
+      Noise_KK_noise_string *pinfo;
+      Noise_KK_device_t *dv;
+    }
+    case_DS_Initiator;
+    struct 
+    {
+      Noise_KK_resp_state_t state;
+      uint32_t id;
+      Noise_KK_noise_string *info;
+      uint8_t *spriv;
+      uint8_t *spub;
+      uint32_t pid;
+      Noise_KK_noise_string *pinfo;
+      Noise_KK_device_t *dv;
+    }
+    case_DS_Responder;
+  }
+  val;
+}
+Noise_KK_session_t;
+
+typedef Noise_KK_session_t *session_p;
+
 typedef struct _________________s {  } ________________;
 
 #define Res 0
@@ -1838,7 +1838,7 @@ Noise_KK_session_t *Noise_KK_session_create_initiator(Noise_KK_device_t *dvp, ui
             uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
             uint8_t *st_rs0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
             uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-            Noise_KK_resp_state_t
+            Noise_KK_init_state_t
             st =
               {
                 .tag = Noise_KK_IMS_Handshake,
@@ -1888,7 +1888,7 @@ Noise_KK_session_t *Noise_KK_session_create_initiator(Noise_KK_device_t *dvp, ui
                 "unreachable (pattern matches are exhaustive in F*)");
               KRML_HOST_EXIT(255U);
             }
-            Noise_KK_resp_state_t st0 = st;
+            Noise_KK_init_state_t st0 = st;
             result_session_t
             res1 =
               {
@@ -2150,7 +2150,7 @@ Noise_KK_session_t *Noise_KK_session_create_responder(Noise_KK_device_t *dvp, ui
             uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
             uint8_t *st_rs0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
             uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-            Noise_KK_init_state_t
+            Noise_KK_resp_state_t
             st =
               {
                 .tag = Noise_KK_IMS_Handshake,
@@ -2200,7 +2200,7 @@ Noise_KK_session_t *Noise_KK_session_create_responder(Noise_KK_device_t *dvp, ui
                 "unreachable (pattern matches are exhaustive in F*)");
               KRML_HOST_EXIT(255U);
             }
-            Noise_KK_init_state_t st0 = st;
+            Noise_KK_resp_state_t st0 = st;
             result_session_t
             res1 =
               {
@@ -2264,7 +2264,7 @@ void Noise_KK_session_free(Noise_KK_session_t *sn)
     uint8_t *spub = st.val.case_DS_Initiator.spub;
     uint8_t *spriv = st.val.case_DS_Initiator.spriv;
     Noise_KK_noise_string *info = st.val.case_DS_Initiator.info;
-    Noise_KK_resp_state_t state = st.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t state = st.val.case_DS_Initiator.state;
     if (state.tag == Noise_KK_IMS_Handshake)
     {
       uint8_t *st_re = state.val.case_IMS_Handshake.re;
@@ -2316,7 +2316,7 @@ void Noise_KK_session_free(Noise_KK_session_t *sn)
     uint8_t *spub = st.val.case_DS_Responder.spub;
     uint8_t *spriv = st.val.case_DS_Responder.spriv;
     Noise_KK_noise_string *info = st.val.case_DS_Responder.info;
-    Noise_KK_init_state_t state = st.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t state = st.val.case_DS_Responder.state;
     if (state.tag == Noise_KK_IMS_Handshake)
     {
       uint8_t *st_re = state.val.case_IMS_Handshake.re;
@@ -2373,25 +2373,9 @@ void Noise_KK_session_free(Noise_KK_session_t *sn)
   KRML_HOST_FREE(sn);
 }
 
-#define Res0 0
-#define Fail0 1
-
-typedef uint8_t result_resp_state_t_tags;
-
-typedef struct result_resp_state_t_s
-{
-  result_resp_state_t_tags tag;
-  union {
-    Noise_KK_resp_state_t case_Res;
-    Noise_KK_error_code case_Fail;
-  }
-  val;
-}
-result_resp_state_t;
-
 typedef struct result_init_state_t_s
 {
-  result_resp_state_t_tags tag;
+  result_session_t_tags tag;
   union {
     Noise_KK_init_state_t case_Res;
     Noise_KK_error_code case_Fail;
@@ -2399,6 +2383,17 @@ typedef struct result_init_state_t_s
   val;
 }
 result_init_state_t;
+
+typedef struct result_resp_state_t_s
+{
+  result_session_t_tags tag;
+  union {
+    Noise_KK_resp_state_t case_Res;
+    Noise_KK_error_code case_Fail;
+  }
+  val;
+}
+result_resp_state_t;
 
 static Noise_KK_error_code
 state_handshake_write(
@@ -2422,7 +2417,7 @@ state_handshake_write(
     uint8_t *dst_spriv = dst.val.case_DS_Initiator.spriv;
     Noise_KK_noise_string *dst_info = dst.val.case_DS_Initiator.info;
     uint32_t dst_id = dst.val.case_DS_Initiator.id;
-    Noise_KK_resp_state_t dst_st = dst.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t dst_st = dst.val.case_DS_Initiator.state;
     if (dst_st.tag == Noise_KK_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
@@ -2453,10 +2448,9 @@ state_handshake_write(
           );
       else
       {
-        result_resp_state_t res;
+        result_init_state_t res;
         if (!(payload_len <= (uint32_t)4294967247U && outlen == (uint32_t)48U + payload_len))
-          res =
-            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_KK_CInput_size } });
+          res = ((result_init_state_t){ .tag = Fail, .val = { .case_Fail = Noise_KK_CInput_size } });
         else
         {
           uint32_t pat_outlen = (uint32_t)32U;
@@ -2493,8 +2487,8 @@ state_handshake_write(
           if (res0 == Noise_KK_CSuccess)
             res =
               (
-                (result_resp_state_t){
-                  .tag = Res0,
+                (result_init_state_t){
+                  .tag = Res,
                   .val = {
                     .case_Res = {
                       .tag = Noise_KK_IMS_Handshake,
@@ -2516,8 +2510,8 @@ state_handshake_write(
                 {
                   res =
                     (
-                      (result_resp_state_t){
-                        .tag = Fail0,
+                      (result_init_state_t){
+                        .tag = Fail,
                         .val = { .case_Fail = Noise_KK_CDH_error }
                       }
                     );
@@ -2530,20 +2524,20 @@ state_handshake_write(
                 }
             }
         }
-        result_resp_state_t res1 = res;
-        result_resp_state_t res2 = res1;
-        if (res2.tag == Fail0)
+        result_init_state_t res1 = res;
+        result_init_state_t res2 = res1;
+        if (res2.tag == Fail)
         {
           Noise_KK_error_code e = res2.val.case_Fail;
           res0 = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
-        else if (res2.tag == Res0)
+        else if (res2.tag == Res)
         {
-          Noise_KK_resp_state_t st1 = res2.val.case_Res;
+          Noise_KK_init_state_t st1 = res2.val.case_Res;
           Noise_KK_session_t ite;
           if (st_step == (uint32_t)1U)
           {
-            Noise_KK_resp_state_t st11;
+            Noise_KK_init_state_t st11;
             if (st1.tag == Noise_KK_IMS_Handshake)
             {
               uint8_t *st_re1 = st1.val.case_IMS_Handshake.re;
@@ -2564,7 +2558,7 @@ state_handshake_write(
               KRML_HOST_FREE(st_re1);
               st11 =
                 (
-                  (Noise_KK_resp_state_t){
+                  (Noise_KK_init_state_t){
                     .tag = Noise_KK_IMS_Transport,
                     .val = {
                       .case_IMS_Transport = {
@@ -2577,7 +2571,7 @@ state_handshake_write(
             }
             else
               st11 =
-                KRML_EABORT(Noise_KK_resp_state_t,
+                KRML_EABORT(Noise_KK_init_state_t,
                   "unreachable (pattern matches are exhaustive in F*)");
             ite =
               (
@@ -2626,7 +2620,7 @@ state_handshake_write(
     uint8_t *dst_spriv = dst.val.case_DS_Responder.spriv;
     Noise_KK_noise_string *dst_info = dst.val.case_DS_Responder.info;
     uint32_t dst_id = dst.val.case_DS_Responder.id;
-    Noise_KK_init_state_t dst_st = dst.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t dst_st = dst.val.case_DS_Responder.state;
     if (dst_st.tag == Noise_KK_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
@@ -2657,10 +2651,9 @@ state_handshake_write(
           );
       else
       {
-        result_init_state_t res;
+        result_resp_state_t res;
         if (!(payload_len <= (uint32_t)4294967247U && outlen == (uint32_t)48U + payload_len))
-          res =
-            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_KK_CInput_size } });
+          res = ((result_resp_state_t){ .tag = Fail, .val = { .case_Fail = Noise_KK_CInput_size } });
         else
         {
           uint32_t pat_outlen = (uint32_t)32U;
@@ -2697,8 +2690,8 @@ state_handshake_write(
           if (res0 == Noise_KK_CSuccess)
             res =
               (
-                (result_init_state_t){
-                  .tag = Res0,
+                (result_resp_state_t){
+                  .tag = Res,
                   .val = {
                     .case_Res = {
                       .tag = Noise_KK_IMS_Handshake,
@@ -2720,8 +2713,8 @@ state_handshake_write(
                 {
                   res =
                     (
-                      (result_init_state_t){
-                        .tag = Fail0,
+                      (result_resp_state_t){
+                        .tag = Fail,
                         .val = { .case_Fail = Noise_KK_CDH_error }
                       }
                     );
@@ -2734,20 +2727,20 @@ state_handshake_write(
                 }
             }
         }
-        result_init_state_t res1 = res;
-        result_init_state_t res2 = res1;
-        if (res2.tag == Fail0)
+        result_resp_state_t res1 = res;
+        result_resp_state_t res2 = res1;
+        if (res2.tag == Fail)
         {
           Noise_KK_error_code e = res2.val.case_Fail;
           res0 = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
-        else if (res2.tag == Res0)
+        else if (res2.tag == Res)
         {
-          Noise_KK_init_state_t st1 = res2.val.case_Res;
+          Noise_KK_resp_state_t st1 = res2.val.case_Res;
           Noise_KK_session_t ite;
           if (st_step == (uint32_t)1U)
           {
-            Noise_KK_init_state_t st11;
+            Noise_KK_resp_state_t st11;
             if (st1.tag == Noise_KK_IMS_Handshake)
             {
               uint8_t *st_re1 = st1.val.case_IMS_Handshake.re;
@@ -2768,7 +2761,7 @@ state_handshake_write(
               KRML_HOST_FREE(st_re1);
               st11 =
                 (
-                  (Noise_KK_init_state_t){
+                  (Noise_KK_resp_state_t){
                     .tag = Noise_KK_IMS_Transport,
                     .val = {
                       .case_IMS_Transport = {
@@ -2781,7 +2774,7 @@ state_handshake_write(
             }
             else
               st11 =
-                KRML_EABORT(Noise_KK_init_state_t,
+                KRML_EABORT(Noise_KK_resp_state_t,
                   "unreachable (pattern matches are exhaustive in F*)");
             ite =
               (
@@ -2836,79 +2829,7 @@ state_handshake_write(
       uint8_t *spriv = dst1.val.case_DS_Initiator.spriv;
       Noise_KK_noise_string *info = dst1.val.case_DS_Initiator.info;
       uint32_t id = dst1.val.case_DS_Initiator.id;
-      Noise_KK_resp_state_t st = dst1.val.case_DS_Initiator.state;
-      Noise_KK_resp_state_t ite;
-      if (st.tag == Noise_KK_IMS_Handshake)
-      {
-        uint8_t *re = st.val.case_IMS_Handshake.re;
-        uint8_t *rs = st.val.case_IMS_Handshake.rs;
-        uint8_t *epub = st.val.case_IMS_Handshake.epub;
-        uint8_t *epriv = st.val.case_IMS_Handshake.epriv;
-        uint8_t *spub1 = st.val.case_IMS_Handshake.spub;
-        uint8_t *spriv1 = st.val.case_IMS_Handshake.spriv;
-        uint8_t *h3 = st.val.case_IMS_Handshake.h;
-        uint8_t *ck = st.val.case_IMS_Handshake.chaining_key;
-        uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
-        ite =
-          (
-            (Noise_KK_resp_state_t){
-              .tag = Noise_KK_IMS_Handshake,
-              .val = {
-                .case_IMS_Handshake = {
-                  .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h3,
-                  .spriv = spriv1, .spub = spub1, .epriv = epriv, .epub = epub, .rs = rs, .re = re
-                }
-              }
-            }
-          );
-      }
-      else if (st.tag == Noise_KK_IMS_Transport)
-      {
-        uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
-        uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
-        uint64_t send_nonce = st.val.case_IMS_Transport.send_nonce;
-        uint8_t *send_key = st.val.case_IMS_Transport.send_key;
-        uint8_t *h3 = st.val.case_IMS_Transport.h;
-        ite =
-          (
-            (Noise_KK_resp_state_t){
-              .tag = Noise_KK_IMS_Transport,
-              .val = {
-                .case_IMS_Transport = {
-                  .h = h3, .send_key = send_key, .send_nonce = send_nonce,
-                  .receive_key = receive_key, .receive_nonce = receive_nonce
-                }
-              }
-            }
-          );
-      }
-      else
-        ite =
-          KRML_EABORT(Noise_KK_resp_state_t,
-            "unreachable (pattern matches are exhaustive in F*)");
-      dst_p1[0U] =
-        (
-          (Noise_KK_session_t){
-            .tag = Noise_KK_DS_Initiator,
-            .val = {
-              .case_DS_Initiator = {
-                .state = ite, .id = id, .info = info, .spriv = spriv, .spub = spub, .pid = pid,
-                .pinfo = pinfo, .dv = dv
-              }
-            }
-          }
-        );
-    }
-    else if (dst1.tag == Noise_KK_DS_Responder)
-    {
-      Noise_KK_device_t *dv = dst1.val.case_DS_Responder.dv;
-      Noise_KK_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
-      uint32_t pid = dst1.val.case_DS_Responder.pid;
-      uint8_t *spub = dst1.val.case_DS_Responder.spub;
-      uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
-      Noise_KK_noise_string *info = dst1.val.case_DS_Responder.info;
-      uint32_t id = dst1.val.case_DS_Responder.id;
-      Noise_KK_init_state_t st = dst1.val.case_DS_Responder.state;
+      Noise_KK_init_state_t st = dst1.val.case_DS_Initiator.state;
       Noise_KK_init_state_t ite;
       if (st.tag == Noise_KK_IMS_Handshake)
       {
@@ -2940,11 +2861,83 @@ state_handshake_write(
         uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
         uint64_t send_nonce = st.val.case_IMS_Transport.send_nonce;
         uint8_t *send_key = st.val.case_IMS_Transport.send_key;
-        bool recv_tpt_msg = st.val.case_IMS_Transport.recv_transport_message;
         uint8_t *h3 = st.val.case_IMS_Transport.h;
         ite =
           (
             (Noise_KK_init_state_t){
+              .tag = Noise_KK_IMS_Transport,
+              .val = {
+                .case_IMS_Transport = {
+                  .h = h3, .send_key = send_key, .send_nonce = send_nonce,
+                  .receive_key = receive_key, .receive_nonce = receive_nonce
+                }
+              }
+            }
+          );
+      }
+      else
+        ite =
+          KRML_EABORT(Noise_KK_init_state_t,
+            "unreachable (pattern matches are exhaustive in F*)");
+      dst_p1[0U] =
+        (
+          (Noise_KK_session_t){
+            .tag = Noise_KK_DS_Initiator,
+            .val = {
+              .case_DS_Initiator = {
+                .state = ite, .id = id, .info = info, .spriv = spriv, .spub = spub, .pid = pid,
+                .pinfo = pinfo, .dv = dv
+              }
+            }
+          }
+        );
+    }
+    else if (dst1.tag == Noise_KK_DS_Responder)
+    {
+      Noise_KK_device_t *dv = dst1.val.case_DS_Responder.dv;
+      Noise_KK_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
+      uint32_t pid = dst1.val.case_DS_Responder.pid;
+      uint8_t *spub = dst1.val.case_DS_Responder.spub;
+      uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
+      Noise_KK_noise_string *info = dst1.val.case_DS_Responder.info;
+      uint32_t id = dst1.val.case_DS_Responder.id;
+      Noise_KK_resp_state_t st = dst1.val.case_DS_Responder.state;
+      Noise_KK_resp_state_t ite;
+      if (st.tag == Noise_KK_IMS_Handshake)
+      {
+        uint8_t *re = st.val.case_IMS_Handshake.re;
+        uint8_t *rs = st.val.case_IMS_Handshake.rs;
+        uint8_t *epub = st.val.case_IMS_Handshake.epub;
+        uint8_t *epriv = st.val.case_IMS_Handshake.epriv;
+        uint8_t *spub1 = st.val.case_IMS_Handshake.spub;
+        uint8_t *spriv1 = st.val.case_IMS_Handshake.spriv;
+        uint8_t *h3 = st.val.case_IMS_Handshake.h;
+        uint8_t *ck = st.val.case_IMS_Handshake.chaining_key;
+        uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
+        ite =
+          (
+            (Noise_KK_resp_state_t){
+              .tag = Noise_KK_IMS_Handshake,
+              .val = {
+                .case_IMS_Handshake = {
+                  .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h3,
+                  .spriv = spriv1, .spub = spub1, .epriv = epriv, .epub = epub, .rs = rs, .re = re
+                }
+              }
+            }
+          );
+      }
+      else if (st.tag == Noise_KK_IMS_Transport)
+      {
+        uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
+        uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
+        uint64_t send_nonce = st.val.case_IMS_Transport.send_nonce;
+        uint8_t *send_key = st.val.case_IMS_Transport.send_key;
+        bool recv_tpt_msg = st.val.case_IMS_Transport.recv_transport_message;
+        uint8_t *h3 = st.val.case_IMS_Transport.h;
+        ite =
+          (
+            (Noise_KK_resp_state_t){
               .tag = Noise_KK_IMS_Transport,
               .val = {
                 .case_IMS_Transport = {
@@ -2958,7 +2951,7 @@ state_handshake_write(
       }
       else
         ite =
-          KRML_EABORT(Noise_KK_init_state_t,
+          KRML_EABORT(Noise_KK_resp_state_t,
             "unreachable (pattern matches are exhaustive in F*)");
       dst_p1[0U] =
         (
@@ -3028,7 +3021,7 @@ state_handshake_read(
     uint8_t *dst_spriv = dst.val.case_DS_Initiator.spriv;
     Noise_KK_noise_string *dst_info = dst.val.case_DS_Initiator.info;
     uint32_t dst_id = dst.val.case_DS_Initiator.id;
-    Noise_KK_resp_state_t dst_st = dst.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t dst_st = dst.val.case_DS_Initiator.state;
     if (dst_st.tag == Noise_KK_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
@@ -3102,15 +3095,15 @@ state_handshake_read(
             r0 = res;
         }
         Noise_KK_error_code r1 = r0;
-        result_resp_state_t r;
+        result_init_state_t r;
         switch (r1)
         {
           case Noise_KK_CSuccess:
             {
               r =
                 (
-                  (result_resp_state_t){
-                    .tag = Res0,
+                  (result_init_state_t){
+                    .tag = Res,
                     .val = {
                       .case_Res = {
                         .tag = Noise_KK_IMS_Handshake,
@@ -3129,20 +3122,20 @@ state_handshake_read(
             }
           default:
             {
-              r = ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = r1 } });
+              r = ((result_init_state_t){ .tag = Fail, .val = { .case_Fail = r1 } });
             }
         }
-        result_resp_state_t res1 = r;
-        result_resp_state_t res2 = res1;
+        result_init_state_t res1 = r;
+        result_init_state_t res2 = res1;
         result_session_t res;
-        if (res2.tag == Fail0)
+        if (res2.tag == Fail)
         {
           Noise_KK_error_code e = res2.val.case_Fail;
           res = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
-        else if (res2.tag == Res0)
+        else if (res2.tag == Res)
         {
-          Noise_KK_resp_state_t st1 = res2.val.case_Res;
+          Noise_KK_init_state_t st1 = res2.val.case_Res;
           res =
             (
               (result_session_t){
@@ -3181,10 +3174,10 @@ state_handshake_read(
             uint8_t *spriv = dst1.val.case_DS_Initiator.spriv;
             Noise_KK_noise_string *info = dst1.val.case_DS_Initiator.info;
             uint32_t id = dst1.val.case_DS_Initiator.id;
-            Noise_KK_resp_state_t st = dst1.val.case_DS_Initiator.state;
+            Noise_KK_init_state_t st = dst1.val.case_DS_Initiator.state;
             if (st_step == (uint32_t)1U)
             {
-              Noise_KK_resp_state_t st1;
+              Noise_KK_init_state_t st1;
               if (st.tag == Noise_KK_IMS_Handshake)
               {
                 uint8_t *st_re1 = st.val.case_IMS_Handshake.re;
@@ -3205,7 +3198,7 @@ state_handshake_read(
                 KRML_HOST_FREE(st_re1);
                 st1 =
                   (
-                    (Noise_KK_resp_state_t){
+                    (Noise_KK_init_state_t){
                       .tag = Noise_KK_IMS_Transport,
                       .val = {
                         .case_IMS_Transport = {
@@ -3218,7 +3211,7 @@ state_handshake_read(
               }
               else
                 st1 =
-                  KRML_EABORT(Noise_KK_resp_state_t,
+                  KRML_EABORT(Noise_KK_init_state_t,
                     "unreachable (pattern matches are exhaustive in F*)");
               dst2 =
                 (
@@ -3272,7 +3265,7 @@ state_handshake_read(
     uint8_t *dst_spriv = dst.val.case_DS_Responder.spriv;
     Noise_KK_noise_string *dst_info = dst.val.case_DS_Responder.info;
     uint32_t dst_id = dst.val.case_DS_Responder.id;
-    Noise_KK_init_state_t dst_st = dst.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t dst_st = dst.val.case_DS_Responder.state;
     if (dst_st.tag == Noise_KK_IMS_Handshake)
     {
       uint8_t *st_re = dst_st.val.case_IMS_Handshake.re;
@@ -3346,15 +3339,15 @@ state_handshake_read(
             r0 = res;
         }
         Noise_KK_error_code r1 = r0;
-        result_init_state_t r;
+        result_resp_state_t r;
         switch (r1)
         {
           case Noise_KK_CSuccess:
             {
               r =
                 (
-                  (result_init_state_t){
-                    .tag = Res0,
+                  (result_resp_state_t){
+                    .tag = Res,
                     .val = {
                       .case_Res = {
                         .tag = Noise_KK_IMS_Handshake,
@@ -3373,20 +3366,20 @@ state_handshake_read(
             }
           default:
             {
-              r = ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = r1 } });
+              r = ((result_resp_state_t){ .tag = Fail, .val = { .case_Fail = r1 } });
             }
         }
-        result_init_state_t res1 = r;
-        result_init_state_t res2 = res1;
+        result_resp_state_t res1 = r;
+        result_resp_state_t res2 = res1;
         result_session_t res;
-        if (res2.tag == Fail0)
+        if (res2.tag == Fail)
         {
           Noise_KK_error_code e = res2.val.case_Fail;
           res = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
         }
-        else if (res2.tag == Res0)
+        else if (res2.tag == Res)
         {
-          Noise_KK_init_state_t st1 = res2.val.case_Res;
+          Noise_KK_resp_state_t st1 = res2.val.case_Res;
           res =
             (
               (result_session_t){
@@ -3425,10 +3418,10 @@ state_handshake_read(
             uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
             Noise_KK_noise_string *info = dst1.val.case_DS_Responder.info;
             uint32_t id = dst1.val.case_DS_Responder.id;
-            Noise_KK_init_state_t st = dst1.val.case_DS_Responder.state;
+            Noise_KK_resp_state_t st = dst1.val.case_DS_Responder.state;
             if (st_step == (uint32_t)1U)
             {
-              Noise_KK_init_state_t st1;
+              Noise_KK_resp_state_t st1;
               if (st.tag == Noise_KK_IMS_Handshake)
               {
                 uint8_t *st_re1 = st.val.case_IMS_Handshake.re;
@@ -3449,7 +3442,7 @@ state_handshake_read(
                 KRML_HOST_FREE(st_re1);
                 st1 =
                   (
-                    (Noise_KK_init_state_t){
+                    (Noise_KK_resp_state_t){
                       .tag = Noise_KK_IMS_Transport,
                       .val = {
                         .case_IMS_Transport = {
@@ -3463,7 +3456,7 @@ state_handshake_read(
               }
               else
                 st1 =
-                  KRML_EABORT(Noise_KK_init_state_t,
+                  KRML_EABORT(Noise_KK_resp_state_t,
                     "unreachable (pattern matches are exhaustive in F*)");
               dst2 =
                 (
@@ -3524,79 +3517,7 @@ state_handshake_read(
       uint8_t *spriv = dst1.val.case_DS_Initiator.spriv;
       Noise_KK_noise_string *info = dst1.val.case_DS_Initiator.info;
       uint32_t id = dst1.val.case_DS_Initiator.id;
-      Noise_KK_resp_state_t st = dst1.val.case_DS_Initiator.state;
-      Noise_KK_resp_state_t ite;
-      if (st.tag == Noise_KK_IMS_Handshake)
-      {
-        uint8_t *re = st.val.case_IMS_Handshake.re;
-        uint8_t *rs = st.val.case_IMS_Handshake.rs;
-        uint8_t *epub = st.val.case_IMS_Handshake.epub;
-        uint8_t *epriv = st.val.case_IMS_Handshake.epriv;
-        uint8_t *spub1 = st.val.case_IMS_Handshake.spub;
-        uint8_t *spriv1 = st.val.case_IMS_Handshake.spriv;
-        uint8_t *h4 = st.val.case_IMS_Handshake.h;
-        uint8_t *ck = st.val.case_IMS_Handshake.chaining_key;
-        uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
-        ite =
-          (
-            (Noise_KK_resp_state_t){
-              .tag = Noise_KK_IMS_Handshake,
-              .val = {
-                .case_IMS_Handshake = {
-                  .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h4,
-                  .spriv = spriv1, .spub = spub1, .epriv = epriv, .epub = epub, .rs = rs, .re = re
-                }
-              }
-            }
-          );
-      }
-      else if (st.tag == Noise_KK_IMS_Transport)
-      {
-        uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
-        uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
-        uint64_t send_nonce = st.val.case_IMS_Transport.send_nonce;
-        uint8_t *send_key = st.val.case_IMS_Transport.send_key;
-        uint8_t *h4 = st.val.case_IMS_Transport.h;
-        ite =
-          (
-            (Noise_KK_resp_state_t){
-              .tag = Noise_KK_IMS_Transport,
-              .val = {
-                .case_IMS_Transport = {
-                  .h = h4, .send_key = send_key, .send_nonce = send_nonce,
-                  .receive_key = receive_key, .receive_nonce = receive_nonce
-                }
-              }
-            }
-          );
-      }
-      else
-        ite =
-          KRML_EABORT(Noise_KK_resp_state_t,
-            "unreachable (pattern matches are exhaustive in F*)");
-      dst_p[0U] =
-        (
-          (Noise_KK_session_t){
-            .tag = Noise_KK_DS_Initiator,
-            .val = {
-              .case_DS_Initiator = {
-                .state = ite, .id = id, .info = info, .spriv = spriv, .spub = spub, .pid = pid1,
-                .pinfo = pinfo, .dv = dv
-              }
-            }
-          }
-        );
-    }
-    else if (dst1.tag == Noise_KK_DS_Responder)
-    {
-      Noise_KK_device_t *dv = dst1.val.case_DS_Responder.dv;
-      Noise_KK_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
-      uint32_t pid1 = dst1.val.case_DS_Responder.pid;
-      uint8_t *spub = dst1.val.case_DS_Responder.spub;
-      uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
-      Noise_KK_noise_string *info = dst1.val.case_DS_Responder.info;
-      uint32_t id = dst1.val.case_DS_Responder.id;
-      Noise_KK_init_state_t st = dst1.val.case_DS_Responder.state;
+      Noise_KK_init_state_t st = dst1.val.case_DS_Initiator.state;
       Noise_KK_init_state_t ite;
       if (st.tag == Noise_KK_IMS_Handshake)
       {
@@ -3628,11 +3549,83 @@ state_handshake_read(
         uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
         uint64_t send_nonce = st.val.case_IMS_Transport.send_nonce;
         uint8_t *send_key = st.val.case_IMS_Transport.send_key;
-        bool recv_tpt_msg = st.val.case_IMS_Transport.recv_transport_message;
         uint8_t *h4 = st.val.case_IMS_Transport.h;
         ite =
           (
             (Noise_KK_init_state_t){
+              .tag = Noise_KK_IMS_Transport,
+              .val = {
+                .case_IMS_Transport = {
+                  .h = h4, .send_key = send_key, .send_nonce = send_nonce,
+                  .receive_key = receive_key, .receive_nonce = receive_nonce
+                }
+              }
+            }
+          );
+      }
+      else
+        ite =
+          KRML_EABORT(Noise_KK_init_state_t,
+            "unreachable (pattern matches are exhaustive in F*)");
+      dst_p[0U] =
+        (
+          (Noise_KK_session_t){
+            .tag = Noise_KK_DS_Initiator,
+            .val = {
+              .case_DS_Initiator = {
+                .state = ite, .id = id, .info = info, .spriv = spriv, .spub = spub, .pid = pid1,
+                .pinfo = pinfo, .dv = dv
+              }
+            }
+          }
+        );
+    }
+    else if (dst1.tag == Noise_KK_DS_Responder)
+    {
+      Noise_KK_device_t *dv = dst1.val.case_DS_Responder.dv;
+      Noise_KK_noise_string *pinfo = dst1.val.case_DS_Responder.pinfo;
+      uint32_t pid1 = dst1.val.case_DS_Responder.pid;
+      uint8_t *spub = dst1.val.case_DS_Responder.spub;
+      uint8_t *spriv = dst1.val.case_DS_Responder.spriv;
+      Noise_KK_noise_string *info = dst1.val.case_DS_Responder.info;
+      uint32_t id = dst1.val.case_DS_Responder.id;
+      Noise_KK_resp_state_t st = dst1.val.case_DS_Responder.state;
+      Noise_KK_resp_state_t ite;
+      if (st.tag == Noise_KK_IMS_Handshake)
+      {
+        uint8_t *re = st.val.case_IMS_Handshake.re;
+        uint8_t *rs = st.val.case_IMS_Handshake.rs;
+        uint8_t *epub = st.val.case_IMS_Handshake.epub;
+        uint8_t *epriv = st.val.case_IMS_Handshake.epriv;
+        uint8_t *spub1 = st.val.case_IMS_Handshake.spub;
+        uint8_t *spriv1 = st.val.case_IMS_Handshake.spriv;
+        uint8_t *h4 = st.val.case_IMS_Handshake.h;
+        uint8_t *ck = st.val.case_IMS_Handshake.chaining_key;
+        uint8_t *k = st.val.case_IMS_Handshake.cipher_key;
+        ite =
+          (
+            (Noise_KK_resp_state_t){
+              .tag = Noise_KK_IMS_Handshake,
+              .val = {
+                .case_IMS_Handshake = {
+                  .step = (uint32_t)3U, .cipher_key = k, .chaining_key = ck, .h = h4,
+                  .spriv = spriv1, .spub = spub1, .epriv = epriv, .epub = epub, .rs = rs, .re = re
+                }
+              }
+            }
+          );
+      }
+      else if (st.tag == Noise_KK_IMS_Transport)
+      {
+        uint64_t receive_nonce = st.val.case_IMS_Transport.receive_nonce;
+        uint8_t *receive_key = st.val.case_IMS_Transport.receive_key;
+        uint64_t send_nonce = st.val.case_IMS_Transport.send_nonce;
+        uint8_t *send_key = st.val.case_IMS_Transport.send_key;
+        bool recv_tpt_msg = st.val.case_IMS_Transport.recv_transport_message;
+        uint8_t *h4 = st.val.case_IMS_Transport.h;
+        ite =
+          (
+            (Noise_KK_resp_state_t){
               .tag = Noise_KK_IMS_Transport,
               .val = {
                 .case_IMS_Transport = {
@@ -3646,7 +3639,7 @@ state_handshake_read(
       }
       else
         ite =
-          KRML_EABORT(Noise_KK_init_state_t,
+          KRML_EABORT(Noise_KK_resp_state_t,
             "unreachable (pattern matches are exhaustive in F*)");
       dst_p[0U] =
         (
@@ -3707,7 +3700,7 @@ state_transport_write(
     uint8_t *spriv = dst.val.case_DS_Initiator.spriv;
     Noise_KK_noise_string *info = dst.val.case_DS_Initiator.info;
     uint32_t id = dst.val.case_DS_Initiator.id;
-    Noise_KK_resp_state_t state = dst.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t state = dst.val.case_DS_Initiator.state;
     bool ite;
     if (state.tag == Noise_KK_IMS_Handshake)
       ite = true;
@@ -3715,7 +3708,7 @@ state_transport_write(
       ite = false;
     if (!ite)
     {
-      result_resp_state_t scrut;
+      result_init_state_t scrut;
       if (state.tag == Noise_KK_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
@@ -3725,12 +3718,12 @@ state_transport_write(
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)4294967279U && clen == plen + (uint32_t)16U))
           scrut =
-            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_KK_CInput_size } });
+            ((result_init_state_t){ .tag = Fail, .val = { .case_Fail = Noise_KK_CInput_size } });
         else if (send_nonce >= (uint64_t)18446744073709551615U)
           scrut =
             (
-              (result_resp_state_t){
-                .tag = Fail0,
+              (result_init_state_t){
+                .tag = Fail,
                 .val = { .case_Fail = Noise_KK_CSaturated_nonce }
               }
             );
@@ -3739,8 +3732,8 @@ state_transport_write(
           Noise_KK_aead_encrypt(send_key, send_nonce, (uint32_t)0U, NULL, plen, p, c);
           scrut =
             (
-              (result_resp_state_t){
-                .tag = Res0,
+              (result_init_state_t){
+                .tag = Res,
                 .val = {
                   .case_Res = {
                     .tag = Noise_KK_IMS_Transport,
@@ -3758,16 +3751,16 @@ state_transport_write(
       }
       else
         scrut =
-          KRML_EABORT(result_resp_state_t,
+          KRML_EABORT(result_init_state_t,
             "unreachable (pattern matches are exhaustive in F*)");
-      if (scrut.tag == Fail0)
+      if (scrut.tag == Fail)
       {
         Noise_KK_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
-      else if (scrut.tag == Res0)
+      else if (scrut.tag == Res)
       {
-        Noise_KK_resp_state_t state_ = scrut.val.case_Res;
+        Noise_KK_init_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
@@ -3802,7 +3795,7 @@ state_transport_write(
     uint8_t *spriv = dst.val.case_DS_Responder.spriv;
     Noise_KK_noise_string *info = dst.val.case_DS_Responder.info;
     uint32_t id = dst.val.case_DS_Responder.id;
-    Noise_KK_init_state_t state = dst.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t state = dst.val.case_DS_Responder.state;
     bool ite;
     if (state.tag == Noise_KK_IMS_Handshake)
       ite = true;
@@ -3810,7 +3803,7 @@ state_transport_write(
       ite = false;
     if (!ite)
     {
-      result_init_state_t scrut;
+      result_resp_state_t scrut;
       if (state.tag == Noise_KK_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
@@ -3821,12 +3814,12 @@ state_transport_write(
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)4294967279U && clen == plen + (uint32_t)16U))
           scrut =
-            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_KK_CInput_size } });
+            ((result_resp_state_t){ .tag = Fail, .val = { .case_Fail = Noise_KK_CInput_size } });
         else if (send_nonce >= (uint64_t)18446744073709551615U)
           scrut =
             (
-              (result_init_state_t){
-                .tag = Fail0,
+              (result_resp_state_t){
+                .tag = Fail,
                 .val = { .case_Fail = Noise_KK_CSaturated_nonce }
               }
             );
@@ -3835,8 +3828,8 @@ state_transport_write(
           Noise_KK_aead_encrypt(send_key, send_nonce, (uint32_t)0U, NULL, plen, p, c);
           scrut =
             (
-              (result_init_state_t){
-                .tag = Res0,
+              (result_resp_state_t){
+                .tag = Res,
                 .val = {
                   .case_Res = {
                     .tag = Noise_KK_IMS_Transport,
@@ -3855,16 +3848,16 @@ state_transport_write(
       }
       else
         scrut =
-          KRML_EABORT(result_init_state_t,
+          KRML_EABORT(result_resp_state_t,
             "unreachable (pattern matches are exhaustive in F*)");
-      if (scrut.tag == Fail0)
+      if (scrut.tag == Fail)
       {
         Noise_KK_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
-      else if (scrut.tag == Res0)
+      else if (scrut.tag == Res)
       {
-        Noise_KK_init_state_t state_ = scrut.val.case_Res;
+        Noise_KK_resp_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
@@ -3930,7 +3923,7 @@ state_transport_read(
     uint8_t *spriv = dst.val.case_DS_Initiator.spriv;
     Noise_KK_noise_string *info = dst.val.case_DS_Initiator.info;
     uint32_t id = dst.val.case_DS_Initiator.id;
-    Noise_KK_resp_state_t state = dst.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t state = dst.val.case_DS_Initiator.state;
     bool ite;
     if (state.tag == Noise_KK_IMS_Handshake)
       ite = true;
@@ -3938,7 +3931,7 @@ state_transport_read(
       ite = false;
     if (!ite)
     {
-      result_resp_state_t scrut;
+      result_init_state_t scrut;
       if (state.tag == Noise_KK_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
@@ -3948,12 +3941,12 @@ state_transport_read(
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)4294967279U && clen == plen + (uint32_t)16U))
           scrut =
-            ((result_resp_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_KK_CInput_size } });
+            ((result_init_state_t){ .tag = Fail, .val = { .case_Fail = Noise_KK_CInput_size } });
         else if (receive_nonce >= (uint64_t)18446744073709551615U)
           scrut =
             (
-              (result_resp_state_t){
-                .tag = Fail0,
+              (result_init_state_t){
+                .tag = Fail,
                 .val = { .case_Fail = Noise_KK_CSaturated_nonce }
               }
             );
@@ -3964,8 +3957,8 @@ state_transport_read(
               {
                 scrut =
                   (
-                    (result_resp_state_t){
-                      .tag = Fail0,
+                    (result_init_state_t){
+                      .tag = Fail,
                       .val = { .case_Fail = Noise_KK_CDecrypt_error }
                     }
                   );
@@ -3975,8 +3968,8 @@ state_transport_read(
               {
                 scrut =
                   (
-                    (result_resp_state_t){
-                      .tag = Res0,
+                    (result_init_state_t){
+                      .tag = Res,
                       .val = {
                         .case_Res = {
                           .tag = Noise_KK_IMS_Transport,
@@ -4002,16 +3995,16 @@ state_transport_read(
       }
       else
         scrut =
-          KRML_EABORT(result_resp_state_t,
+          KRML_EABORT(result_init_state_t,
             "unreachable (pattern matches are exhaustive in F*)");
-      if (scrut.tag == Fail0)
+      if (scrut.tag == Fail)
       {
         Noise_KK_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
-      else if (scrut.tag == Res0)
+      else if (scrut.tag == Res)
       {
-        Noise_KK_resp_state_t state_ = scrut.val.case_Res;
+        Noise_KK_init_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
@@ -4046,7 +4039,7 @@ state_transport_read(
     uint8_t *spriv = dst.val.case_DS_Responder.spriv;
     Noise_KK_noise_string *info = dst.val.case_DS_Responder.info;
     uint32_t id = dst.val.case_DS_Responder.id;
-    Noise_KK_init_state_t state = dst.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t state = dst.val.case_DS_Responder.state;
     bool ite;
     if (state.tag == Noise_KK_IMS_Handshake)
       ite = true;
@@ -4054,7 +4047,7 @@ state_transport_read(
       ite = false;
     if (!ite)
     {
-      result_init_state_t scrut;
+      result_resp_state_t scrut;
       if (state.tag == Noise_KK_IMS_Transport)
       {
         uint64_t receive_nonce = state.val.case_IMS_Transport.receive_nonce;
@@ -4064,12 +4057,12 @@ state_transport_read(
         uint8_t *h = state.val.case_IMS_Transport.h;
         if (!(plen <= (uint32_t)4294967279U && clen == plen + (uint32_t)16U))
           scrut =
-            ((result_init_state_t){ .tag = Fail0, .val = { .case_Fail = Noise_KK_CInput_size } });
+            ((result_resp_state_t){ .tag = Fail, .val = { .case_Fail = Noise_KK_CInput_size } });
         else if (receive_nonce >= (uint64_t)18446744073709551615U)
           scrut =
             (
-              (result_init_state_t){
-                .tag = Fail0,
+              (result_resp_state_t){
+                .tag = Fail,
                 .val = { .case_Fail = Noise_KK_CSaturated_nonce }
               }
             );
@@ -4080,8 +4073,8 @@ state_transport_read(
               {
                 scrut =
                   (
-                    (result_init_state_t){
-                      .tag = Fail0,
+                    (result_resp_state_t){
+                      .tag = Fail,
                       .val = { .case_Fail = Noise_KK_CDecrypt_error }
                     }
                   );
@@ -4091,8 +4084,8 @@ state_transport_read(
               {
                 scrut =
                   (
-                    (result_init_state_t){
-                      .tag = Res0,
+                    (result_resp_state_t){
+                      .tag = Res,
                       .val = {
                         .case_Res = {
                           .tag = Noise_KK_IMS_Transport,
@@ -4118,16 +4111,16 @@ state_transport_read(
       }
       else
         scrut =
-          KRML_EABORT(result_init_state_t,
+          KRML_EABORT(result_resp_state_t,
             "unreachable (pattern matches are exhaustive in F*)");
-      if (scrut.tag == Fail0)
+      if (scrut.tag == Fail)
       {
         Noise_KK_error_code e = scrut.val.case_Fail;
         r = ((result_session_t){ .tag = Fail, .val = { .case_Fail = e } });
       }
-      else if (scrut.tag == Res0)
+      else if (scrut.tag == Res)
       {
-        Noise_KK_init_state_t state_ = scrut.val.case_Res;
+        Noise_KK_resp_state_t state_ = scrut.val.case_Res;
         r =
           (
             (result_session_t){
@@ -4206,7 +4199,7 @@ Noise_KK_session_write(
   Noise_KK_session_t sn = snp[0U];
   if (sn.tag == Noise_KK_DS_Initiator)
   {
-    Noise_KK_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t sn_state = sn.val.case_DS_Initiator.state;
     if (sn_state.tag == Noise_KK_IMS_Transport)
     {
       Noise_KK_encap_message_t encap_payload = payload[0U];
@@ -4413,7 +4406,7 @@ Noise_KK_session_write(
   }
   else if (sn.tag == Noise_KK_DS_Responder)
   {
-    Noise_KK_init_state_t sn_state = sn.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t sn_state = sn.val.case_DS_Responder.state;
     if (sn_state.tag == Noise_KK_IMS_Transport)
     {
       bool recv_tpt_msg = sn_state.val.case_IMS_Transport.recv_transport_message;
@@ -4653,7 +4646,7 @@ Noise_KK_session_read(
   Noise_KK_session_t sn = snp[0U];
   if (sn.tag == Noise_KK_DS_Initiator)
   {
-    Noise_KK_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t sn_state = sn.val.case_DS_Initiator.state;
     if (sn_state.tag == Noise_KK_IMS_Transport)
     {
       option__uint32_t scrut;
@@ -4821,7 +4814,7 @@ Noise_KK_session_read(
   }
   else if (sn.tag == Noise_KK_DS_Responder)
   {
-    Noise_KK_init_state_t sn_state = sn.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t sn_state = sn.val.case_DS_Responder.state;
     if (sn_state.tag == Noise_KK_IMS_Transport)
     {
       option__uint32_t scrut;
@@ -5016,7 +5009,7 @@ Noise_KK_session_compute_next_message_len(
   Noise_KK_session_t dst = sn[0U];
   if (dst.tag == Noise_KK_DS_Initiator)
   {
-    Noise_KK_resp_state_t st = dst.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t st = dst.val.case_DS_Initiator.state;
     if (st.tag == Noise_KK_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
@@ -5061,7 +5054,7 @@ Noise_KK_session_compute_next_message_len(
   }
   else if (dst.tag == Noise_KK_DS_Responder)
   {
-    Noise_KK_init_state_t st = dst.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t st = dst.val.case_DS_Responder.state;
     if (st.tag == Noise_KK_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
@@ -5122,7 +5115,7 @@ Noise_KK_status Noise_KK_session_get_status(Noise_KK_session_t *sn)
   Noise_KK_session_t dst = sn[0U];
   if (dst.tag == Noise_KK_DS_Initiator)
   {
-    Noise_KK_resp_state_t st = dst.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t st = dst.val.case_DS_Initiator.state;
     if (st.tag == Noise_KK_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
@@ -5144,7 +5137,7 @@ Noise_KK_status Noise_KK_session_get_status(Noise_KK_session_t *sn)
   }
   else if (dst.tag == Noise_KK_DS_Responder)
   {
-    Noise_KK_init_state_t st = dst.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t st = dst.val.case_DS_Responder.state;
     if (st.tag == Noise_KK_IMS_Handshake)
     {
       uint32_t step = st.val.case_IMS_Handshake.step;
@@ -5188,7 +5181,7 @@ void Noise_KK_session_get_hash(uint8_t *out, Noise_KK_session_t *sn)
   uint8_t *h;
   if (dst.tag == Noise_KK_DS_Initiator)
   {
-    Noise_KK_resp_state_t st = dst.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t st = dst.val.case_DS_Initiator.state;
     if (st.tag == Noise_KK_IMS_Handshake)
       h = st.val.case_IMS_Handshake.h;
     else if (st.tag == Noise_KK_IMS_Transport)
@@ -5198,7 +5191,7 @@ void Noise_KK_session_get_hash(uint8_t *out, Noise_KK_session_t *sn)
   }
   else if (dst.tag == Noise_KK_DS_Responder)
   {
-    Noise_KK_init_state_t st = dst.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t st = dst.val.case_DS_Responder.state;
     if (st.tag == Noise_KK_IMS_Handshake)
       h = st.val.case_IMS_Handshake.h;
     else if (st.tag == Noise_KK_IMS_Transport)
@@ -5531,7 +5524,7 @@ bool Noise_KK_session_reached_max_security(Noise_KK_session_t *snp)
   Noise_KK_session_t sn = snp[0U];
   if (sn.tag == Noise_KK_DS_Initiator)
   {
-    Noise_KK_resp_state_t sn_state = sn.val.case_DS_Initiator.state;
+    Noise_KK_init_state_t sn_state = sn.val.case_DS_Initiator.state;
     if (sn_state.tag == Noise_KK_IMS_Transport)
       return true;
     else if (sn_state.tag == Noise_KK_IMS_Handshake)
@@ -5547,7 +5540,7 @@ bool Noise_KK_session_reached_max_security(Noise_KK_session_t *snp)
   }
   else if (sn.tag == Noise_KK_DS_Responder)
   {
-    Noise_KK_init_state_t sn_state = sn.val.case_DS_Responder.state;
+    Noise_KK_resp_state_t sn_state = sn.val.case_DS_Responder.state;
     if (sn_state.tag == Noise_KK_IMS_Transport)
       return sn_state.val.case_IMS_Transport.recv_transport_message;
     else if (sn_state.tag == Noise_KK_IMS_Handshake)
@@ -5773,7 +5766,7 @@ Noise_KK_session_t
       uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
       uint8_t *st_rs0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
       uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-      Noise_KK_resp_state_t
+      Noise_KK_init_state_t
       st =
         {
           .tag = Noise_KK_IMS_Handshake,
@@ -5823,7 +5816,7 @@ Noise_KK_session_t
           "unreachable (pattern matches are exhaustive in F*)");
         KRML_HOST_EXIT(255U);
       }
-      Noise_KK_resp_state_t st0 = st;
+      Noise_KK_init_state_t st0 = st;
       result_session_t
       res =
         {
@@ -6065,7 +6058,7 @@ Noise_KK_session_t
       uint8_t *st_epub0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
       uint8_t *st_rs0 = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
       uint8_t *st_re = KRML_HOST_CALLOC((uint32_t)32U, sizeof (uint8_t));
-      Noise_KK_init_state_t
+      Noise_KK_resp_state_t
       st =
         {
           .tag = Noise_KK_IMS_Handshake,
@@ -6115,7 +6108,7 @@ Noise_KK_session_t
           "unreachable (pattern matches are exhaustive in F*)");
         KRML_HOST_EXIT(255U);
       }
-      Noise_KK_init_state_t st0 = st;
+      Noise_KK_resp_state_t st0 = st;
       result_session_t
       res =
         {
