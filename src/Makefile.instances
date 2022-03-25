@@ -1,0 +1,8 @@
+
+dist/api-IKpsk2/IKpsk2_25519_ChaChaPoly_BLAKE2s/libnoiseapi.a: dist/api-IKpsk2/IKpsk2_25519_ChaChaPoly_BLAKE2s/Makefile.basic
+	$(MAKE) -C $(dir $@) -f $(notdir $<)
+dist/api-IKpsk2/IKpsk2_25519_ChaChaPoly_BLAKE2s/Makefile.basic: PATTERN_NAME=IKpsk2
+dist/api-IKpsk2/IKpsk2_25519_ChaChaPoly_BLAKE2s/Makefile.basic: CIPHERSUITE_NAME=25519_ChaChaPoly_BLAKE2s
+
+all-api-instances: \
+    dist/api-IKpsk2/IKpsk2_25519_ChaChaPoly_BLAKE2s/libnoiseapi.a
