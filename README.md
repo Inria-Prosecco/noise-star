@@ -31,3 +31,18 @@ after HACL* and Noise\* have been properly built.
 
 The example uses IKpsk2, with Curve25519, ChaChaPoly and SHA256 (non-optimized
 implementations).
+
+Verified Implementation
+=======================
+
+The formally verified, generic implementation is in `src/`.
+
+Specific Choices of Cryptographic Implementations
+=================================================
+
+There are a lot of cipher suites, and most of the cryptographic primitives have
+several (optimized) implementations. Because there are too many of them, we only
+generate implementations for specific choices of cryptographic primitive
+implementations. If you desire a specific choice of implementations made available
+by the [Hacl\*](https://github.com/project-everest/hacl-star) library, feel free
+to contact the authors.
