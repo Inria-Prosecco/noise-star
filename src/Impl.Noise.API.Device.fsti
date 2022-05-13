@@ -57,7 +57,7 @@ val _align_fsti : unit
 
 (*** Type definitions *)
 
-(*[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+(*[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let stateful_info_buffer (a:Type0) (l: UInt32.t { UInt32.v l > 0 }) (zero: a):
   St.stateful_malloc_from_input_clone_copy unit =
   St.Stateful_malloc_from_input_clone_copy
@@ -102,7 +102,7 @@ let stateful_info_buffer (a:Type0) (l: UInt32.t { UInt32.v l > 0 }) (zero: a):
     (* Input from output *)
     (fun _ x -> x)*)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let stateful_info_unit :
   St.stateful_malloc_from_input_clone_copy unit =
   St.Stateful_malloc_from_input_clone_copy
@@ -151,7 +151,7 @@ let stateful_info_unit :
 /// is applied on unknown remote static keys, and so far, the only way to lookup a psk
 /// is to lookup a peer).
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type constrained_policy_function (nc : config) (always_false : bool) =
   f:policy_function nc{always_false ==> (forall rs. f rs = false)}
 
@@ -183,7 +183,7 @@ type stateful_policy_function (nc : iconfig) (recv_psk : bool) =
   stateful_policy_function nc recv_psk
 
 /// Two policy implementations: always true (WhatsApp flavour), always false (Wireguard flavour)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let true_stateful_policy_function (nc : iconfig) :
   stateful_policy_function nc false =
 Stateful_policy_function
@@ -193,7 +193,7 @@ Stateful_policy_function
   (fun x -> true) // apply_policy_spec
   (fun x -> ()) // apply_policy
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let false_stateful_policy_function (nc : iconfig) (recv_psk : bool) :
   stateful_policy_function nc recv_psk =
 Stateful_policy_function
@@ -268,7 +268,7 @@ type stateful_certification_state (nc : iconfig) (peer_info : stateful_peer_info
 
   stateful_certification_state nc peer_info
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type true_certification_state
   (nc : iconfig)
   (peer_info : stateful_peer_info{peer_info.St.s () == unit /\ peer_info.St.t () == unit}) :
@@ -285,7 +285,7 @@ type true_certification_state
 /// new, unregistered key, the user should set up the policy to reject all
 /// unknown keys and the certification function will never get called.
 /// But we still need to provide a certification state implementation.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type false_certification_state
   (nc : iconfig)
   (peer_info : stateful_peer_info) :
@@ -317,7 +317,7 @@ noeq type id_cl = {
 }
 
 /// An implementation of the identifiers
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let uint_id_cl (t : inttype{unsigned t}) : id_cl = {
   id_t = int_t t PUB;
   id_none = uint 0;
@@ -329,29 +329,29 @@ let uint_id_cl (t : inttype{unsigned t}) : id_cl = {
   id_v_injective_lem = (fun x y -> ());
 }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type id_cl_opt_t (idc : id_cl) = idc.id_t
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type id_cl_t (idc : id_cl) = id:idc.id_t{id <> idc.id_none}
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let id_cl_v (#idc : id_cl) (id : id_cl_t idc) : GTot peer_id =
   idc.id_v id
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let id_cl_opt_v (#idc : id_cl) (id : idc.id_t) : (GTot (option peer_id)) =
   if id = idc.id_none then None else Some (idc.id_v id)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let id_cl_none (idc : id_cl) : id:id_cl_opt_t idc{id_cl_opt_v id == None} = idc.id_none
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let id_cl_max (idc : id_cl) : id_cl_t idc = idc.id_max
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let id_cl_max_v (idc : id_cl) : GTot nat = Some?.v (id_cl_opt_v idc.id_max)
 
 /// A device contains a static key if the initiator or the responder uses a
 /// static key, because it can be used to produce initiators and responders.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_has_s (hsk : handshake_pattern) : Tot bool =
   [@inline_let] let init_ks = with_onorm (key_slots_from_pattern true hsk) in
   [@inline_let] let resp_ks = with_onorm (key_slots_from_pattern false hsk) in
@@ -359,7 +359,7 @@ let device_has_s (hsk : handshake_pattern) : Tot bool =
 
 /// Peers contain keys if the initiator or the responder uses a remote static key
 /// (any peer can be used as initiator or responder).
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peers_have_s (hsk : handshake_pattern) : Tot bool =
   [@inline_let] let init_ks = with_norm (key_slots_from_pattern true hsk) in
   [@inline_let] let resp_ks = with_norm (key_slots_from_pattern false hsk) in
@@ -395,48 +395,48 @@ noeq type idconfig_raw : Type u#1 = {
 /// we only need part of it) to a term of a reasonable size.
 type idconfig = unit -> idconfig_raw
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_nc (idc : idconfig) : iconfig =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> nc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_config (idc : idconfig) : config =
   get_config (idc_get_nc idc)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_dc (idc : idconfig) : dconfig =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> dc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_pattern (idc : idconfig) : wfs_handshake_pattern =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> pat
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_sid (idc : idconfig) : id_cl =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> sid
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_pid (idc : idconfig) : id_cl =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> pid
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_info (idc : idconfig) : St.stateful_malloc_from_input_clone_copy unit =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> pinfo
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_is_psk (idc : idconfig) : bool =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> with_onorm (check_hsk_is_psk pat)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_policy (idc : idconfig) : stateful_policy_function (idc_get_nc idc) (idc_is_psk idc) =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> policy
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_policy_spec (idc : idconfig) :
   constrained_policy_function (idc_get_config idc) (idc_is_psk idc) =
   (idc_get_policy idc).apply_policy_spec
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_cstate (idc : idconfig) : stateful_certification_state (idc_get_nc idc) (idc_get_info idc).St.smficc_stateful =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> cert
 
@@ -463,117 +463,117 @@ inline_for_extraction
 let idc_get_cstate_frame_freeable (#idc : idconfig) =
   (idc_get_cstate idc).cstate.St.frame_freeable
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_get_serialize (idc : idconfig) : bool =
   match idc () with Mkidconfig_raw nc dc pat sid pid pinfo policy cert srlz -> srlz
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_uses_s (idc : idconfig) : bool =
   device_has_s (idc_get_pattern idc)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_peers_have_s (idc : idconfig) : bool =
   peers_have_s (idc_get_pattern idc)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_input_t (idc : idconfig) : Type0 =
   (idc_get_info idc).St.smficc_input.St.s ()
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_input_s (idc : idconfig) : Type0 =
   (idc_get_info idc).St.smficc_input.St.t ()
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_input_v (#idc : idconfig) (h : mem) (info : info_input_t idc) :
   GTot (info_input_s idc) =
   (idc_get_info idc).St.smficc_input.St.v () h info
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_input_footprint (#idc : idconfig) =
   (idc_get_info idc).St.smficc_input.St.footprint
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_input_invariant (#idc : idconfig) =
   (idc_get_info idc).St.smficc_input.St.invariant
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_input_frame_invariant (#idc : idconfig) =
   (idc_get_info idc).St.smficc_input.St.frame_invariant
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_t (idc : idconfig) : Type0 =
   (idc_get_info idc).St.smficc_stateful.St.s ()
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_s (idc : idconfig) : Type0 =
   (idc_get_info idc).St.smficc_stateful.St.t ()
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_v (#idc : idconfig) (h : mem) (info : info_t idc) :
   GTot (info_s idc) =
   (idc_get_info idc).St.smficc_stateful.St.v () h info
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_footprint (#idc : idconfig) =
   (idc_get_info idc).St.smficc_stateful.St.footprint
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_invariant (#idc : idconfig) =
   (idc_get_info idc).St.smficc_stateful.St.invariant
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_freeable (#idc : idconfig) =
   (idc_get_info idc).St.smficc_stateful.St.freeable
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_frame_invariant (#idc : idconfig) =
   (idc_get_info idc).St.smficc_stateful.St.frame_invariant
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let info_frame_freeable (#idc : idconfig) =
   (idc_get_info idc).St.smficc_stateful.St.frame_freeable
 
 // TODO: we might remove those definitions in the future
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_t (idc : idconfig) : Type0 = info_t idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_s (idc : idconfig) : Type0 = info_s idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_v (#idc : idconfig) (h : mem) (pinfo : peer_info_t idc) = info_v h pinfo
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_footprint (#idc : idconfig) = info_footprint #idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_invariant (#idc : idconfig) = info_invariant #idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_freeable (#idc : idconfig) = info_freeable #idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_frame_invariant (#idc : idconfig) = info_frame_invariant #idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_info_frame_freeable (#idc : idconfig) = info_frame_freeable #idc
 
 /// Serialization/deserialization types
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let serialize_key_t (idc : idconfig) : Type0 = type_or_unit aead_key_t (idc_get_serialize idc)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let enc_private_key_vsv (nc : iconfig) : size_nat = private_key_vsv nc + aead_tag_vsv
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let enc_private_key_vs (nc : iconfig) = size (enc_private_key_vsv nc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let enc_private_key_t (idc : idconfig) =
   type_or_unit (lbuffer uint8 (enc_private_key_vs (idc_get_nc idc))) (idc_uses_s idc) 
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let enc_private_key_with_nonce_vsv (nc : iconfig) : size_nat =
   enc_private_key_vsv nc + aead_nonce_size
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let enc_private_key_with_nonce_vs (nc : iconfig) = size (enc_private_key_with_nonce_vsv nc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let enc_private_key_with_nonce_t (idc : idconfig) =
   type_or_unit (lbuffer uint8 (enc_private_key_with_nonce_vs (idc_get_nc idc))) (idc_uses_s idc) 
 
 (*** Peers *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val peer_t (idc : idconfig) : Type0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val peer_p_or_null (idc : idconfig) : Type0
 
 val peer_p_g_is_null (#idc : idconfig) (p : peer_p_or_null idc) : GTot bool
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val peer_p_null (idc : idconfig) : p:peer_p_or_null idc{peer_p_g_is_null p}
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_p (idc : idconfig) : Type0 = p:peer_p_or_null idc{not (peer_p_g_is_null p)}
 
 val peer_p_invariant (#idc : idconfig) (h : mem) (p : peer_p idc) : GTot Type0
@@ -585,7 +585,7 @@ val peer_p_live (#idc : idconfig) (h : mem) (p : peer_p_or_null idc) :
   (ensures (fun t ->
     t ==> (if peer_p_g_is_null p then True else peer_p_invariant h p)))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val peer_p_is_null (#idc : idconfig) (p : peer_p_or_null idc) :
   Stack bool
   (requires (fun h0 -> peer_p_live h0 p))
@@ -602,7 +602,7 @@ val peer_p_invariant_live_lem (#idc : idconfig) (h : mem) (p : peer_p idc) :
   (ensures (peer_p_live h p))
   [SMTPat (peer_p_invariant h p)]
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let peer_s (idc : idconfig) : Type0 = peer (idc_get_dc idc)
 
 val peer_p_v (#idc : idconfig) (h : mem) (p : peer_p idc) : GTot (peer_s idc)
@@ -635,46 +635,46 @@ let peer_p_or_null_g_get_pid (#idc : idconfig) (h : mem) (p : peer_p_or_null idc
   if peer_p_g_is_null p then None
   else Some (peer_p_g_get_id h p)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_rs_t idc = public_key_t_or_unit (idc_get_nc idc) (peers_have_s (idc_get_pattern idc))
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_psk_t idc = preshared_key_t_or_unit (idc_is_psk idc)
 
-//[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+//[@@ noextract_to "Karamel"] inline_for_extraction noextract
 //let states_id_opt_t idc = (idc_get_sid idc).id_t
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let state_id_t idc = id_cl_t (idc_get_sid idc)
-//[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+//[@@ noextract_to "Karamel"] inline_for_extraction noextract
 //let states_id_opt_v (#idc : idconfig) = id_cl_opt_v #(idc_get_sid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let state_id_v (#idc : idconfig) = id_cl_v #(idc_get_sid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let state_id_max (idc : idconfig) : state_id_t idc = id_cl_max (idc_get_sid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let state_id_max_v (idc : idconfig) : GTot nat = id_cl_max_v (idc_get_sid idc)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let session_id_t idc = state_id_t idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let session_id_v (#idc : idconfig) = state_id_v #idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let session_id_max (idc : idconfig) = state_id_max idc
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let session_id_max_v (idc : idconfig) = state_id_max_v idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_id_opt_t idc = (idc_get_pid idc).id_t
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_id_t idc = id_cl_t (idc_get_pid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_id_opt_v (#idc : idconfig) = id_cl_opt_v #(idc_get_pid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_id_v (#idc : idconfig) = id_cl_v #(idc_get_pid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_id_none (idc : idconfig) : z:peer_id_opt_t idc{peer_id_opt_v z = None} = id_cl_none (idc_get_pid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_id_max (idc : idconfig) : peer_id_t idc = id_cl_max (idc_get_pid idc)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_id_max_v (idc : idconfig) : GTot nat = id_cl_max_v (idc_get_pid idc)
 
 /// Some framing lemmas. Note that those lemmas don't have SMT patterns:
@@ -708,7 +708,7 @@ val peer_p_frame_invariant :
     peer_p_invariant h1 p /\
     peer_p_v h0 p == peer_p_v h1 p))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type peer_p_get_id_st (idc : idconfig) =
   p:peer_p idc ->
   Stack (peer_id_t idc)
@@ -717,12 +717,12 @@ type peer_p_get_id_st (idc : idconfig) =
     h1 == h0 /\
     peer_id_v pid = peer_p_g_get_id h0 p))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_peer_p_get_id :
   #idc:idconfig ->
   peer_p_get_id_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type peer_p_get_info_st (idc : idconfig) =
   // We copy the peer information to out
   out:peer_info_t idc ->
@@ -738,12 +738,12 @@ type peer_p_get_info_st (idc : idconfig) =
     peer_info_invariant h1 out /\
     peer_info_v h1 out == peer_p_g_get_info h0 p))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_peer_p_get_info :
      #idc:idconfig
   -> peer_p_get_info_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type peer_p_get_static_st (idc : idconfig{idc_peers_have_s idc}) =
   out:public_key_t_or_unit (idc_get_nc idc) (idc_peers_have_s idc) ->
   p:peer_p idc ->
@@ -756,7 +756,7 @@ type peer_p_get_static_st (idc : idconfig{idc_peers_have_s idc}) =
     B.(modifies (lbuffer_or_unit_loc out) h0 h1) /\
     lbuffer_or_unit_to_opt_lseq h1 out == peer_p_g_get_static h0 p))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_peer_p_get_static :
      #idc:idconfig{idc_peers_have_s idc}
   -> peer_p_get_static_st idc
@@ -765,16 +765,16 @@ val mk_peer_p_get_static :
 /// definition implements peer_get_static, otherwise it is unit, meaning the
 /// definition gets erased at extraction.
 // The following type definition doesn't typecheck if we use type_or_unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_p_get_static_st_or_unit (idc:idconfig) : Type0=
   if idc_peers_have_s idc then peer_p_get_static_st idc else unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_peer_p_get_static_or_unit :
      #idc:idconfig
   -> peer_p_get_static_st_or_unit idc =
   fun #idc -> if idc_peers_have_s idc then mk_peer_p_get_static #idc else ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type peer_p_get_psk_st (idc : idconfig{idc_is_psk idc}) =
   out:preshared_key_t ->
   p:peer_p idc ->
@@ -788,17 +788,17 @@ type peer_p_get_psk_st (idc : idconfig{idc_is_psk idc}) =
     Some? (peer_p_g_get_psk h0 p) /\
     as_seq h1 out == Some?.v (peer_p_g_get_psk h0 p)))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_peer_p_get_psk :
      #idc:idconfig{idc_is_psk idc}
   -> peer_p_get_psk_st idc
 
 /// Extraction helpers for the instanciation: see the comment for mk_peer_p_get_static_or_unit
 // The following type definition doesn't typecheck if we use type_or_unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let peer_p_get_psk_st_or_unit (idc:idconfig) : Type0=
   if idc_is_psk idc then peer_p_get_psk_st idc else unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_peer_p_get_psk_or_unit :
      #idc:idconfig
   -> peer_p_get_psk_st_or_unit idc =
@@ -806,32 +806,32 @@ let mk_peer_p_get_psk_or_unit :
 
 (*** Configuration *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let knows_rs_at_init (idc : idconfig) (initiator : bool) =
   Spec.Noise.API.MetaInfo.knows_remote_at_init (idc_get_pattern idc) initiator
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let knows_psk_at_init (idc : idconfig) (initiator : bool) =
   Spec.Noise.API.MetaInfo.knows_psk_at_init (idc_get_pattern idc) initiator
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let knows_remote_at_init (idc : idconfig) (initiator : bool) =
   Spec.Noise.API.MetaInfo.knows_remote_at_init (idc_get_pattern idc) initiator
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type opt_pid_t (idc : idconfig) (initiator : bool) =
   type_or_unit (idc_get_pid idc).id_t (with_onorm (knows_remote_at_init idc initiator))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type opt_pid_s = option (peer_id)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let opt_pid_v (#idc : idconfig) (#initiator : bool) (pid : opt_pid_t idc initiator) :
   GTot opt_pid_s =
   if knows_remote_at_init idc initiator then peer_id_opt_v #idc pid
   else None
 
-[@@ (strict_on_arguments [0]); noextract_to "Kremlin"] noextract
+[@@ (strict_on_arguments [0]); noextract_to "Karamel"] noextract
 let check_pattern (pattern : handshake_pattern) : Tot bool =
   let is_psk = check_hsk_is_psk pattern in
   let b1 = Impl.Noise.API.State.Base.handshake_pattern_is_valid pattern in
@@ -842,15 +842,15 @@ let check_pattern (pattern : handshake_pattern) : Tot bool =
   let b3 = List.Tot.length pattern.messages + 1 <= max_size_t in
   b1 && b2 && b3
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let idc_is_valid_compute (idc : idconfig) : Tot bool =
   let pattern = idc_get_pattern idc in
   let is_psk = idc_is_psk idc in
   check_pattern pattern
 
 // TODO: make this visible and remove the lemma?
-//[@@ (strict_on_arguments [0]); noextract_to "Kremlin"]
-[@@ noextract_to "Kremlin"]
+//[@@ (strict_on_arguments [0]); noextract_to "Karamel"]
+[@@ noextract_to "Karamel"]
 inline_for_extraction noextract
 val idc_is_valid (idc : idconfig) : Tot bool
 
@@ -858,7 +858,7 @@ val idc_is_valid_lem (idc : idconfig) :
   Lemma(idc_is_valid idc = idc_is_valid_compute idc)
   [SMTPat (idc_is_valid idc)]
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type valid_idc = idc:idconfig{idc_is_valid idc}
 
 (*** Device *)
@@ -868,45 +868,45 @@ noeq type sized_buffer = {
   buffer : lbuffer uint8 size;
 }
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let sized_buffer_to_loc (b : sized_buffer) : GTot B.loc =
   if g_is_null b.buffer then B.loc_buffer (b.buffer <: buffer uint8)
   else B.loc_addr_of_buffer (b.buffer <: buffer uint8)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let sized_buffer_live (h : mem) (b : sized_buffer) : GTot Type0 =
   B.live h (b.buffer <: buffer uint8)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let sized_buffer_freeable (b : sized_buffer) : GTot Type0 =
   not(g_is_null b.buffer) ==> B.freeable (b.buffer <: buffer uint8)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let sized_buffer_to_seq (h : mem) (b : sized_buffer) : GTot (seq uint8) =
   B.as_seq h (b.buffer <: buffer uint8)
 
 /// Hashable sized buffer
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let hsized_buffer (nc : iconfig) =
   sb:sized_buffer{is_hashable_size (get_config nc) (size_v sb.size)}
 
 // We reveal this for the type abbreviations
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_t (idc : idconfig) : Type0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_or_null (idc : idconfig) : Type0
 
 val device_p_g_is_null (#idc : idconfig) (dvp : device_p_or_null idc) : GTot bool
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type device_p (idc : idconfig) =
   dvp:device_p_or_null idc{not (device_p_g_is_null dvp)}
 
 val device_p_live (#idc : idconfig) (h : mem) (dvp : device_p_or_null idc) : GTot Type0
 val device_p_invariant (#idc : idconfig) (h : mem) (dvp : device_p idc) : GTot Type0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_is_null (#idc : idconfig) (dvp : device_p_or_null idc) :
   Stack bool
   (requires (fun h0 ->
@@ -937,7 +937,7 @@ let device_p_or_null_region_of (#idc : idconfig) (dvp : device_p_or_null idc) : 
   else region_to_loc (device_p_rid_of dvp)
 
 // Recall lemma for the device region
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_recall_region (#idc : idconfig) (dvp : device_p idc) :
   Stack unit
   (requires (fun h0 ->
@@ -975,48 +975,48 @@ val device_p_owns_peer_lem :
       peer_p_invariant h p /\
       region_includes (device_p_rid_of dvp) (peer_p_footprint p)))
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_s (idc : idconfig) = device (idc_get_dc idc)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val device_p_v (#idc : idconfig) (m : mem) (dvp : device_p idc) : GTot (device_s idc)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val device_p_get_cstate (#idc : idconfig) (h : mem) (dv : device_p idc) :
   GTot (idc_get_cstate_s idc)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_get_states_counter_v (#idc : idconfig) (h : mem) (dv : device_p idc) :
   GTot state_id =
   let dv_v = device_p_v h dv in
   device_get_states_counter dv_v
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_get_sessions_counter_v #idc =
   device_p_g_get_states_counter_v #idc
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_get_peers_counter_v (#idc : idconfig) (h : mem) (dv : device_p idc) :
   GTot peer_id =
   let dv_v = device_p_v h dv in
   device_get_peers_counter dv_v
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val device_p_g_get_states_counter (#idc : idconfig) (h : mem) (dv : device_p idc) :
   Ghost (state_id_t idc)
   (requires True)
   (ensures (fun cnt -> state_id_v cnt = device_p_g_get_states_counter_v h dv))
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_get_sessions_counter #idc = device_p_g_get_states_counter #idc
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val device_p_g_get_peers_counter (#idc : idconfig) (h : mem) (dv : device_p idc) :
   Ghost (peer_id_t idc)
   (requires True)
   (ensures (fun cnt -> peer_id_v cnt = device_p_g_get_peers_counter_v h dv))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_get_states_counter_st (idc : idconfig) =
   dvp:device_p idc ->
   Stack (state_id_t idc)
@@ -1025,21 +1025,21 @@ type device_p_get_states_counter_st (idc : idconfig) =
     h1 == h0 /\
     cnt = device_p_g_get_states_counter h0 dvp))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_get_states_counter :
   #idc:idconfig ->
   device_p_get_states_counter_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_get_sessions_counter_st (idc : idconfig) =
   device_p_get_states_counter_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_get_sessions_counter :
   #idc:idconfig ->
   device_p_get_sessions_counter_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_get_peers_counter_st (idc : idconfig) =
   dvp:device_p idc ->
   Stack (peer_id_t idc)
@@ -1048,22 +1048,22 @@ type device_p_get_peers_counter_st (idc : idconfig) =
     h1 == h0 /\
     cnt = device_p_g_get_peers_counter h0 dvp))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_get_peers_counter :
   #idc:idconfig ->
   device_p_get_peers_counter_st idc
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_states_counter_is_saturated (#idc : idconfig) (h : mem) (dvp : device_p idc) :
   GTot bool =
   let dv_v = device_p_v h dvp in
   device_p_g_get_states_counter h dvp = state_id_max idc
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_sessions_counter_is_saturated #idc h dvp =
   device_p_g_states_counter_is_saturated #idc h dvp
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_states_counter_is_saturated_st (idc : idconfig) =
   dvp:device_p idc ->
   Stack bool
@@ -1072,27 +1072,27 @@ type device_p_states_counter_is_saturated_st (idc : idconfig) =
     h1 == h0 /\
     b = device_p_g_states_counter_is_saturated h0 dvp))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_states_counter_is_saturated :
   #idc:idconfig ->
   device_p_states_counter_is_saturated_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_sessions_counter_is_saturated_st (idc : idconfig) =
   device_p_states_counter_is_saturated_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_sessions_counter_is_saturated :
   #idc:idconfig ->
   device_p_sessions_counter_is_saturated_st idc
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_peers_counter_is_saturated (#idc : idconfig) (h : mem) (dvp : device_p idc) :
   GTot bool =
   let dv_v = device_p_v h dvp in
   device_p_g_get_peers_counter h dvp = peer_id_max idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_peers_counter_is_saturated_st (idc : idconfig) =
   dvp:device_p idc ->
   Stack bool
@@ -1101,18 +1101,18 @@ type device_p_peers_counter_is_saturated_st (idc : idconfig) =
     h1 == h0 /\
     b = (device_p_g_peers_counter_is_saturated h0 dvp)))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_peers_counter_is_saturated :
   #idc:idconfig ->
   device_p_peers_counter_is_saturated_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_g_get_info (#idc : idconfig) (h : mem) (dvp : device_p idc) :
   GTot (idc_get_dc idc).dc_info =
   let dv_v = device_p_v h dvp in
   device_get_info dv_v
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_get_info_st (idc : idconfig) =
   // We copy the device information to out
   out:info_t idc ->
@@ -1128,12 +1128,12 @@ type device_p_get_info_st (idc : idconfig) =
     info_invariant h1 out /\
     info_v h1 out == device_p_g_get_info h0 dvp))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_get_info :
   #idc:idconfig ->
   device_p_get_info_st idc
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_g_get_static_v (#idc : idconfig) (h : mem) (dvp : device_p idc) :
   GTot (option (keypair (idc_get_config idc))) =
   let dv_v = device_p_v h dvp in
@@ -1141,7 +1141,7 @@ let device_p_g_get_static_v (#idc : idconfig) (h : mem) (dvp : device_p idc) :
 
 // This signature may seem overly complicated, but it was designed to allow
 // sharing keys with the sessions.
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val device_p_g_get_static (#idc : idconfig) (h : mem) (dv : device_p idc) :
   Ghost
     (private_key_t_or_unit (idc_get_nc idc) (device_has_s (idc_get_pattern idc)) &
@@ -1153,7 +1153,7 @@ val device_p_g_get_static (#idc : idconfig) (h : mem) (dv : device_p idc) :
     let kp'_v = device_p_g_get_static_v h dv in
     kp_v == kp'_v))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_get_static_priv_st (idc : idconfig{idc_uses_s idc}) =
   // We copy the device static to out
   out:private_key_t (idc_get_nc idc) ->
@@ -1168,12 +1168,12 @@ type device_p_get_static_priv_st (idc : idconfig{idc_uses_s idc}) =
     Some? (device_p_g_get_static_v h0 dvp) /\
     as_seq h1 out == (Some?.v (device_p_g_get_static_v h0 dvp)).priv))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_get_static_priv :
   #idc:idconfig{idc_uses_s idc} ->
   device_p_get_static_priv_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_get_static_pub_st (idc : idconfig{idc_uses_s idc}) =
   // We copy the device static to out
   out:public_key_t (idc_get_nc idc) ->
@@ -1188,25 +1188,25 @@ type device_p_get_static_pub_st (idc : idconfig{idc_uses_s idc}) =
     Some? (device_p_g_get_static_v h0 dvp) /\
     as_seq h1 out == (Some?.v (device_p_g_get_static_v h0 dvp)).pub))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_get_static_pub :
   #idc:idconfig{idc_uses_s idc} ->
   device_p_get_static_pub_st idc
 
 /// Extraction helpers which are used to define and extract functions only if they make sense
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_get_static_priv_st_or_unit (idc:idconfig) : Type0 =
   if idc_uses_s idc then device_p_get_static_priv_st idc else unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_device_p_get_static_priv_or_unit :
   #idc:idconfig ->
   device_p_get_static_priv_st_or_unit idc =
   fun #idc -> if idc_uses_s idc then mk_device_p_get_static_priv #idc else ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_get_static_pub_st_or_unit (idc:idconfig) : Type0 =
   if idc_uses_s idc then device_p_get_static_pub_st idc else unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_device_p_get_static_pub_or_unit :
   #idc:idconfig ->
   device_p_get_static_pub_st_or_unit idc =
@@ -1219,27 +1219,27 @@ let mk_device_p_get_static_pub_or_unit :
 /// [device_p_only_changed_peers_or_counters] is implied (see lemma below) by
 /// [device_p_no_removal] and [device_p_removed_peer], and is mostly used in
 /// cases where we don't need precise information for the framing.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_only_changed_peers_or_counters (#idc : idconfig) (dvp : device_p idc) (h0 h1 : mem) :
   GTot Type0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_no_removal (#idc : idconfig) (dvp : device_p idc) (h0 h1 : mem) :
   GTot Type0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_removed_peer
   (#idc : idconfig) (dvp : device_p idc) (pid : peer_id) (h0 h1 : mem) :
   GTot Type0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_no_removal_implies_only_changed_peers_or_counters
   (#idc : idconfig) (dvp : device_p idc) (h0 h1 : mem) :
   Lemma (requires (device_p_no_removal dvp h0 h1))
   (ensures (device_p_only_changed_peers_or_counters dvp h0 h1))
   [SMTPat (device_p_no_removal dvp h0 h1)]
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val device_p_removed_peer_implies_only_changed_peers_or_counters
   (#idc : idconfig) (dvp : device_p idc) (pid : peer_id) (h0 h1 : mem) :
   Lemma (requires (device_p_removed_peer dvp pid h0 h1))
@@ -1372,7 +1372,7 @@ val peer_p_or_null_removed_peer_frame_invariant :
 
 (**** Create/free device *)
 #push-options "--ifuel 1"
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_create_st (idc : idconfig) =
      r : HS.rid
   -> cstate : idc_get_cstate_s idc
@@ -1407,13 +1407,13 @@ type device_p_create_st (idc : idconfig) =
     end))
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_create
   (#idc : idconfig)
   (csi:config_impls (idc_get_nc idc)) :
   device_p_create_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_create_from_secret_st (idc : idconfig{idc_get_serialize idc}) =
      r : HS.rid
   -> cstate : idc_get_cstate_s idc
@@ -1460,18 +1460,18 @@ type device_p_create_from_secret_st (idc : idconfig{idc_get_serialize idc}) =
       device_p_v h1 dvp == dv_v
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_create_from_secret
   (#idc : idconfig{idc_get_serialize idc})
   (csi:config_impls (idc_get_nc idc)) :
   device_p_create_from_secret_st idc
 
 /// Extraction helpers for the instanciation
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_create_from_secret_st_or_unit (idc:valid_idc) : Type0=
   if idc_get_serialize idc then device_p_create_from_secret_st idc else unit
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_device_p_create_from_secret_or_unit :
      #idc:valid_idc
   -> csi:config_impls (idc_get_nc idc)
@@ -1480,7 +1480,7 @@ let mk_device_p_create_from_secret_or_unit :
   if idc_get_serialize idc
   then mk_device_p_create_from_secret #idc csi else ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_free_st (idc : idconfig) =
   dvp : device_p idc ->
   ST unit
@@ -1489,7 +1489,7 @@ type device_p_free_st (idc : idconfig) =
   (ensures (fun h0 _ h1 ->
     B.(modifies (device_p_region_of dvp) h0 h1)))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_free :
   #idc : idconfig ->
   device_p_free_st idc
@@ -1497,7 +1497,7 @@ val mk_device_p_free :
 
 (**** Lookup *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_lookup_peer_by_id_st (idc:idconfig) =
      dv:device_p idc
   -> id:peer_id_opt_t idc ->
@@ -1519,12 +1519,12 @@ type device_p_lookup_peer_by_id_st (idc:idconfig) =
       peer_p_g_get_id h1 p == peer_id_v #idc id
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_lookup_peer_by_id :
      #idc:idconfig
   -> device_p_lookup_peer_by_id_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_lookup_peer_by_static_st (idc : idconfig{normalize_term #bool (idc_peers_have_s idc)}) =
      dv:device_p idc
   -> s:public_key_t (idc_get_nc idc) ->
@@ -1543,15 +1543,15 @@ type device_p_lookup_peer_by_static_st (idc : idconfig{normalize_term #bool (idc
     else Some? r_v /\ peer_p_v h1 p == Some?.v r_v
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_lookup_peer_by_static :
      #idc:idconfig{normalize_term #bool (idc_peers_have_s idc)}
   -> device_p_lookup_peer_by_static_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_lookup_peer_by_static_st_or_unit (idc : valid_idc) : Type0 =
   if idc_peers_have_s idc then device_p_lookup_peer_by_static_st idc else unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_device_p_lookup_peer_by_static_or_unit :
   #idc:valid_idc ->
   device_p_lookup_peer_by_static_st_or_unit idc =
@@ -1562,7 +1562,7 @@ let mk_device_p_lookup_peer_by_static_or_unit :
 // We use an optional peer id on purpose: the end-user, not working in F*,
 // might accidentally use 0 as a peer id (a valid peer id is > 0).
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_add_peer_get_st_pre (#idc : valid_idc) :
      dv:device_p idc
   -> pinfo:info_input_t idc
@@ -1575,7 +1575,7 @@ let device_p_add_peer_get_st_pre (#idc : valid_idc) :
   lbuffer_or_unit_live h0 rs /\
   lbuffer_or_unit_live h0 psk
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_add_peer_get_st_post (#idc : valid_idc) :
      dv:device_p idc
   -> pinfo:info_input_t idc
@@ -1617,7 +1617,7 @@ let device_p_add_peer_get_st_post (#idc : valid_idc) :
     dv1_v == dv0_v
   end
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_add_peer_get_st (idc : valid_idc) =
      dv:device_p idc
   -> pinfo:info_input_t idc
@@ -1627,12 +1627,12 @@ type device_p_add_peer_get_st (idc : valid_idc) =
   (requires (fun h0 -> device_p_add_peer_get_st_pre dv pinfo rs psk h0))
   (ensures (fun h0 p h1 -> device_p_add_peer_get_st_post dv pinfo rs psk h0 p h1))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_add_peer_get :
      #idc:valid_idc
   -> device_p_add_peer_get_st idc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_add_peer_st_pre (#idc : valid_idc) :
      dv:device_p idc
   -> pinfo:info_input_t idc
@@ -1642,7 +1642,7 @@ let device_p_add_peer_st_pre (#idc : valid_idc) :
   fun dv pinfo rs psk h0 ->
   device_p_add_peer_get_st_pre dv pinfo rs psk h0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_add_peer_st_post (#idc : valid_idc) :
      dv:device_p idc
   -> pinfo:info_input_t idc
@@ -1681,7 +1681,7 @@ let device_p_add_peer_st_post (#idc : valid_idc) :
   | _ -> False
   end
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_add_peer_st (idc : valid_idc) =
      dv:device_p idc
   -> pinfo:info_input_t idc
@@ -1691,14 +1691,14 @@ type device_p_add_peer_st (idc : valid_idc) =
   (requires (fun h0 -> device_p_add_peer_st_pre dv pinfo rs psk h0))
   (ensures (fun h0 p h1 -> device_p_add_peer_st_post dv pinfo rs psk h0 p h1))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_add_peer :
      #idc:valid_idc
   -> device_p_add_peer_st idc
 
 // We use an optional peer id on purpose: the end-user, not working in F*,
 // might accidentally use 0 as a peer id (a valid peer id is > 0).
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_remove_peer_st (idc : valid_idc) =
      dv:device_p idc
   -> pid:peer_id_opt_t idc ->
@@ -1719,7 +1719,7 @@ type device_p_remove_peer_st (idc : valid_idc) =
     | None -> dv1_v == dv0_v /\ device_p_no_removal dv h0 h1
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_remove_peer :
   #idc:valid_idc ->
   device_p_remove_peer_st idc
@@ -1727,7 +1727,7 @@ val mk_device_p_remove_peer :
 (**** Serialization/deserialization *)
 (***** Device serialization *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_serialize_device_secret_st (idc : valid_idc{idc_get_serialize idc /\ idc_uses_s idc}) =
      r:HS.rid
   -> outlen:B.pointer size_t
@@ -1766,18 +1766,18 @@ type device_p_serialize_device_secret_st (idc : valid_idc{idc_get_serialize idc 
       region_includes r (buffer_or_null_loc_addr out1)
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_serialize_device_secret :
   #idc:valid_idc{idc_get_serialize idc /\ idc_uses_s idc} ->
   csi:config_impls (idc_get_nc idc) ->
   device_p_serialize_device_secret_st idc
 
 /// Extraction helpers for the instanciation
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_serialize_device_secret_st_or_unit (idc:valid_idc) : Type0=
   if idc_get_serialize idc && idc_uses_s idc
   then device_p_serialize_device_secret_st idc else unit
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_device_p_serialize_device_secret_or_unit :
      #idc:valid_idc
   -> csi:config_impls (idc_get_nc idc)
@@ -1788,7 +1788,7 @@ let mk_device_p_serialize_device_secret_or_unit :
 
 (***** Peer serialization *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_serialize_peer_secret_st (idc : valid_idc) =
      r:HS.rid
   -> outlen:B.pointer size_t
@@ -1843,19 +1843,19 @@ type device_p_serialize_peer_secret_st (idc : valid_idc) =
         region_includes r (buffer_or_null_loc_addr out1)
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_serialize_peer_secret :
   #idc:valid_idc{idc_get_serialize idc /\ (idc_is_psk idc || idc_peers_have_s idc)} ->
   csi:config_impls (idc_get_nc idc) ->
   device_p_serialize_peer_secret_st idc
 
 /// Extraction helpers for the instanciation
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_serialize_peer_secret_st_or_unit (idc:valid_idc) : Type0=
   if idc_get_serialize idc && (idc_is_psk idc || idc_peers_have_s idc)
   then device_p_serialize_peer_secret_st idc else unit
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_device_p_serialize_peer_secret_or_unit :
      #idc:valid_idc
   -> csi:config_impls (idc_get_nc idc)
@@ -1864,7 +1864,7 @@ let mk_device_p_serialize_peer_secret_or_unit :
   if idc_get_serialize idc && (idc_is_psk idc || idc_peers_have_s idc)
   then mk_device_p_serialize_peer_secret #idc csi else ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type device_p_deserialize_peer_secret_st (idc : valid_idc) =
      // We need this one to allocate a buffer in which to decrypt the keys
      // TODO: remove it and use a sub-region in the device.
@@ -1918,19 +1918,19 @@ type device_p_deserialize_peer_secret_st (idc : valid_idc) =
       dv1_v == dv0_v
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_device_p_deserialize_peer_secret :
   #idc:valid_idc{idc_get_serialize idc /\ (idc_is_psk idc || idc_peers_have_s idc)} ->
   csi:config_impls (idc_get_nc idc) ->
   device_p_deserialize_peer_secret_st idc
 
 /// Extraction helpers for the instanciation
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let device_p_deserialize_peer_secret_st_or_unit (idc:valid_idc) : Type0=
   if idc_get_serialize idc && (idc_is_psk idc || idc_peers_have_s idc)
   then device_p_deserialize_peer_secret_st idc else unit
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let mk_device_p_deserialize_peer_secret_or_unit :
      #idc:valid_idc
   -> csi:config_impls (idc_get_nc idc)

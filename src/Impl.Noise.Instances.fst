@@ -49,7 +49,7 @@ let consume_initiation_IKpsk2 =
 // Maybe start by investigating while the following doesn't normalize here:
 // [> let x = chskf_check_is_psk (convert_pattern Spec.pattern_IKpsk2)
 // (note that it normalizes in Impl.Noise.PatternMessages.Definitions.fst...)
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let _convert_pattern (x : wf_handshake_pattern) : handshake_pattern = x
 
 (* set the PSK just before the response message *)

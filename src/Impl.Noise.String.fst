@@ -50,14 +50,14 @@ module Char = FStar.Char
 /// cast is natural, and we actually have to perform a copy that we throw away.
 
 /// The low-level char type
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type char_t = uint8
 
 /// The high-level char type
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type char = Char.char
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let null_char : char_t = u8 0
 
 let char_v (c : char) = v (Char.u32_of_char c)
@@ -353,7 +353,7 @@ let string_empty_lem s =
   list_of_string_inj s ""
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let buffer_or_null_loc_addr (#ty : buftype) (#a:Type0) (b:buffer_t ty a) : GTot B.loc =
   if g_is_null b then loc b // For some reason, we need to return loc_buffer b (and not loc_none)
   else loc_addr_of_buffer b
@@ -365,7 +365,7 @@ let buffer_or_null_freeable (#ty : buftype) (#a:Type0) (b:buffer_t ty a) : GTot 
 /// an implicit parameter for the length, which we don't use.
 
 #push-options "--ifuel 1"
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let as_seq (#t:buftype) (#a:Type0) (h:mem) (b:buffer_t t a) :
   GTot (Seq.lseq a (length b)) =
   match t with
@@ -374,7 +374,7 @@ let as_seq (#t:buftype) (#a:Type0) (h:mem) (b:buffer_t t a) :
   | CONST -> CB.as_seq h (b <: cbuffer a)
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val index:
      #ty:buftype
   -> #a:Type0
@@ -412,7 +412,7 @@ let upd #a b i x =
 /// Null-terminated Low* strings.
 /// Note that the length gives the number of characters WITHOUT the last NULL
 /// character delimiting the end of the string.
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let is_string_or_null (ty:buftype) (l : G.erased size_nat) (s : buffer_t ty char_t) :
   GTot Type0 =
   if not (g_is_null s) then    
@@ -421,15 +421,15 @@ let is_string_or_null (ty:buftype) (l : G.erased size_nat) (s : buffer_t ty char
     length s = l+1
   else G.reveal l = 0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type string_or_null (ty:buftype) (length : G.erased size_nat) =
   s:buffer_t ty char_t {is_string_or_null ty length s}
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type string (ty:buftype) (length : G.erased size_nat) =
   s:string_or_null ty length{not (g_is_null s)}
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val wf_string (#ty:buftype) (#length : G.erased size_nat)
               (h : mem) (s : string ty length) : GTot Type0
 let wf_string #ty #length h s =
@@ -437,7 +437,7 @@ let wf_string #ty #length h s =
   (forall (i : nat). i < length ==> get h s i =!= null_char) /\
   get h s length == null_char
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val wf_string_or_null (#ty:buftype) (#length : G.erased size_nat)
                       (h : mem) (s : string_or_null ty length) : GTot Type0
 let wf_string_or_null #ty #length h s =
@@ -445,7 +445,7 @@ let wf_string_or_null #ty #length h s =
   else
     wf_string h s
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val wf_string_i_lem (#ty:buftype) (#length : G.erased size_nat)
                     (h : mem) (s : string ty length)
                     (i : nat{i <= length}):
@@ -453,7 +453,7 @@ val wf_string_i_lem (#ty:buftype) (#length : G.erased size_nat)
   (ensures (get h s i == null_char <==> i = G.reveal length))
 let wf_string_i_lem #length h s i = ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val wf_string_not_last_lem (#ty:buftype) (#length : G.erased size_nat)
                            (h : mem) (s : string ty length)
                            (i : nat{i < length}):
@@ -461,36 +461,36 @@ val wf_string_not_last_lem (#ty:buftype) (#length : G.erased size_nat)
   (ensures (get h s i =!= null_char))
 let wf_string_not_last_lem #ty #length h s i = ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val wf_string_last_lem (#ty:buftype) (#length : G.erased size_nat) (h : mem) (s : string ty length) :
   Lemma (requires (wf_string h s))
   (ensures (get h s length == null_char))
 let wf_string_last_lem #length h s = ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let wf_string_loc (#ty:buftype) (#length : G.erased size_nat) (s : string ty length) :
   GTot B.loc =
   loc s
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let wf_string_loc_addr (#ty:buftype) (#length : G.erased size_nat) (s : string ty length) :
   GTot B.loc =
   loc_addr_of_buffer s
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let wf_string_freeable (#ty:buftype) (#length : G.erased size_nat) (s : string ty length) :
   GTot Type0 =
   freeable s
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let wf_string_as_seq (#ty:buftype) (#length : G.erased size_nat) (h : mem) (s : string ty length) :
   GTot (seq char_t) =
   as_seq h s
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type string256 =
   s:Prims.string{
     forall (i:nat{i < String.length s}). char_v (String.index s i) <= 255}
 
 // This function operates on a null terminated string
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val string_v (#ty : buftype) (h : mem) (s : buffer_t ty char_t) :
   Ghost string256
   (requires True)
@@ -509,7 +509,7 @@ let string_v #ty h s =
     seq_to_string s2
     end
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val wf_string_frame_invariant (#ty:buftype) (#length : G.erased size_nat)
                               (l : B.loc) (s : string ty length) (h0 h1 : mem) :
   Lemma (requires (
@@ -521,7 +521,7 @@ let wf_string_frame_invariant #ty #length l s h0 h1 = ()
 
 (**** Utilities *)
 (** Compute the length of a string *)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val string_get_length (#ty:buftype) (#length : G.erased size_nat) (s : string ty length) :
   Stack size_t
   (requires (fun h0 -> wf_string h0 s))
@@ -529,7 +529,7 @@ val string_get_length (#ty:buftype) (#length : G.erased size_nat) (s : string ty
     B.(modifies loc_none h0 h1) /\
     size_v l = G.reveal length))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val string_get_length_aux (#ty:buftype) (#length : G.erased size_nat)
                           (s : string ty length) (i : B.pointer size_t) :
   Stack unit
@@ -591,7 +591,7 @@ let string_get_length #ty #length s =
   i
 
 (** Copy a string *)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val string_copy (#ty :buftype) (#length : G.erased size_nat)
                 (o : string MUT length) (i : string ty length) :
   Stack unit
@@ -604,7 +604,7 @@ val string_copy (#ty :buftype) (#length : G.erased size_nat)
     B.(modifies (wf_string_loc o) h0 h1) /\
     wf_string_as_seq h1 o == wf_string_as_seq h0 i))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val string_copy_aux (#ty :buftype) (#length : G.erased size_nat)
                     (o : string MUT length) (i : string ty length)
                     (np : B.pointer size_t):
@@ -689,7 +689,7 @@ let string_copy #ty #length o i =
 
 /// When converting from bytes to string: we may need to check if the content of
 /// the buffer doesn't contain 0.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val bytes_no_zero (#ty:buftype) (l : size_t) (buf : buffer_t ty uint8) :
   Stack bool
   (requires (fun h0 -> live h0 buf /\ length buf == size_v l))
@@ -698,7 +698,7 @@ val bytes_no_zero (#ty:buftype) (l : size_t) (buf : buffer_t ty uint8) :
     (b <==> (forall (i:nat{i < size_v l}). uint_v (Seq.index (as_seq h1 buf) i) =!= 0))))
 
 // This can be generalized. No use for now though.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val bytes_no_zero_aux (#ty:buftype) (l : size_t)
                       (buf : buffer_t ty uint8)
                       (i : B.pointer size_t) :
@@ -816,28 +816,28 @@ type lstring (ty : buftype) : Type0 =
     is_string_or_null ty s.lstr_length s.lstr_str /\
     s.lstr_length <= max_string_length}
 
-// For the type abbreviation - TODO: make Kremlin inline the lstring_raw abbreviation
+// For the type abbreviation - TODO: make Karamel inline the lstring_raw abbreviation
 type noise_string = lstring MUT
 type noise_cstring = lstring CONST
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let lstring_null (ty : buftype) : lstring ty =
   {
     lstr_length = 0;
     lstr_str = null #ty char_t;
   }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_invariant (#ty : buftype) (h : mem) (str : lstring ty) : GTot Type0
 let lstring_invariant #ty h str =
   wf_string_or_null #ty #str.lstr_length h str.lstr_str
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_freeable (#ty : buftype) (str : lstring ty) : GTot Type0
 let lstring_freeable #ty str =
   buffer_or_null_freeable str.lstr_str
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let lstring_footprint (#ty : buftype) (str : lstring ty) : GTot B.loc =
   buffer_or_null_loc_addr str.lstr_str
 
@@ -856,7 +856,7 @@ noeq type hstring = {
   hstr_r_str : rid; // erased
 }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_invariant (h : mem) (str : hstring) : GTot Type0
 let hstring_invariant h str_p =
   let str = B.deref h str_p.hstr_ptr in
@@ -882,11 +882,11 @@ let hstring_invariant h str_p =
   region_includes str_p.hstr_r (B.loc_union str_p_loc str_loc)
   end
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let hstring_footprint (str : hstring) : GTot B.loc =
   region_to_loc str.hstr_r
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_v (#ty : buftype) (h : mem) (s : lstring ty) :
   Ghost string256
   (requires True)
@@ -914,7 +914,7 @@ let hstring_v h s =
   let str = B.deref h s.hstr_ptr in
   lstring_v h str
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_frame_invariant (#ty : buftype) (l : B.loc) (s : lstring ty) (h0 h1 : mem) :
   Lemma
   (requires (
@@ -927,7 +927,7 @@ val lstring_frame_invariant (#ty : buftype) (l : B.loc) (s : lstring ty) (h0 h1 
 
 let lstring_frame_invariant #ty l s h0 h1 = ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_frame_invariant (l : B.loc) (s : hstring) (h0 h1 : mem) :
   Lemma
   (requires (
@@ -945,7 +945,7 @@ inline_for_extraction
 type clstring = lstring CONST
 
 /// A stateful well-formed string.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_stateful (ty : buftype) : Impl.Noise.Stateful.stateful unit
 
 let lstring_stateful (ty : buftype) =
@@ -970,12 +970,12 @@ Stateful
   // frame freeable
   (fun #_ l s h0 h1 -> ())
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val clstring_stateful : Impl.Noise.Stateful.stateful unit
 
 let clstring_stateful = lstring_stateful CONST
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_free (ty : buftype{ty <> CONST}) : free_st (lstring_stateful ty)
 #push-options "--ifuel 1"
 let lstring_free ty _ s =
@@ -986,7 +986,7 @@ let lstring_free ty _ s =
     | MUT -> B.free (s.lstr_str <: buffer char_t)
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_clone_gen (ty0 ty1 : buftype) :
   r:rid ->
   input:lstring ty0 ->
@@ -1077,19 +1077,19 @@ let lstring_clone_gen ty0 ty1 r input =
       end
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_clone (ty : buftype) : clone_st (lstring_stateful ty)
 
 let lstring_clone ty #_ r (input : lstring ty) =
   lstring_clone_gen ty ty r input
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_to_bytes_seq (ty : buftype) : to_bytes_seq_t (lstring_stateful ty)
 
 let lstring_to_bytes_seq ty #i s =
   seq_char_to_uint8 (string_to_seq s)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_stateful : Impl.Noise.Stateful.stateful unit
 
 let hstring_stateful =
@@ -1115,7 +1115,7 @@ Stateful
   // frame freeable
   (fun #_ l s h0 h1 -> ())
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_clone : clone_st hstring_stateful
 let hstring_clone #_ r0 (input : hstring) =
   (**) let h0 = ST.get () in
@@ -1145,7 +1145,7 @@ let hstring_clone #_ r0 (input : hstring) =
 
 /// Rk.: we make the hypothesis that we don't need to free the pointer provided
 /// by the user.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_copy : copy_st hstring_stateful
 let hstring_copy _ out input =
   let r_str = out.hstr_r_str in
@@ -1153,7 +1153,7 @@ let hstring_copy _ out input =
   let out_str = lstring_clone_gen MUT MUT r_str input_str in
   B.upd out.hstr_ptr 0ul out_str
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_malloc : malloc_st hstring_stateful
 let hstring_malloc _ r0 =
   let r = new_region r0 in
@@ -1180,14 +1180,14 @@ let hstring_malloc _ r0 =
   (**) let h1 = ST.get () in
   out
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_free : free_st hstring_stateful
 let hstring_free _ s =
   let str = B.index s.hstr_ptr 0ul in
   lstring_free MUT () str;
   B.free s.hstr_ptr
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_malloc_from_input : malloc_from_input_st (lstring_stateful MUT) hstring_stateful
 let hstring_malloc_from_input _ r0 input =
   let r = new_region r0 in
@@ -1209,7 +1209,7 @@ let hstring_malloc_from_input _ r0 input =
   (**) let h1 = ST.get () in
   out
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_from_hstring : input_from_output_st (lstring_stateful MUT) hstring_stateful
 let lstring_from_hstring _ input =
   let lstr = B.index input.hstr_ptr 0ul in
@@ -1220,13 +1220,13 @@ let lstring_from_hstring _ input =
     lstr_str = str;
   }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_to_bytes_seq : to_bytes_seq_t hstring_stateful
 
 let hstring_to_bytes_seq #i s =
   seq_char_to_uint8 (string_to_seq s)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_to_bytes : to_bytes_st hstring_to_bytes_seq
 
 #push-options "--z3rlimit 100"
@@ -1274,7 +1274,7 @@ let hstring_to_bytes #i r out outlen s0 =
 #pop-options
 
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val clstring_cast_to_bytes : cast_to_bytes_st (lstring_to_bytes_seq MUT)
 
 let clstring_cast_to_bytes #i s0 =
@@ -1305,7 +1305,7 @@ let clstring_cast_to_bytes #i s0 =
       end
     end
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_cast_to_bytes : cast_to_bytes_st hstring_to_bytes_seq
 
 let hstring_cast_to_bytes #i s0 =
@@ -1329,7 +1329,7 @@ let hstring_cast_to_bytes #i s0 =
     (l, s)
     end
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val lstring_input_to_bytes_seq (ty : buftype) : input_to_bytes_seq_t (lstring_stateful ty) hstring_to_bytes_seq
 
 let lstring_input_to_bytes_seq ty #i s =
@@ -1341,7 +1341,7 @@ let lstring_input_to_bytes_seq ty #i s =
 // using const buffers is difficult, because Hacl* doesn't handle them,
 // and it would require a fair amount of updates. For now, we thus
 // use uint8* buffers everywhere (no char*, no const buffers).
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val hstring_smficc : Impl.Noise.Stateful.stateful_malloc_from_input_clone_copy unit
 
 let hstring_smficc =

@@ -9,7 +9,7 @@ module Impl.Noise.LinkedList
 /// - a non recursive version using a loop (only for [filter_one])
 ///
 /// The recursive versions don't extract, because they have non-extractable
-/// meta parameters in their signature, unless you ask Kremlin to turn tail-call
+/// meta parameters in their signature, unless you ask Karamel to turn tail-call
 /// recursion to loops at extraction time.
 ///
 /// It shouldn't be difficult to implement the tail-call version of
@@ -56,7 +56,7 @@ let _align_beg = ()
 noeq
 type t_ (t1: Type0): Type0 = {
   ptr: B.pointer (LL1.t t1);
-  // Relies on a new pointer-to-unit elimination phase in KreMLin
+  // Relies on a new pointer-to-unit elimination phase in KaRaMeL
   // LL1 requires the client to keep track of a high-level ghost list
   // of the low-level elements in the low-level linked lidt. We can
   // then convert them to a list of high-level elements

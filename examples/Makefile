@@ -1,8 +1,8 @@
 ## Flags and includes
 
 HACL_INCLUDES = \
-	-I$(HACL_HOME)/dist/kremlin/include \
-	-I$(HACL_HOME)/dist/kremlin/kremlib/dist/minimal
+	-I$(HACL_HOME)/dist/karamel/include \
+	-I$(HACL_HOME)/dist/karamel/krmllib/dist/minimal
 
 HACL_LIBS = \
 	-L$(HACL_HOME)/dist/gcc-compatible -levercrypt

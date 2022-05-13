@@ -4,8 +4,8 @@
 #ifndef __I1N_H
 #define __I1N_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "Noise_I1N.h"

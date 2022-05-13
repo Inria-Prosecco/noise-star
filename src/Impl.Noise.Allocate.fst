@@ -15,10 +15,10 @@ module B = LowStar.Buffer
 
 (*** Utilities *)
 
-[@@ noextract_to "Kremlin"] noextract unfold let region_to_loc = B.loc_all_regions_from false
-[@@ noextract_to "Kremlin"] noextract unfold let disjoint_regions r1 r2 = B.loc_disjoint (region_to_loc r1) (region_to_loc r2)
-[@@ noextract_to "Kremlin"] noextract unfold let region_includes r1 = B.loc_includes (region_to_loc r1)
-[@@ noextract_to "Kremlin"] noextract unfold let region_includes_region r1 r2 = B.loc_includes (region_to_loc r1) (region_to_loc r2)
+[@@ noextract_to "Karamel"] noextract unfold let region_to_loc = B.loc_all_regions_from false
+[@@ noextract_to "Karamel"] noextract unfold let disjoint_regions r1 r2 = B.loc_disjoint (region_to_loc r1) (region_to_loc r2)
+[@@ noextract_to "Karamel"] noextract unfold let region_includes r1 = B.loc_includes (region_to_loc r1)
+[@@ noextract_to "Karamel"] noextract unfold let region_includes_region r1 r2 = B.loc_includes (region_to_loc r1) (region_to_loc r2)
 unfold let region_includes_buffer r (#a:Type0) (#rrel #rel:B.srel a) (b:B.mbuffer a rrel rel) :
   GTot Type0 =
   if B.g_is_null b then region_includes r (B.loc_buffer b)
@@ -40,7 +40,7 @@ let region_is_child (r_parent r_child : rid) : GTot Type0 =
   r_child <> root /\
   region_includes_region r_parent r_child
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_region : r0:rid ->
   ST rid
   (requires (fun _ -> is_eternal_region r0))
@@ -53,7 +53,7 @@ let create_region r0 =
 
 (**** First flavour *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions2 : r0:rid ->
   ST (rid & rid)
   (requires (fun _ -> is_eternal_region r0))
@@ -73,7 +73,7 @@ let create_regions2 r0 =
   let r2 = new_region r0 in
   (r1, r2)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions3 : r0:rid ->
   ST (rid & rid & rid)
   (requires (fun _ -> is_eternal_region r0))
@@ -96,7 +96,7 @@ let create_regions3 r0 =
   let r3 = new_region r0 in
   (r1, r2, r3)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions4 : r0:rid ->
   ST (rid & rid & rid & rid)
   (requires (fun _ -> is_eternal_region r0))
@@ -122,7 +122,7 @@ let create_regions4 r0 =
   let r4 = new_region r0 in
   (r1, r2, r3, r4)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions5 : r0:rid ->
   ST (rid & rid & rid & rid & rid)
   (requires (fun _ -> is_eternal_region r0))
@@ -151,7 +151,7 @@ let create_regions5 r0 =
   let r5 = new_region r0 in
   (r1, r2, r3, r4, r5)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions6 : r0:rid ->
   ST (rid & rid & rid & rid & rid & rid)
   (requires (fun _ -> is_eternal_region r0))
@@ -183,7 +183,7 @@ let create_regions6 r0 =
   let r6 = new_region r0 in
   (r1, r2, r3, r4, r5, r6)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions10 : r0:rid ->
   ST (rid & rid & rid & rid & rid & rid & rid & rid & rid & rid)
   (requires (fun _ -> is_eternal_region r0))
@@ -227,7 +227,7 @@ let create_regions10 r0 =
   let r10 = new_region r0 in
   (r1, r2, r3, r4, r5, r6, r7, r8, r9, r10)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions12 : r0:rid ->
   ST (rid & rid & rid & rid & rid & rid & rid & rid & rid & rid & rid & rid)
   (requires (fun _ -> is_eternal_region r0))
@@ -283,7 +283,7 @@ let region_is_grandchild (r_parent r_child r_grandchild : rid) : GTot Type0 =
   region_is_child r_parent r_grandchild /\
   region_is_child r_child r_grandchild
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions_non_root_2 : r00:rid ->
   ST (rid & rid & rid)
   (requires (fun _ -> is_eternal_region r00))
@@ -305,7 +305,7 @@ let create_regions_non_root_2 r00 =
   let r2 = new_region r0 in
   (r0, r1, r2)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions_non_root_3 : r00:rid ->
   ST (rid & rid & rid & rid)
   (requires (fun _ -> is_eternal_region r00))
@@ -330,7 +330,7 @@ let create_regions_non_root_3 r00 =
   let r3 = new_region r0 in
   (r0, r1, r2, r3)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val create_regions_non_root_4 : r00:rid ->
   ST (rid & rid & rid & rid & rid)
   (requires (fun _ -> is_eternal_region r00))
@@ -360,7 +360,7 @@ let create_regions_non_root_4 r00 =
 
 (*** Allocation *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val malloc_gen :
   #a:Type0 -> r: rid -> l:B.loc -> init: a -> len: UInt32.t ->
   ST (b:B.buffer a{B.length b == UInt32.v len /\ not (B.g_is_null b)})
@@ -378,7 +378,7 @@ val malloc_gen :
 let malloc_gen #a r l init len =
   B.malloc r init len
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val malloc1 :
   #a:Type0 -> r: rid -> init: a -> len: UInt32.t ->
   ST (b:B.buffer a{B.length b == UInt32.v len /\ not (B.g_is_null b)})

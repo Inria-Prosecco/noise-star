@@ -165,7 +165,7 @@ let initialize_m
     smi.hsf.sk == false /\ smi.hsf.rs == false /\ smi.hsf.re == false /\ smi.hsf.psk == psk_b /\
     smi.hsf.s == s_b /\ smi.hsf.e == e_b
   );
-  (* We need to use a small trick to ensure the tuples will be inlined by Kremlin *)
+  (* We need to use a small trick to ensure the tuples will be inlined by Karamel *)
   (* TODO: find a way not to duplicate this piece of code *)
   let (mc_state, ms_ck, ms_h), (mspriv, mspub), (mepriv, mepub),
       mremote_static, mremote_ephemeral, mpreshared =
@@ -374,7 +374,7 @@ let csend_premessage_m_aux
   (**) csend_premessage_pre_lem hsk ir has_psk;
   (**) wf_handshake_pattern_pre_length_lem hsk;
   (**) csend_creceive_cexchange_smi_consistent_lem hsk has_psk;
-  (* We need to use a small trick to ensure the tuples will be inlined by Kremlin *)
+  (* We need to use a small trick to ensure the tuples will be inlined by Karamel *)
   let (mc_state, ms_ck, ms_h), (mspriv, mspub), (mepriv, mepub),
       mremote_static, mremote_ephemeral, mpreshared =
       handshake_state_t_to_m st
@@ -485,7 +485,7 @@ let creceive_premessage_m_aux
   (**) creceive_premessage_pre_lem hsk ir has_psk;
   (**) wf_handshake_pattern_pre_length_lem hsk;
   (**) csend_creceive_cexchange_smi_consistent_lem hsk has_psk;
-  (* We need to use a small trick to ensure the tuples will be inlined by Kremlin *)
+  (* We need to use a small trick to ensure the tuples will be inlined by Karamel *)
   let (mc_state, ms_ck, ms_h), (mspriv, mspub), (mepriv, mepub),
       mremote_static, mremote_ephemeral, mpreshared =
       handshake_state_t_to_m st
@@ -897,7 +897,7 @@ let creceive_message_m_aux
   [@inline_let] let inlen = with_norm(inlen_nn) in
   (**) creceive_message_pre_lem nc hsk i has_psk payload_outlen;
   (**) creceive_message_pre_post_smi_lem hsk i has_psk;
-  (* We need to use a small trick to ensure the tuples will be inlined by Kremlin *)
+  (* We need to use a small trick to ensure the tuples will be inlined by Karamel *)
   let (mc_state, ms_ck, ms_h), (mspriv, mspub), (mepriv, mepub),
       mremote_static, mremote_ephemeral, mpreshared =
       handshake_state_t_to_m st

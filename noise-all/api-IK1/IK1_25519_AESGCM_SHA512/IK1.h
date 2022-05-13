@@ -4,8 +4,8 @@
 #ifndef __IK1_H
 #define __IK1_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "Noise_IK1.h"

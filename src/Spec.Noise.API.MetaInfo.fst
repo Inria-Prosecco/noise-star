@@ -154,7 +154,7 @@ let key_slots_from_pattern (initiator : bool) (hsk : handshake_pattern) : key_sl
 /// The following helper computes the length of a message, without the payload.
 /// The total length of message i (starting from 0) is:
 /// [> payload_length + compute_message_length ...
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let compute_message_length
   (nc : config)
   (hsk : handshake_pattern)
@@ -173,7 +173,7 @@ let compute_message_length
   l1 + aead_length
 
 /// We use this helper to check that all patterns generate messages of length > 0
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let compute_min_message_length
   (hsk : handshake_pattern)
   (step : nat{step < List.Tot.length hsk.messages}) :
@@ -188,7 +188,7 @@ let compute_min_message_length
   let aead_length = if has_sym_key' then aead_tag_size else 0 in
   l1 + aead_length
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let compute_min_message_length_lem
   (nc : config)
   (hsk : handshake_pattern)

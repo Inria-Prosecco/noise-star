@@ -211,7 +211,7 @@ val lbuffer_or_unit_malloc_copy (#a : Type0) (#len : size_t{size_v len > 0}) (#b
     B.live h1 (lbuffer_or_unit_to_buffer o) /\
     lbuffer_or_unit_to_seq h1 o == lbuffer_or_unit_to_seq h0 i))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val sub_or_unit (#a : Type0)
                 (b : bool)
                 (input : buffer a)

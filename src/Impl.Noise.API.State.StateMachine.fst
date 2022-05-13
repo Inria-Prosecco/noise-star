@@ -51,7 +51,7 @@ module St = Impl.Noise.Stateful
 /// to minimize the conditions we require for the patterns, if we want to apply
 /// our extraction mechanism to all the valid patterns we can list, and we want to
 /// make sure we don't miss meaningful ones.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let check_pattern_messagei (hsk : handshake_pattern)
                            (is_psk : bool)
                            (init_lookups_psk resp_lookups_psk : bool)
@@ -104,7 +104,7 @@ let check_pattern_messagei (hsk : handshake_pattern)
   in
   b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && b10 && b11 && b12
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let rec check_pattern_aux
   (hsk : handshake_pattern)
   (is_psk : bool)
@@ -121,7 +121,7 @@ let rec check_pattern_aux
 /// The remote static and the psk must be loaded together, at the same time.
 /// In particular, if both are used, if one is loaded at initialization time,
 /// the other must be loaded at initialization time.
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let rs_and_psk_loaded_together (hsk : handshake_pattern) (initiator : bool) =
   let ks = key_slots_from_pattern initiator hsk in
   let knows_rs = knows_rs_at_init hsk initiator in
@@ -129,7 +129,7 @@ let rs_and_psk_loaded_together (hsk : handshake_pattern) (initiator : bool) =
   not (knows_rs && ks.ks_psk) || knows_psk &&
   not (knows_psk && ks.ks_rs) || knows_rs
 
-[@@ (strict_on_arguments [0]); noextract_to "Kremlin"]
+[@@ (strict_on_arguments [0]); noextract_to "Karamel"]
 inline_for_extraction noextract
 let check_pattern (hsk : handshake_pattern) =
   let is_psk = check_hsk_is_psk hsk in
@@ -157,11 +157,11 @@ let check_pattern (hsk : handshake_pattern) =
   rs_and_psk_loaded_together hsk false // not used in this file
 
 /// Sanity check
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let all_patterns_are_validb = List.Tot.for_all check_pattern Spec.Noise.Patterns.supported_patterns
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let invalid_patterns = List.Tot.filter (fun (x : wf_handshake_pattern) -> not (check_pattern x)) Spec.Noise.Patterns.supported_patterns
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let all_patterns_are_valid = check_bool all_patterns_are_validb
 
 val check_pattern_aux_i_lem (hsk : handshake_pattern) (i : nat{i <= List.Tot.length hsk.messages}) :
@@ -237,15 +237,15 @@ let isc_is_valid_compute (initiator : bool) (isc : isconfig) : GTot bool =
 // If we don't control the unfolding, type inferencing goes wild because
 // of the normalizer and definitions like [send_message_impls_aux] take half an hour
 // to lax check, if your computer's memory doesn't explode before.
-[@@ (strict_on_arguments [0; 1]); noextract_to "Kremlin"]
+[@@ (strict_on_arguments [0; 1]); noextract_to "Karamel"]
 inline_for_extraction noextract
 let isc_is_valid (initiator : bool) (isc : isconfig) : GTot (b:bool{b==isc_is_valid_compute initiator isc}) =
   isc_is_valid_compute initiator isc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type valid_isc (initiator : bool) = isc:isconfig{isc_is_valid initiator isc}
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let isc_step_to_smi_aux (initiator : bool)
                         (isc : isconfig)
                         (step :nat{step <= List.Tot.length (isc_get_pattern isc).messages}) :
@@ -270,7 +270,7 @@ let check_pattern_valid_meta_info_lem initiator isc i =
   isc_valid_meta_info_lem isc smi;
   isc_valid_meta_info_lem isc post_smi
 
-[@@ (strict_on_arguments [1; 2]); noextract_to "Kremlin"]
+[@@ (strict_on_arguments [1; 2]); noextract_to "Karamel"]
 inline_for_extraction noextract
 let isc_step_to_smi (#initiator : bool)
                     (isc : valid_isc initiator)
@@ -286,22 +286,22 @@ let isc_step_to_smi (#initiator : bool)
   end;
   smi
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let get_proper_isc (initiator:bool) (init_isc : valid_isc true) (resp_isc : valid_isc false) :
   valid_isc initiator =
   if initiator then init_isc else resp_isc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let get_send_isc (i:nat) (init_isc : valid_isc true) (resp_isc : valid_isc false) :
   valid_isc (i%2=0) =
   if i%2=0 then init_isc else resp_isc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let get_receive_isc (i:nat) (init_isc : valid_isc true) (resp_isc : valid_isc false) :
   valid_isc (i%2=1) =
   if i%2=0 then resp_isc else init_isc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type valid_init_isc = valid_isc true
 
 let resp_isc_is_valid (init_isc : valid_isc true) (resp_isc : valid_isc false) : GTot Type0 =
@@ -309,7 +309,7 @@ let resp_isc_is_valid (init_isc : valid_isc true) (resp_isc : valid_isc false) :
   isc_get_nc init_isc == isc_get_nc resp_isc /\
   isc_get_pinfo init_isc == isc_get_pinfo resp_isc
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type valid_resp_isc (init_isc : valid_isc true) =
   resp_isc:valid_isc false{resp_isc_is_valid init_isc resp_isc}
 
@@ -318,7 +318,7 @@ type valid_resp_isc (init_isc : valid_isc true) =
 /// will only be manipulated only in F* and will disappear at extraction time:
 /// we thus do something simple and handy.
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let send_messagei_impl
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc)
@@ -329,7 +329,7 @@ let send_messagei_impl
   [@inline_let] let isc = get_send_isc i init_isc resp_isc in
   send_message_st isc smi initiator i
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 noeq type send_message_impls_aux
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc) :
@@ -344,7 +344,7 @@ noeq type send_message_impls_aux
   sendl:send_message_impls_aux init_isc resp_isc (i+1) ->
   send_message_impls_aux init_isc resp_isc i
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let receive_no_split_messagei_impl
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc)
@@ -354,7 +354,7 @@ let receive_no_split_messagei_impl
   [@inline_let] let isc = get_receive_isc i init_isc resp_isc in
   receive_message_st isc smi i
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let receive_split_messagei_impls
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc)
@@ -367,7 +367,7 @@ let receive_split_messagei_impls
 /// This definition takes a long time to be checked by F*. It previously took
 /// a huge time (spent in F*, not Z3) but we made it bearable by abstracting
 /// the pre/postconditions for [receive_message_st] and [receive_message_tokens_nout_st]
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 noeq type receive_messagei_impl
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc) :
@@ -383,7 +383,7 @@ noeq type receive_messagei_impl
   receive:receive_split_messagei_impls init_isc resp_isc i ->
   receive_messagei_impl init_isc resp_isc i
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 noeq type receive_message_impls_aux
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc) :
@@ -399,13 +399,13 @@ noeq type receive_message_impls_aux
   receive_message_impls_aux init_isc resp_isc i
 
 #push-options "--fuel 1 --ifuel 1"
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type receive_message_impls
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc) : Type0 =
   receive_message_impls_aux init_isc resp_isc 0
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type send_message_impls
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc) : Type0 =
@@ -416,7 +416,7 @@ type send_message_impls
 /// post-process them so that:
 /// - all the meta parameters are normalized
 /// - the function bodies get flattened to remove recursion
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_send_messagei_impl (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
                           (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
                           (resp_isc : valid_resp_isc init_isc)
@@ -449,7 +449,7 @@ let mk_send_messagei_impl pattern init_isc resp_isc i ssdhi =
   (**)   st outlen out h0 (convert_type r) h1;
   convert_type r
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_no_split_messagei_impl
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -489,7 +489,7 @@ let mk_receive_no_split_messagei_impl pattern init_isc resp_isc i ssdhi =
 /// receive_split_messagei_impls_ty so that we can define the two function
 /// implementations separately.
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let receive_split_messagei_beg_impl
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc)
@@ -507,7 +507,7 @@ let receive_split_messagei_beg_impl
   [@inline_let] let tokens_end = with_onorm(snd(splitAtFirstElem S tokens)) in
   receive_message_tokens_nout_st_aux nc smi initiator is_psk tokens_beg
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let receive_split_messagei_end_impl
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc)
@@ -536,7 +536,7 @@ let receive_split_messagei_impls_consist_lem
     (receive_split_messagei_beg_impl init_isc resp_isc i &
      receive_split_messagei_end_impl init_isc resp_isc i)) = ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_split_messagei_beg_impl
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -578,7 +578,7 @@ let mk_receive_split_messagei_beg_impl pattern init_isc resp_isc i ssdhi =
 /// The critical thing is that the end list of tokens has to be inlined,
 /// so that we can flatten the call to the recursive
 /// receive_message_tokens_nout.
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_receive_split_messagei_end_impl_aux
   (init_isc : valid_init_isc)
   (resp_isc : valid_resp_isc init_isc)
@@ -612,7 +612,7 @@ let mk_receive_split_messagei_end_impl_aux init_isc resp_isc i ssdhi tokens_beg 
   (**)   st inlen input h0 (convert_type r) h1;
   convert_type r
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_split_messagei_end_impl
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -628,7 +628,7 @@ let mk_receive_split_messagei_end_impl pattern init_isc resp_isc i ssdhi =
     (with_norm (fst (splitAtFirstElem S (get_message pattern i))))
     (with_norm (snd (splitAtFirstElem S (get_message pattern i))))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_split_messagei_impls
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -641,7 +641,7 @@ let mk_receive_split_messagei_impls pattern init_isc resp_isc i ssdhi =
   mk_receive_split_messagei_beg_impl pattern init_isc resp_isc i ssdhi,
   convert_type (mk_receive_split_messagei_end_impl pattern init_isc resp_isc i ssdhi)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_messagei_impl
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -658,7 +658,7 @@ let mk_receive_messagei_impl pattern init_isc resp_isc i ssdhi =
     One_shot_receive i (mk_receive_no_split_messagei_impl pattern init_isc resp_isc i ssdhi)
 
 //[@@ (strict_on_arguments [3;4])] // TODO: actually blocks the normalization, probably because of the type refinements
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_send_message_impls_aux
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -680,7 +680,7 @@ let rec mk_send_message_impls_aux pattern init_isc resp_isc n i ssdhi =
     Send_message_i i impli (mk_send_message_impls_aux pattern init_isc resp_isc n (i+1) ssdhi)
 
 #push-options "--fuel 1 --ifuel 1" // to prove that the number of messages > 0
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_send_message_impls
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -698,7 +698,7 @@ let mk_send_message_impls pattern init_isc resp_isc ssdhi =
 #pop-options
 
 //[@@ (strict_on_arguments [3;4])] // TODO: actually blocks the normalization, probably because of the type refinements
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_message_impls_aux
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -720,7 +720,7 @@ let rec mk_receive_message_impls_aux pattern init_isc resp_isc n i ssdhi =
     Receive_message_i i impli (mk_receive_message_impls_aux pattern init_isc resp_isc n (i+1) ssdhi)
 
 #push-options "--fuel 1 --ifuel 1" // to prove that the number of messages > 0
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_message_impls
   (pattern : wf_handshake_pattern) // TODO: remove once we remove post-processing
   (init_isc : valid_init_isc{pattern == isc_get_pattern init_isc})
@@ -797,7 +797,7 @@ let mk_state_t_handshake_writei_post =
   mk_state_t_handshake_write_post
     #isc #initiator smi post_smi i payload_len payload st outlen out h0 res h1
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_handshake_writei :
      init_isc : valid_init_isc
   -> resp_isc : valid_resp_isc init_isc
@@ -870,7 +870,7 @@ let mk_state_t_handshake_writei =
 (*** Handshake read message i *)
 
 // TODO: move
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type state_t_handshake
   (init_isc : valid_init_isc) (resp_isc : valid_resp_isc init_isc) (initiator : bool) =
   st:state_t (get_proper_isc initiator init_isc resp_isc) initiator{state_t_is_handshake st}
@@ -882,12 +882,12 @@ let state_t_handshake_shared_props
   (st2 : state_t isc initiator{state_t_is_handshake st2}) : GTot Type0 =
   Impl.Noise.API.State.Base.state_t_handshake_shared_props st1 st2
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let isc_receive_validate
   (init_isc : valid_init_isc) (resp_isc : valid_resp_isc init_isc) (initiator : bool) =
   isc_validate (get_proper_isc initiator init_isc resp_isc)
 
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_state_t_handshake_readi_pre :
      init_isc : valid_init_isc
   -> resp_isc : valid_resp_isc init_isc
@@ -913,7 +913,7 @@ let mk_state_t_handshake_readi_pre =
 
   handshake_state_t_valid_values initiator i st false
 
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_state_t_handshake_readi_post :
      init_isc : valid_init_isc
   -> resp_isc : valid_resp_isc init_isc
@@ -1048,7 +1048,7 @@ let mk_state_t_handshake_readi_no_S_post =
   mk_state_t_handshake_readi_post
     init_isc resp_isc i vfunct vst pinfo payload_outlen payload_out st inlen input h0 res h1
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_handshake_readi_no_S :
      init_isc : valid_init_isc
   -> resp_isc : valid_resp_isc init_isc
@@ -1129,7 +1129,7 @@ let mk_state_t_handshake_readi_no_S =
 
   r
 
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_state_t_handshake_readi_with_S_pre :
      init_isc : valid_init_isc
   -> resp_isc : valid_resp_isc init_isc
@@ -1156,7 +1156,7 @@ let mk_state_t_handshake_readi_with_S_pre =
   List.Tot.mem S tokens
   end
 
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_state_t_handshake_readi_with_S_post :
      init_isc : valid_init_isc
   -> resp_isc : valid_resp_isc init_isc
@@ -1181,7 +1181,7 @@ let mk_state_t_handshake_readi_with_S_post =
 
 /// This function has effect ST and not Stack because copying the peer information
 /// might require stateful operations.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_handshake_readi_with_S :
      init_isc : valid_init_isc
   -> resp_isc : valid_resp_isc init_isc
@@ -1316,7 +1316,7 @@ let mk_state_t_handshake_writei_rec_post =
   mk_state_t_handshake_write_post
     #isc #initiator smi post_smi step payload_len payload st outlen out h0 res h1
 
-[@@ (strict_on_arguments [5]); noextract_to "Kremlin"]
+[@@ (strict_on_arguments [5]); noextract_to "Karamel"]
 inline_for_extraction noextract
 val mk_state_t_handshake_writei_rec :
      initiator:bool
@@ -1397,7 +1397,7 @@ let rec mk_state_t_handshake_writei_rec =
         mk_state_t_handshake_writei_rec initiator init_isc resp_isc (i+1) step impls' payload_len payload st outlen out <:
         s_result_code (state_t_handshake init_isc resp_isc initiator)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type state_t_handshake_write_rec_impl
      (initiator:bool)
      (init_isc:valid_init_isc)
@@ -1421,7 +1421,7 @@ type state_t_handshake_write_rec_impl
 // fields might be present or not) we need to add a meta parameter initiator.
 // This parameter will be dynamically resolved at the top-level functions by
 // performing a match on the state.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_handshake_write_rec
      (initiator : bool)
      (init_isc:valid_init_isc)
@@ -1439,7 +1439,7 @@ let mk_state_t_handshake_write_rec =
 
 (**** Handshake read *)
 
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_state_t_handshake_readi_rec_pre :
      initiator : bool
   -> init_isc : valid_init_isc
@@ -1473,7 +1473,7 @@ let mk_state_t_handshake_readi_rec_pre =
   Handshake_receive? (step_to_status initiator step_v)
   end
 
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_state_t_handshake_readi_rec_post :
      initiator : bool
   -> init_isc : valid_init_isc
@@ -1500,7 +1500,7 @@ let mk_state_t_handshake_readi_rec_post =
   mk_state_t_handshake_readi_post
     init_isc resp_isc step_v vfunct vst pinfo payload_outlen payload_out st inlen input h0 res h1
 
-[@@ (strict_on_arguments [5]); noextract_to "Kremlin"]
+[@@ (strict_on_arguments [5]); noextract_to "Karamel"]
 inline_for_extraction noextract
 val mk_state_t_handshake_readi_rec :
      initiator:bool
@@ -1620,7 +1620,7 @@ let rec mk_state_t_handshake_readi_rec =
         else mk_state_t_handshake_readi_rec initiator init_isc resp_isc (i+1) step impls' vfunct vst pinfo payload_outlen payload_out st inlen input
     else mk_state_t_handshake_readi_rec initiator init_isc resp_isc (i+1) step impls' vfunct vst pinfo payload_outlen payload_out st inlen input
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type state_t_handshake_read_rec_impl
   (initiator:bool)
   (init_isc:valid_init_isc)
@@ -1642,7 +1642,7 @@ type state_t_handshake_read_rec_impl
     mk_state_t_handshake_readi_rec_post
       initiator init_isc resp_isc 0 step vfunct vst pinfo payload_outlen payload_out st inlen input h0 res h1))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_handshake_read_rec
   (initiator:bool)
   (init_isc:valid_init_isc)

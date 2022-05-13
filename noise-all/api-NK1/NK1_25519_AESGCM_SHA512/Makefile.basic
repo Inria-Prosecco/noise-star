@@ -1,4 +1,4 @@
-# A basic Makefile that KreMLin copies in the output directory; this is not
+# A basic Makefile that KaRaMeL copies in the output directory; this is not
 # guaranteed to work and will only work well for very simple projects. This
 # Makefile uses:
 # - the custom C files passed to your krml invocation
@@ -11,7 +11,7 @@ ifeq (,$(HACL_HOME))
   $(error please define HACL_HOME to point to the root of your HACL* git checkout)
 endif
 
-CFLAGS 	+= -I. -I $(HACL_HOME)/dist/kremlin/include -I $(HACL_HOME)/dist/kremlin/kremlib/dist/minimal
+CFLAGS 	+= -I. -I $(HACL_HOME)/dist/karamel/include -I $(HACL_HOME)/dist/karamel/krmllib/dist/minimal
 CFLAGS 	+= -Wall -Wextra -Werror -std=c11 -Wno-unused-variable \
   -Wno-unknown-warning-option -Wno-unused-but-set-variable \
   -Wno-unused-parameter -Wno-infinite-recursion \

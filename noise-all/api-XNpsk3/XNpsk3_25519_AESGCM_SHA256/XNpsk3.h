@@ -4,8 +4,8 @@
 #ifndef __XNpsk3_H
 #define __XNpsk3_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "Noise_XNpsk3.h"

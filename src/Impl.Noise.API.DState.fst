@@ -67,7 +67,7 @@ let _align_fsti = ()
 (*** Configuration, policy *)
 
 #push-options "--ifuel 1"
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let apply_policy (idc : idconfig) :
   stateful_validation_state (idc_get_nc idc) (stateful_validation_info idc) =
 
@@ -206,7 +206,7 @@ noeq type dstate_t_raw
   -> dstate_t_raw id_t info_t istate_t ispriv_t ispub_t ipid_t ipinfo_t idv_t
                   rstate_t rspriv_t rspub_t rpid_t rpinfo_t rdv_t
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type dstate_t (idc : valid_idc) =
   dstate_t_raw 
     (dstate_id_t idc)
@@ -224,7 +224,7 @@ type dstate_t (idc : valid_idc) =
     (peer_info_t idc)
     (device_p idc)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let invert_dstate_t (idc : valid_idc) :
   Lemma
   (inversion (dstate_t idc))
@@ -240,7 +240,7 @@ noeq type dstate_p_or_null_raw (dstate_t : Type0) = {
   stp_r_pid : HS.rid;
 }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type dstate_p_or_null (idc : valid_idc) =
   dstate_p_or_null_raw (dstate_t idc)
 
@@ -275,7 +275,7 @@ type ddstate_t (idc : valid_idc) (initiator : bool) = {
   dds_st : state_t (idc_get_isc idc initiator) initiator;
 }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val gdestruct_dstate_t (#idc : valid_idc) (st : dstate_t idc) : GTot (gddstate_t idc)
 let gdestruct_dstate_t #idc st =
   match st with
@@ -288,7 +288,7 @@ let gdestruct_dstate_t #idc st =
       gdds_st = st; gdds_spriv = spriv; gdds_spub = spub;
       gdds_pid = pid; gdds_pinfo = pinfo; gdds_dv = dv }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_is_initiator :
      #idc:valid_idc
   -> st:dstate_t idc
@@ -296,7 +296,7 @@ val dstate_t_is_initiator :
 let dstate_t_is_initiator #idc st =
   DS_Initiator? st
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val destruct_dstate_t (#idc : valid_idc) (initiator : bool)
                       (st : dstate_t idc{initiator = dstate_t_is_initiator st}) :
     ddstate_t idc initiator
@@ -311,18 +311,18 @@ let destruct_dstate_t #idc initiator st =
       dds_spriv = spriv; dds_spub = spub;
       dds_pid = pid; dds_pinfo = pinfo; dds_dv = dv }
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_is_handshake (#idc : valid_idc) (st : dstate_t idc) : bool
 let dstate_t_is_handshake #idc st =
   match st with
   | DS_Initiator st id info spriv spub pid pinfo dv -> state_t_is_handshake st
   | DS_Responder st id info spriv spub pid pinfo dv -> state_t_is_handshake st
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let dstate_t_is_transport (#idc : valid_idc) (st : dstate_t idc) : GTot bool =
   not (dstate_t_is_handshake st)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_handshake_get_step :
      #idc:valid_idc
   -> st:dstate_t idc{dstate_t_is_handshake st}
@@ -332,7 +332,7 @@ let dstate_t_handshake_get_step #idc st =
   | DS_Initiator st id info spriv spub pid pinfo dv -> state_t_handshake_get_step st
   | DS_Responder st id info spriv spub pid pinfo dv -> state_t_handshake_get_step st
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_handshake_get_step_v :
      #idc:valid_idc
   -> st:dstate_t idc{dstate_t_is_handshake st}
@@ -343,7 +343,7 @@ let dstate_t_handshake_get_step_v #idc st =
 let mk_dstate_p_null (idc : valid_idc) : stp:dstate_p_or_null idc{dstate_p_g_is_null stp} =
   { stp = B.null; stp_r = root; stp_r_split = root; stp_r_pid = root; }
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_g_handshake_get_static :
      #idc:valid_idc
   -> st:dstate_t idc{dstate_t_is_handshake st}
@@ -356,13 +356,13 @@ let dstate_t_g_handshake_get_static #idc st =
   | DS_Initiator st id info spriv spub pid pinfo dv -> (spriv, spub)
   | DS_Responder st id info spriv spub pid pinfo dv -> (spriv, spub)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_get_device (#idc : valid_idc) (dst : dstate_t idc) : GTot (device_p idc)
 let dstate_t_get_device #idc dst =
   let Mkgddstate_t initiator id info spriv spub pid pinfo dv st = gdestruct_dstate_t dst in
   dv
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_get_state (#idc : valid_idc) (dst : dstate_t idc) :
   GTot (state_t (idc_get_isc idc (dstate_t_is_initiator dst)) (dstate_t_is_initiator dst))
 let dstate_t_get_state #idc dst =
@@ -373,7 +373,7 @@ let dstate_p_g_get_device #idc h dst_p =
   let dst = B.deref h dst_p.stp in
   dstate_t_get_device #idc dst
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_get_pid (#idc : valid_idc) (dst : dstate_t idc) :
   Tot (idc_get_pid idc).id_t
 let dstate_t_get_pid #idc dst =
@@ -381,14 +381,14 @@ let dstate_t_get_pid #idc dst =
   | DS_Initiator st id info spriv spub pid pinfo dv -> pid
   | DS_Responder st id info spriv spub pid pinfo dv -> pid
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_core_footprint (#idc : valid_idc) (st : dstate_t idc) : GTot B.loc
 let dstate_t_core_footprint #idc st =
   let Mkgddstate_t initiator id info spriv spub pid pinfo dv st = gdestruct_dstate_t st in
   B.(loc_union (state_t_core_footprint st)
     (loc_union (idc_get_info_footprint info) (idc_get_info_footprint pinfo)))
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_footprint (#idc : valid_idc) (st : dstate_t idc) : GTot B.loc
 let dstate_t_footprint #idc st =
   let Mkgddstate_t initiator id info spriv spub pid pinfo dv st = gdestruct_dstate_t st in
@@ -398,19 +398,19 @@ let dstate_t_footprint #idc st =
                (loc_union (idc_get_info_footprint info) (idc_get_info_footprint pinfo)))
                (loc_union (lbuffer_or_unit_to_loc spriv) (lbuffer_or_unit_to_loc spub)))
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_footprint_with_device (#idc : valid_idc) (dst : dstate_t idc) : GTot B.loc
 let dstate_t_footprint_with_device #idc dst =
   let Mkgddstate_t initiator id info spriv spub pid pinfo dv st = gdestruct_dstate_t dst in
   B.(loc_union (dstate_t_footprint dst) (device_p_region_of dv))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_has_static (#idc : valid_idc) (st : dstate_t idc) : bool
 let dstate_t_has_static #idc st =
   let initiator = dstate_t_is_initiator st in
   isc_get_s (idc_get_isc idc initiator)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val device_p_owns_dstate_t
   (#idc : valid_idc) (h : mem) (dvp : device_p idc) (st : dstate_t idc) : GTot Type0
 let device_p_owns_dstate_t #idc h dvp dst =
@@ -428,7 +428,7 @@ let device_p_owns_dstate_t #idc h dvp dst =
 /// Internally, any dstate_t will always satisfy this invariant when given to or
 /// returned by a function. The invariant revealed to the user is (very) slightly more
 /// precise.
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_invariant_core (#idc : valid_idc) (h : mem) (dst : dstate_t idc) : GTot Type0
 let dstate_t_invariant_core #idc h dst =
   let Mkgddstate_t initiator id info spriv spub pid pinfo dvp st = gdestruct_dstate_t dst in
@@ -469,7 +469,7 @@ let dstate_t_invariant_core #idc h dst =
 
   device_p_owns_dstate_t h dvp dst
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_invariant (#idc : valid_idc) (h : mem) (dst : dstate_t idc) : GTot Type0
 let dstate_t_invariant #idc h dst =
   dstate_t_invariant_core h dst /\
@@ -491,7 +491,7 @@ let dstate_t_invariant #idc h dst =
 /// This allows us to call functions which take a precondition on the step, without
 /// carrying cumbersome preconditions everywhere (and in the end all this is hidden
 /// from the user).
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let get_bounded_step (#isc : isconfig) (#initiator : bool)
                      (st:State.state_t isc initiator{state_t_is_handshake st}) : nat =
   let pattern =  isc_get_pattern isc in
@@ -500,7 +500,7 @@ let get_bounded_step (#isc : isconfig) (#initiator : bool)
   let n = List.Tot.length pattern.messages in
   if i > n then n else i  
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_v_aux (#idc : valid_idc) (h : mem)
                    (initiator : bool)
                    (st:State.state_t (idc_get_isc idc initiator) initiator)
@@ -540,14 +540,14 @@ let dstate_t_v_aux #idc h initiator st id info pid pinfo =
       dst_pinfo = pinfo_v;
     }
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_v (#idc : valid_idc) (h : mem) (st : dstate_t idc) : GTot (dstate_s idc)
 let dstate_t_v #idc h st =
   let Mkgddstate_t initiator id info spriv spub pid pinfo dv st = gdestruct_dstate_t st in
   dstate_t_v_aux #idc h initiator st id info pid pinfo
 
 // Sanity check
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_is_handshake_lem (#idc : valid_idc) (st : dstate_t idc) (h : mem) :
   Lemma
   (requires (dstate_t_invariant h st))
@@ -557,7 +557,7 @@ val dstate_t_is_handshake_lem (#idc : valid_idc) (st : dstate_t idc) (h : mem) :
 
 let dstate_t_is_handshake_lem #idc st h = ()
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_frame_invariant :
      #idc:valid_idc
   -> l:B.loc
@@ -597,7 +597,7 @@ let dstate_t_frame_invariant #idc l dst h0 h1 =
     end
 
 /// The finer frame invariant
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_frame_invariant_update_device
   (#idc : valid_idc) (l : B.loc) (st : dstate_t idc) (dvp : device_p idc) (h0 h1 : mem) :
   Lemma
@@ -636,19 +636,19 @@ let dstate_t_frame_invariant_update_device #idc l dst dvp0 h0 h1 =
     transport_state_t_frame_invariant #isc l #initiator st h0 h1
     end
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_p_core_footprint (#idc : valid_idc) (h : mem) (stp : dstate_p idc) : GTot B.loc
 let dstate_p_core_footprint #idc h stp =
   let st = B.deref h stp.stp in
   B.(loc_union (loc_addr_of_buffer stp.stp) (dstate_t_core_footprint st))
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_p_footprint (#idc : valid_idc) (h : mem) (stp : dstate_p idc) : GTot B.loc
 let dstate_p_footprint #idc h stp =
   let st = B.deref h stp.stp in
   B.(loc_union (loc_addr_of_buffer stp.stp) (dstate_t_footprint st))
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_p_footprint_with_device (#idc : valid_idc) (h : mem) (stp : dstate_p idc) : GTot B.loc
 let dstate_p_footprint_with_device #idc h stp =
   let st = B.deref h stp.stp in
@@ -662,14 +662,14 @@ let dstate_p_v #idc h stp =
   let st = B.deref h stp.stp in
   dstate_t_v h st
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val dstate_t_is_stuck (#idc : valid_idc) (st : dstate_t idc) : bool
 let dstate_t_is_stuck #idc st =
   [@inline_let] let n = with_onorm(List.Tot.length (idc_get_pattern idc).messages) in
   [@inline_let] let is_handshake_state = dstate_t_is_handshake st in
   is_handshake_state && UInt32.gte (dstate_t_handshake_get_step st) (size (n + 1))
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_is_stuck_lem (#idc : valid_idc) (st : dstate_t idc) (h : mem) :
   Lemma
   (requires (dstate_t_invariant h st))
@@ -684,14 +684,14 @@ let dstate_p_g_handshake_get_static #idc h stp =
   dstate_t_g_handshake_get_static st
 
 // Sanity check
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let dstate_p_g_is_initiator_lem (#idc : valid_idc) (stp : dstate_p idc) (h : mem) :
   Lemma (
     let st = B.deref h stp.stp in
     dstate_p_g_is_initiator h stp = dstate_t_is_initiator st) = ()
 
 // Sanity check
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let dstate_p_g_is_handshake_lem (#idc : valid_idc) (stp : dstate_p idc) (h : mem) :
   Lemma (
     let st = B.deref h stp.stp in
@@ -761,7 +761,7 @@ let dstate_p_is_stuck #idc st =
   dstate_t_is_stuck st
 
 // Sanity check
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let dstate_t_p_owns_dstate_p_lem
   (#idc : valid_idc) (h : mem) (stp : dstate_p idc) :
   Lemma (
@@ -782,7 +782,7 @@ let device_p_owns_dstate_p
   end
 
 // Sanity check
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let device_p_owns_dstate_p_lem
   (#idc : valid_idc) (h : mem) (dvp : device_p idc) (dstp : dstate_p idc) :
   Lemma (
@@ -818,7 +818,7 @@ let idc_pattern_length_not_zero (idc : valid_idc) :
   Lemma(List.Tot.length (idc_get_pattern idc).messages > 0) = ()
 #push-options
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let dstate_t_handshake_shared_props_base
   (#idc : valid_idc)
   (h1 h2 : mem)
@@ -839,7 +839,7 @@ let dstate_t_handshake_shared_props_base
   pinfo1 == pinfo2
   // The core footprint and the keys will be taken care of by the additional requirements
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let dstate_t_handshake_no_split_shared_props
   (#idc : valid_idc)
   (h1 h2 : mem)
@@ -851,7 +851,7 @@ let dstate_t_handshake_no_split_shared_props
   dstate_t_handshake_shared_props_base h1 h2 dst1 dst2 /\
   state_t_handshake_shared_props #isc #initiator (dstate_t_get_state dst1) (dstate_t_get_state dst2)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let dstate_t_handshake_shared_props
   (#idc : valid_idc)
   (r : rid) // some dynamic allocations might have happened because of split
@@ -870,7 +870,7 @@ let dstate_t_handshake_shared_props
                      (dstate_t_footprint dst2))
    end
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 let dstate_p_handshake_shared_props
   (#idc : valid_idc)
   (h1 h2 : mem)
@@ -907,7 +907,7 @@ let mk_dstate_p_get_status #idc dst_p =
 // If we are in the handshake phase, it depends on the current step.
 // In transport phase, it is always payload_len + aead_tag (note that the state
 // can't necessarily send/receive a message).
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_compute_next_message_len
   (#idc:valid_idc) (out : B.pointer size_t)
   (dst : dstate_t idc) (payload_len : size_t) :
@@ -1002,7 +1002,7 @@ let mk_dstate_p_get_peer_info #idc out stp =
 
 (**** Create, free *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 let dstate_t_create_st_pre :
      #idc:valid_idc
   -> r:HS.rid
@@ -1028,7 +1028,7 @@ let dstate_t_create_st_pre :
   end /\
   get_hash_pre (idc_get_nc idc)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 let dstate_t_create_st_post :
      #idc:valid_idc
   -> r:HS.rid
@@ -1070,7 +1070,7 @@ let dstate_t_create_st_post :
 
 /// The proof is too long if the lookup is performed in the create function:
 /// we thus split it.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_create_no_lookup :
      #idc:valid_idc
   -> ssi:ss_impls (idc_get_nc idc)
@@ -1131,7 +1131,7 @@ let lbuffer_or_unit_conditional_malloc_copy_relaxed #a #len #b1 b2 r init i =
 
 /// Another helper to remove as many stateful [if ... then ... else ...] as
 /// possible (cause proof explosions).
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val allocate_peer_info
   (#idc : valid_idc)
   (r_pinfo : HS.rid)
@@ -1419,7 +1419,7 @@ let mk_dstate_t_create_no_lookup #idc ssi initialize r dvp dv initiator epriv ep
   Res dst
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_create :
      #idc:valid_idc
   -> ssi:ss_impls (idc_get_nc idc)
@@ -1488,7 +1488,7 @@ let mk_dstate_t_create #idc ssi initialize r dvp initiator epriv epub pid =
     end
 #pop-options
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_create_not_stuck_lem
   (#idc : valid_idc)
   (h : mem) (stp : dstate_p idc)
@@ -1583,7 +1583,7 @@ let mk_dstate_p_create #idc ssi initialize initiator r0 dvp epriv epub pid =
    dst_p
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_free :
      #idc:valid_idc
   -> st:dstate_t idc ->
@@ -1633,7 +1633,7 @@ let mk_dstate_p_free #idc stp =
 
 (**** Handshake split *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_try_split :
      #idc : valid_idc
   -> split_impl:split_st (idc_get_nc idc)
@@ -1712,7 +1712,7 @@ let mk_dstate_t_try_split #idc split_impl r initiator prev_step dst =
   else dst
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_p_set_stuck :
      #idc : valid_idc
   -> st : dstate_p idc ->
@@ -1753,7 +1753,7 @@ let mk_dstate_p_set_stuck #idc dst_p =
 (**** Handshake send message *)
 
 /// To factorize the proofs, we fix the [initiator] value.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_handshake_write_aux :
      #idc : valid_idc
   -> initiator : bool
@@ -1892,7 +1892,7 @@ let mk_dstate_t_handshake_write_aux
     Res (mk_dstate_t_try_split #idc split_impl r initiator step dst1)
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 type dstate_t_handshake_write_st (idc : valid_idc) =
      r : rid
   -> payload_len : size_t
@@ -1941,7 +1941,7 @@ type dstate_t_handshake_write_st (idc : valid_idc) =
     | _ -> False
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_handshake_write (#idc : valid_idc) :
      impl_init : state_t_handshake_write_rec_impl true idc
   -> impl_resp : state_t_handshake_write_rec_impl false idc
@@ -2058,7 +2058,7 @@ let mk_dstate_p_handshake_write #idc impl_init impl_resp split_impl payload_len 
 (**** Handshake receive message *)
 
 /// Not used: purely a sanity check for the proof of handshake receive message
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val dstate_t_handshake_read_update_pinfo_lem
   (#idc : valid_idc) (dst : dstate_t idc{dstate_t_is_handshake dst})
   (inlen : size_t) (input : lbuffer uint8 inlen)
@@ -2100,7 +2100,7 @@ let dstate_t_handshake_read_update_pinfo_lem
 /// equality test [step = uint_to_t i] got reduced to [UInt32.v step = i].
 /// I tried wrapping this equality in a call to [norm] to protect it, but it didn't
 /// work, so I finally resorted to more precise calls to the normalizer.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val check_messagei_has_S_aux
   (idc : valid_idc)
   (i : nat{i < List.Tot.length (idc_get_pattern idc).messages})
@@ -2123,7 +2123,7 @@ let rec check_messagei_has_S_aux idc i step =
   if with_onorm (List.Tot.mem S msg)
   then b1 || step = UInt32.uint_to_t i else b1
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val check_messagei_has_S
   (idc : valid_idc)
   (step : UInt32.t{UInt32.v step < List.Tot.length (idc_get_pattern idc).messages}) :
@@ -2143,7 +2143,7 @@ let check_messagei_has_S idc step =
   (check_messagei_has_S_aux idc (n-1) step)
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 let mk_dstate_t_handshake_read_aux_no_split_st_gen_pre :
      #idc : valid_idc
   -> initiator : bool
@@ -2178,7 +2178,7 @@ let mk_dstate_t_handshake_read_aux_no_split_st_gen_pre :
   get_dh_pre (idc_get_nc idc) /\
   get_hash_pre (idc_get_nc idc)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 let mk_dstate_t_handshake_read_aux_no_split_st_post :
      #idc : valid_idc
   -> initiator : bool
@@ -2233,7 +2233,7 @@ let mk_dstate_t_handshake_read_aux_no_split_st_post :
   end
 
 /// To factorize the proofs, we fix the [initiator] value.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_handshake_read_aux_no_split_certify_static :
      #idc : valid_idc
   -> initiator : bool
@@ -2446,7 +2446,7 @@ let mk_dstate_t_handshake_read_aux_no_split_certify_static
 #pop-options
 
 /// To factorize the proofs, we fix the [initiator] value.
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_handshake_read_aux_no_split :
      #idc : valid_idc
   -> initiator : bool
@@ -2678,7 +2678,7 @@ let mk_dstate_t_handshake_read_aux_no_split
 
 /// To factorize the proofs, we fix the [initiator] value.
 #restart-solver
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_handshake_read_aux :
      #idc : valid_idc
   -> initiator : bool
@@ -2827,7 +2827,7 @@ let mk_dstate_t_handshake_read_aux
 
 /// To factorize the proofs, we fix the [initiator] value.
 #restart-solver
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type dstate_t_handshake_read_st (idc : valid_idc) =
      r : rid
   -> payload_outlen : size_t
@@ -2899,7 +2899,7 @@ type dstate_t_handshake_read_st (idc : valid_idc) =
     | _ -> False
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_handshake_read :
      #idc : valid_idc
   -> impl_init : state_t_handshake_read_rec_impl true idc
@@ -3079,7 +3079,7 @@ let mk_dstate_p_handshake_read
 
 (**** Transport send message *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type dstate_t_transport_write_st (idc : valid_idc) =
      plen : size_t
   -> p : lbuffer uint8 plen
@@ -3121,7 +3121,7 @@ type dstate_t_transport_write_st (idc : valid_idc) =
     | _ -> False
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_transport_write :
      #idc:valid_idc
   -> encrypt : iaead_encrypt_type (idc_get_nc idc) ->
@@ -3205,7 +3205,7 @@ let mk_dstate_p_transport_write #idc encrypt plen p clen c dst_p =
 
 (**** Transport receive message *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract unfold
+[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
 type dstate_t_transport_read_st (idc : valid_idc) =
      plen : size_t
   -> p : lbuffer uint8 plen
@@ -3247,7 +3247,7 @@ type dstate_t_transport_read_st (idc : valid_idc) =
     | _ -> False
     end))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_dstate_t_transport_read :
      #idc:valid_idc
   -> decrypt : iaead_decrypt_type (idc_get_nc idc) ->

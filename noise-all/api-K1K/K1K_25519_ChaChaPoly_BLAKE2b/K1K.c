@@ -25,7 +25,7 @@ Noise_K1K_error_code Noise_K1K___proj__Error__item___0(Noise_K1K_rcode projectee
     return projectee.val.case_Error;
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -47,7 +47,7 @@ Noise_K1K_error_code Noise_K1K___proj__Stuck__item___0(Noise_K1K_rcode projectee
     return projectee.val.case_Stuck;
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -69,7 +69,7 @@ uint8_t Noise_K1K___proj__Auth_level__item__l(Noise_K1K_ac_level_t projectee)
     return projectee.val.case_Auth_level;
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -91,7 +91,7 @@ uint8_t Noise_K1K___proj__Conf_level__item__l(Noise_K1K_ac_level_t projectee)
     return projectee.val.case_Conf_level;
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -1889,7 +1889,7 @@ Noise_K1K_session_t *Noise_K1K_session_create_initiator(Noise_K1K_device_t *dvp,
             }
             else
             {
-              KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+              KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
                 __FILE__,
                 __LINE__,
                 "unreachable (pattern matches are exhaustive in F*)");
@@ -2206,7 +2206,7 @@ Noise_K1K_session_t *Noise_K1K_session_create_responder(Noise_K1K_device_t *dvp,
             }
             else
             {
-              KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+              KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
                 __FILE__,
                 __LINE__,
                 "unreachable (pattern matches are exhaustive in F*)");
@@ -2305,7 +2305,7 @@ void Noise_K1K_session_free(Noise_K1K_session_t *sn)
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -2357,7 +2357,7 @@ void Noise_K1K_session_free(Noise_K1K_session_t *sn)
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -2376,7 +2376,7 @@ void Noise_K1K_session_free(Noise_K1K_session_t *sn)
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -2527,7 +2527,7 @@ state_handshake_write(
                   }
                 default:
                   {
-                    KRML_HOST_EPRINTF("KreMLin incomplete match at %s:%d\n", __FILE__, __LINE__);
+                    KRML_HOST_EPRINTF("KaRaMeL incomplete match at %s:%d\n", __FILE__, __LINE__);
                     KRML_HOST_EXIT(253U);
                   }
               }
@@ -2596,7 +2596,7 @@ state_handshake_write(
                   }
                 default:
                   {
-                    KRML_HOST_EPRINTF("KreMLin incomplete match at %s:%d\n", __FILE__, __LINE__);
+                    KRML_HOST_EPRINTF("KaRaMeL incomplete match at %s:%d\n", __FILE__, __LINE__);
                     KRML_HOST_EXIT(253U);
                   }
               }
@@ -2799,7 +2799,7 @@ state_handshake_write(
                 }
               default:
                 {
-                  KRML_HOST_EPRINTF("KreMLin incomplete match at %s:%d\n", __FILE__, __LINE__);
+                  KRML_HOST_EPRINTF("KaRaMeL incomplete match at %s:%d\n", __FILE__, __LINE__);
                   KRML_HOST_EXIT(253U);
                 }
             }
@@ -3051,7 +3051,7 @@ state_handshake_write(
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -3067,7 +3067,7 @@ state_handshake_write(
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -3804,7 +3804,7 @@ state_handshake_read(
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -3820,7 +3820,7 @@ state_handshake_read(
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -4043,7 +4043,7 @@ state_transport_write(
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -4137,7 +4137,7 @@ state_transport_read(
               }
             default:
               {
-                KRML_HOST_EPRINTF("KreMLin incomplete match at %s:%d\n", __FILE__, __LINE__);
+                KRML_HOST_EPRINTF("KaRaMeL incomplete match at %s:%d\n", __FILE__, __LINE__);
                 KRML_HOST_EXIT(253U);
               }
           }
@@ -4254,7 +4254,7 @@ state_transport_read(
               }
             default:
               {
-                KRML_HOST_EPRINTF("KreMLin incomplete match at %s:%d\n", __FILE__, __LINE__);
+                KRML_HOST_EPRINTF("KaRaMeL incomplete match at %s:%d\n", __FILE__, __LINE__);
                 KRML_HOST_EXIT(253U);
               }
           }
@@ -4308,7 +4308,7 @@ state_transport_read(
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -4565,7 +4565,7 @@ Noise_K1K_session_write(
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -4785,7 +4785,7 @@ Noise_K1K_session_write(
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -4794,7 +4794,7 @@ Noise_K1K_session_write(
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -4994,7 +4994,7 @@ Noise_K1K_session_read(
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5175,7 +5175,7 @@ Noise_K1K_session_read(
     }
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5184,7 +5184,7 @@ Noise_K1K_session_read(
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -5252,7 +5252,7 @@ Noise_K1K_session_compute_next_message_len(
         return false;
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5302,7 +5302,7 @@ Noise_K1K_session_compute_next_message_len(
         return false;
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5311,7 +5311,7 @@ Noise_K1K_session_compute_next_message_len(
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -5340,7 +5340,7 @@ Noise_K1K_status Noise_K1K_session_get_status(Noise_K1K_session_t *sn)
       return Noise_K1K_Transport;
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5362,7 +5362,7 @@ Noise_K1K_status Noise_K1K_session_get_status(Noise_K1K_session_t *sn)
       return Noise_K1K_Transport;
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5371,7 +5371,7 @@ Noise_K1K_status Noise_K1K_session_get_status(Noise_K1K_session_t *sn)
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -5428,7 +5428,7 @@ uint32_t Noise_K1K_session_get_id(Noise_K1K_session_t *sn)
     return st.val.case_DS_Responder.id;
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -5546,7 +5546,7 @@ void Noise_K1K_session_get_info(Noise_K1K_noise_string *out, Noise_K1K_session_t
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -5573,7 +5573,7 @@ uint32_t Noise_K1K_session_get_peer_id(Noise_K1K_session_t *sn)
     return st.val.case_DS_Responder.pid;
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -5708,7 +5708,7 @@ bool Noise_K1K_session_get_peer_info(Noise_K1K_noise_string *out, Noise_K1K_sess
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -5743,7 +5743,7 @@ bool Noise_K1K_session_reached_max_security(Noise_K1K_session_t *snp)
       return false;
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5759,7 +5759,7 @@ bool Noise_K1K_session_reached_max_security(Noise_K1K_session_t *snp)
       return false;
     else
     {
-      KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+      KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
         __FILE__,
         __LINE__,
         "unreachable (pattern matches are exhaustive in F*)");
@@ -5768,7 +5768,7 @@ bool Noise_K1K_session_reached_max_security(Noise_K1K_session_t *snp)
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -6022,7 +6022,7 @@ Noise_K1K_session_t
       }
       else
       {
-        KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+        KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
           __FILE__,
           __LINE__,
           "unreachable (pattern matches are exhaustive in F*)");
@@ -6060,7 +6060,7 @@ Noise_K1K_session_t
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");
@@ -6314,7 +6314,7 @@ Noise_K1K_session_t
       }
       else
       {
-        KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+        KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
           __FILE__,
           __LINE__,
           "unreachable (pattern matches are exhaustive in F*)");
@@ -6352,7 +6352,7 @@ Noise_K1K_session_t
   }
   else
   {
-    KRML_HOST_EPRINTF("KreMLin abort at %s:%d\n%s\n",
+    KRML_HOST_EPRINTF("KaRaMeL abort at %s:%d\n%s\n",
       __FILE__,
       __LINE__,
       "unreachable (pattern matches are exhaustive in F*)");

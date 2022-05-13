@@ -326,7 +326,7 @@ let hs_get_preshared (#nc : iconfig) (st : handshake_state_t nc) :
   sub st (hs_preshared_offs nc) preshared_key_vs
 
 (**** Conversion between type representations *)
-/// We use the fact that tuples are inlined by Kremlin to generate clean code.
+/// We use the fact that tuples are inlined by Karamel to generate clean code.
 
 (***** Key pair *)
 let keypair_mt_t_rel (#nc : iconfig) (mkp : keypair_m nc) (kp : keypair_t nc) : Type0 =

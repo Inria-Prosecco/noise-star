@@ -1,5 +1,5 @@
 module Impl.Noise.Stateful
-// TODO: move to HACL, F* or Kremlin
+// TODO: move to HACL, F* or Karamel
 
 open FStar.Mul
 open FStar.HyperStack

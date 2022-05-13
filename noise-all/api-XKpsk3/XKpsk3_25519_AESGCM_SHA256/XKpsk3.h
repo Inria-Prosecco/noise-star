@@ -4,8 +4,8 @@
 #ifndef __XKpsk3_H
 #define __XKpsk3_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "Hacl.h"

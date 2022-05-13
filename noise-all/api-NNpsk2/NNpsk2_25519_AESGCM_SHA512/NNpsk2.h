@@ -4,8 +4,8 @@
 #ifndef __NNpsk2_H
 #define __NNpsk2_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "Noise_NNpsk2.h"

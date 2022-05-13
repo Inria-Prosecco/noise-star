@@ -74,34 +74,34 @@ let session_create_responder =
   (initialize_handshake_state_m (ssdhi_get_ssi ssdhi))
 let session_free = mk_session_p_free
 
-[@@ (T.postprocess_with (normalize_messages_impl_list)); noextract_to "Kremlin"]
+[@@ (T.postprocess_with (normalize_messages_impl_list)); noextract_to "Karamel"]
 inline_for_extraction noextract
 let send_messages = mk_send_message_impls idc ssdhi
 
-[@@ (T.postprocess_with (normalize_messages_impl_list)); noextract_to "Kremlin"]
+[@@ (T.postprocess_with (normalize_messages_impl_list)); noextract_to "Karamel"]
 inline_for_extraction noextract
 let receive_messages = mk_receive_message_impls idc ssdhi
 
 [@@ (T.postprocess_with (normalize_read_write_message [`%send_messages; `%receive_messages]));
- noextract_to "Kremlin"]
+ noextract_to "Karamel"]
 inline_for_extraction noextract
 let state_handshake_init_write_rec =
   mk_state_t_handshake_write_rec true send_messages
 
 [@@ (T.postprocess_with (normalize_read_write_message [`%send_messages; `%receive_messages]));
- noextract_to "Kremlin"]
+ noextract_to "Karamel"]
 inline_for_extraction noextract
 let state_handshake_resp_write_rec =
   mk_state_t_handshake_write_rec false send_messages
 
 [@@ (T.postprocess_with (normalize_read_write_message [`%send_messages; `%receive_messages]));
- noextract_to "Kremlin"]
+ noextract_to "Karamel"]
 inline_for_extraction noextract
 let state_handshake_init_read_rec =
   mk_state_t_handshake_read_rec true receive_messages
 
 [@@ (T.postprocess_with (normalize_read_write_message [`%send_messages; `%receive_messages]));
- noextract_to "Kremlin"]
+ noextract_to "Karamel"]
 inline_for_extraction noextract
 let state_handshake_resp_read_rec =
   mk_state_t_handshake_read_rec false receive_messages

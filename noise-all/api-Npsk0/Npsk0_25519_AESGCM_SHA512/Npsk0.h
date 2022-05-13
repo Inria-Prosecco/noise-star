@@ -4,8 +4,8 @@
 #ifndef __Npsk0_H
 #define __Npsk0_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "Noise_Npsk0.h"

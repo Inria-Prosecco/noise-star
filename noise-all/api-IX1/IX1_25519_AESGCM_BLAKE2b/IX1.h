@@ -4,8 +4,8 @@
 #ifndef __IX1_H
 #define __IX1_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "Noise_IX1.h"

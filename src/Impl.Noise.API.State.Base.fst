@@ -210,7 +210,7 @@ let state_t_invariant_stateful (#isc : isconfig) (#initiator : bool) (m : mem) (
 let state_t_handshake_invariant_stateful_live_rs #isc m st = ()
 
 /// Build a meta handshake state from a state_t
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let state_t_get_hsm (#isc : isconfig) (#initiator : bool) (st : state_t isc initiator{IMS_Handshake? st}) :
   Tot (handshake_state_m (isc_get_nc isc)) =
   [@inline_let]
@@ -286,7 +286,7 @@ let transport_state_t_frame_invariant #isc l st h0 h1 = ()
 
 (*** Protocol name *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let compute_protocol_name_length
   (nc : config) (pattern_name : string{check_pattern_name pattern_name}) :
   Pure size_nat
@@ -298,7 +298,7 @@ let compute_protocol_name_length
   with_onorm(protocol_name_length (String.length pattern_name) nc)
 
 #push-options "--fuel 1 --ifuel 1"
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let compute_protocol_name_alloca
   (nc : iconfig) (pattern_name : string{check_pattern_name pattern_name}) :
   StackInline (hashable_t nc (size (compute_protocol_name_length (get_config nc) pattern_name)))
@@ -326,7 +326,7 @@ let compute_protocol_name_alloca
 (**** Premessages *)
 
 /// We don't support premessages which contain ephemerals for now
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_send_premessage_none :
   #nc : iconfig ->
   smi : Ghost.erased meta_info ->
@@ -348,7 +348,7 @@ val process_send_premessage_none :
 
 let process_send_premessage_none #nc smi st = success _
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_send_premessage_s :
   #nc : iconfig ->
   ssi : ss_impls nc ->
@@ -379,7 +379,7 @@ let process_send_premessage_s #nc ssi smi st =
   (**) hash_max_input_norm_lem (get_config nc);
   ssi_get_mix_hash ssi smi.hsf.sk (public_key_vs nc) k sym_st smi.nonce
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_send_premessage :
   #nc : iconfig ->
   ssi : ss_impls nc ->
@@ -408,7 +408,7 @@ let process_send_premessage #nc ssi smi tks st =
   | None -> process_send_premessage_none #nc smi st
   | Some [PS] -> process_send_premessage_s #nc ssi smi st
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_receive_premessage_none :
   #nc : iconfig ->
   smi : Ghost.erased meta_info ->
@@ -433,7 +433,7 @@ val process_receive_premessage_none :
 
 let process_receive_premessage_none #nc smi #rsb rs st = success _
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_receive_premessage_s :
   #nc : iconfig ->
   ssi : ss_impls nc ->
@@ -477,7 +477,7 @@ let process_receive_premessage_s #nc ssi smi rs st =
   (**) hash_max_input_norm_lem (get_config nc);
   ssi_get_mix_hash ssi smi.hsf.sk (public_key_vs nc) (rs <: buffer uint8) sym_st smi.nonce
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_receive_premessage :
   #nc : iconfig ->
   ssi : ss_impls nc ->
@@ -528,7 +528,7 @@ let process_receive_premessage #nc ssi smi tks #rsb rs (* #reb re *) st =
   | Some [PS] -> process_receive_premessage_s #nc ssi smi rs st
 
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_initiator_premessages :
   #nc : iconfig ->
   ssi : ss_impls nc ->
@@ -588,7 +588,7 @@ let process_initiator_premessages #nc ssi smi pattern #rsb rs st =
   process_receive_premessage ssi smi premessage_ri rs st
 
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_responder_premessages :
   #nc : iconfig ->
   ssi : ss_impls nc ->
@@ -653,7 +653,7 @@ let process_responder_premessages #nc ssi smi pattern #rsb rs st =
   process_send_premessage ssi smi premessage_ri st
 #pop-options
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let process_premessages_update_smi
   (pattern : wf_handshake_pattern{handshake_pattern_is_valid pattern})
   (initiator : bool)
@@ -675,7 +675,7 @@ let process_premessages_smi_pre
    rsb = true && no_remote_pretoken smi PS
    && is_valid_hsm (receive_pretoken_update_smi PS smi) st)  
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val process_premessages :
   #nc : iconfig ->
   ssi : ss_impls nc ->
@@ -730,7 +730,7 @@ let process_premessages #nc ssi smi pattern initiator #rsb rs st =
 
 (*** Create state *)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_malloc :
      #isc:isconfig
   -> r:HS.rid
@@ -846,7 +846,7 @@ val create_state_smi_process_premessages_lem
 
 let create_state_smi_process_premessages_lem isc initiator rsb pskb = ()
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_create_state_no_alloc :
      #isc:isconfig{isc_has_valid_pattern isc}
   -> ssi:ss_impls (isc_get_nc isc)
@@ -1045,7 +1045,7 @@ let mk_state_t_create_state =
 #pop-options
 
 (*** Free *)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_handshake_free :
      #isc:isconfig
   -> #initiator:bool
@@ -1069,7 +1069,7 @@ let mk_state_t_handshake_free #isc #initiator st =
   lbuffer_or_unit_free st_re;
   lbuffer_or_unit_free st_psk
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_state_t_transport_free :
      #isc:isconfig
   -> #initiator:bool
@@ -1143,7 +1143,7 @@ let check_input_output_len nc smi is_psk pat payload_len msg_len =
 // TODO: investigate why the unfolding gets stuck if i is strict
 // TODO: rewrite to not use options (possible if we apply the normalization
 // on partial applications)
-[@@ (strict_on_arguments [0]); noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ (strict_on_arguments [0]); noextract_to "Karamel"] inline_for_extraction noextract
 val compute_messagei_len
   (isc:isconfig) (i : nat) (step : size_t)
   (payload_len : size_t) :
@@ -1210,7 +1210,7 @@ let mk_state_t_compute_next_message_len #isc #initiator st payload_len out =
       end
     else false
 
-[@@ (strict_on_arguments [0]); noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ (strict_on_arguments [0]); noextract_to "Karamel"] inline_for_extraction noextract
 val compute_payloadi_len
   (isc:isconfig) (i : nat) (step : size_t)
   (message_len : size_t) :
@@ -1483,7 +1483,7 @@ let receive_message_tokens_nout_post_lem
 
 (**** receive_lookup: no S *)
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val mk_receive_lookup_message_tokens_with_payload_no_S_no_vst_pre :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1516,7 +1516,7 @@ let mk_receive_lookup_message_tokens_with_payload_no_S_no_vst_pre
 
   handshake_state_t_valid_values initiator i st false
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_lookup_message_tokens_with_payload_no_S_no_vst :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1634,7 +1634,7 @@ let mk_receive_lookup_message_tokens_with_payload_no_S_no_vst
     end
 #pop-options
 
-[@@ noextract_to "Kremlin"] noextract
+[@@ noextract_to "Karamel"] noextract
 val mk_receive_lookup_message_tokens_with_payload_no_S_pre :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1662,7 +1662,7 @@ let mk_receive_lookup_message_tokens_with_payload_no_S_pre
   B.loc_disjoint vst_footprint (B.loc_buffer (payload_out <: buffer uint8)) /\
   B.loc_disjoint vst_footprint (B.loc_buffer (input <: buffer uint8))
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_lookup_message_tokens_with_payload_no_S :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1736,7 +1736,7 @@ let mk_receive_lookup_message_tokens_with_payload_no_S
   r
 
 (**** receive_lookup: with S *)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_check_remote_static :
      #isc:isconfig
   -> smi:meta_info
@@ -1818,7 +1818,7 @@ let mk_check_remote_static #isc smi vfunct vst pinfo st =
   end;
   r
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_hs_state_receive_lookup_message_tokens_nout_with_payload_with_S_end :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -2021,7 +2021,7 @@ let mk_hs_state_receive_lookup_message_tokens_nout_with_payload_with_S_end
  * wrapped into another function which will make the link between the "nout"
  * versions of the receive functions and the "classical" one, and will perform
  * the dynamic checks to prove the preconditions. *)
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_hs_state_receive_lookup_message_tokens_nout_with_payload_with_S_beg_end :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -2283,7 +2283,7 @@ let mk_receive_lookup_message_tokens_with_payload_with_S_stateful_pre
   get_dh_pre (isc_get_nc isc) /\
   get_hash_pre (isc_get_nc isc)
 
-[@@ noextract_to "Kremlin"] noextract unfold
+[@@ noextract_to "Karamel"] noextract unfold
 val mk_receive_lookup_message_tokens_nout_with_payload_with_S_pre :
      #isc:isconfig
   -> #initiator:bool
@@ -2311,7 +2311,7 @@ let mk_receive_lookup_message_tokens_nout_with_payload_with_S_pre
 
   handshake_state_t_valid_values initiator i st false
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 val mk_receive_lookup_message_tokens_with_payload_with_S :
      #isc:isconfig
   -> #initiator:bool
@@ -2633,7 +2633,7 @@ let mk_state_t_split #isc #initiator smi split r st =
 (*** Transport *)
 (**** Utilities*)
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let aaead_check_size (a : aead_alg) (plen clen : size_t) :
   Pure bool (requires True)
   (ensures (fun b ->
@@ -2653,7 +2653,7 @@ let aaead_check_size (a : aead_alg) (plen clen : size_t) :
   (**) assert(b ==> size_v clen = size_v plen + aead_tag_size);
   b
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let aead_check_size (nc : iconfig) (plen clen : size_t) =
   aaead_check_size (get_aead_alg (get_config nc)) plen clen
 

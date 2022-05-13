@@ -37,14 +37,14 @@ let _ : squash(List.Tot.length pattern.messages = num_pattern_messages) =
 inline_for_extraction noextract
 let use_serialization = true
 
-[@@ noextract_to "Kremlin"] inline_for_extraction noextract
+[@@ noextract_to "Karamel"] inline_for_extraction noextract
 let idc_ : valid_idc =
   mk_idc inc pattern hstring_smficc (uint_id_cl U32) (uint_id_cl U32)
          (false_stateful_policy_function inc (with_onorm (check_hsk_is_psk pattern)))
          (false_certification_state inc hstring_smficc.St.smficc_stateful)
          use_serialization
 
-[@@ (strict_on_arguments [0]); noextract_to "Kremlin"]
+[@@ (strict_on_arguments [0]); noextract_to "Karamel"]
 inline_for_extraction noextract
 let idc () = idc_ ()
 

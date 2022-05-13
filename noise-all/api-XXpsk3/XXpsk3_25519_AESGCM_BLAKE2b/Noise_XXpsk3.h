@@ -4,8 +4,8 @@
 #ifndef __Noise_XXpsk3_H
 #define __Noise_XXpsk3_H
 #include <stdint.h>
-#include "kremlin/internal/target.h"
-#include "kremlin/internal/types.h"
+#include "karamel/internal/target.h"
+#include "karamel/internal/types.h"
 
 
 #include "EverCrypt.h"
