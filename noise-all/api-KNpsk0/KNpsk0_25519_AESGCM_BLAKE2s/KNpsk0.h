@@ -4,8 +4,8 @@
 #ifndef __KNpsk0_H
 #define __KNpsk0_H
 #include <stdint.h>
-#include "karamel/internal/target.h"
-#include "karamel/internal/types.h"
+#include "krml/internal/target.h"
+#include "krml/internal/types.h"
 
 
 #include "Hacl.h"

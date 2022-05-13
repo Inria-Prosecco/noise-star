@@ -4,8 +4,8 @@
 #ifndef __KKpsk0_H
 #define __KKpsk0_H
 #include <stdint.h>
-#include "karamel/internal/target.h"
-#include "karamel/internal/types.h"
+#include "krml/internal/target.h"
+#include "krml/internal/types.h"
 
 
 #include "Noise_KKpsk0.h"

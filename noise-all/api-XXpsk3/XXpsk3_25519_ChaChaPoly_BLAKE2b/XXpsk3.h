@@ -4,8 +4,8 @@
 #ifndef __XXpsk3_H
 #define __XXpsk3_H
 #include <stdint.h>
-#include "karamel/internal/target.h"
-#include "karamel/internal/types.h"
+#include "krml/internal/target.h"
+#include "krml/internal/types.h"
 
 
 #include "Hacl.h"

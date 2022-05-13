@@ -302,8 +302,8 @@ dist/core/Makefile.basic: $(filter-out %prims.krml,$(ALL_KRML_FILES)) $(HAND_WRI
 	  -library Hacl.* \
 	  -minimal \
 	  -add-include '<stdint.h>' \
-	  -add-include '"karamel/internal/target.h"' \
-	  -add-include '"karamel/internal/types.h"' \
+	  -add-include '"krml/internal/target.h"' \
+	  -add-include '"krml/internal/types.h"' \
 	  -o libnoisecore.a \
 	  $(KRML_FLAGS)
 
@@ -336,8 +336,8 @@ dist/api-%/Makefile.basic: $(filter-out %prims.krml,$(ALL_KRML_FILES)) $(HAND_WR
 	  -library Hacl.* \
 	  -minimal \
 	  -add-include '<stdint.h>' \
-	  -add-include '"karamel/internal/target.h"' \
-	  -add-include '"karamel/internal/types.h"' \
+	  -add-include '"krml/internal/target.h"' \
+	  -add-include '"krml/internal/types.h"' \
 	  -o libnoiseapi.a \
 	  $(KRML_FLAGS)
 

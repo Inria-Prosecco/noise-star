@@ -4,8 +4,8 @@
 #ifndef __NX_H
 #define __NX_H
 #include <stdint.h>
-#include "karamel/internal/target.h"
-#include "karamel/internal/types.h"
+#include "krml/internal/target.h"
+#include "krml/internal/types.h"
 
 
 #include "Noise_NX.h"

@@ -4,8 +4,8 @@
 #ifndef __K_H
 #define __K_H
 #include <stdint.h>
-#include "karamel/internal/target.h"
-#include "karamel/internal/types.h"
+#include "krml/internal/target.h"
+#include "krml/internal/types.h"
 
 
 #include "Hacl.h"

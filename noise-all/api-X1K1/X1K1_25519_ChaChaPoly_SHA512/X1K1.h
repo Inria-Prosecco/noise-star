@@ -4,8 +4,8 @@
 #ifndef __X1K1_H
 #define __X1K1_H
 #include <stdint.h>
-#include "karamel/internal/target.h"
-#include "karamel/internal/types.h"
+#include "krml/internal/target.h"
+#include "krml/internal/types.h"
 
 
 #include "Noise_X1K1.h"
