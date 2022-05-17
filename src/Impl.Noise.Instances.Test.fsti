@@ -27,7 +27,7 @@ private val _align_beg : unit
 (*** IKpsk2 *)
 (**** Handshake test *)
 #push-options "--z3rlimit 50 --ifuel 1"
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let perform_IKpsk2_handshake (is ie rs re : keypair Spec.wgc)
                              (psk : preshared_key)
                              (ts : Spec.timestamp) :
@@ -70,13 +70,13 @@ let perform_IKpsk2_handshake (is ie rs re : keypair Spec.wgc)
             Some (ist2, rst2)
 #pop-options
 
-[@@ noextract_to "Karamel"]
+[@@ noextract_to "krml"]
 inline_for_extraction noextract
 let timestamp_vsv = Spec.timestamp_size
 let timestamp_vs = size timestamp_vsv
 type timestamp_t = lbuffer uint8 timestamp_vs
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let cperform_IKpsk2_handshake_init_pre_pre
   (pname : hashable_t wg_inc 37ul) (prologue : hashable_t wg_inc 34ul)
   (is ie rs re : keypair_t wg_inc)
@@ -95,7 +95,7 @@ let cperform_IKpsk2_handshake_init_pre_pre
   h.[|ist|] `S.equal` (S.create (handshake_state_vsv wg_inc) (u8 0)) /\
   h.[|rst|] `S.equal` (S.create (handshake_state_vsv wg_inc) (u8 0))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let cperform_IKpsk2_handshake_initiation_pre
   (ts : timestamp_t)
   (ist rst : handshake_state_t wg_inc)
@@ -106,7 +106,7 @@ let cperform_IKpsk2_handshake_initiation_pre
   disjoint rst ts /\
   disjoint ist rst
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val cperform_IKpsk2_handshake
   (pname : hashable_t wg_inc 37ul) (prologue : hashable_t wg_inc 34ul)
   (is ie rs re : keypair_t wg_inc)

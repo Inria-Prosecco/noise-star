@@ -61,13 +61,13 @@ let _ : squash(
 /// In the case of IKpsk2, all the private key types are the same, and all the
 /// public key types are the same
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let private_key_t = sprivate_key_t idc true
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let public_key_t = spublic_key_t idc true
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let hashable_size_t = hashable_size_t (idc_get_nc idc)
 
 let _ : squash(knows_remote_at_init idc true = true) =
@@ -81,20 +81,20 @@ module Helpers = FStar.InteractiveHelpers
 open Lib.RandomSequence
 open Lib.RandomBuffer.System
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let message0_length : l:nat{l = compute_message_length idc 0} =
   (**) normalize_term_spec (compute_message_length idc 0);
   96
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let message0_len = size message0_length
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let message1_length : l:nat{l = compute_message_length idc 1} =
   (**) normalize_term_spec (compute_message_length idc 1);
   48
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let message1_len = size message1_length
 
 /// First test to check that the lemmas are correctly applied by the SMT.
@@ -102,7 +102,7 @@ let message1_len = size message1_length
 // TODO: relax the disjointness hypotheses
 #restart-solver
 #push-options "--z3rlimit 300"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let test1 (r0 : rid)
           (sk1 : aead_key_t)
           (spriv1 : private_key_t)
@@ -221,7 +221,7 @@ let test1 (r0 : rid)
 // in command line mode
 #restart-solver
 #push-options "--z3rlimit 5000"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let test2 (r0 : rid)
           (sk1 sk2 : aead_key_t)
           (spriv1 spriv2 : private_key_t)
@@ -353,8 +353,8 @@ let test2 (r0 : rid)
             | Success ->
               let inlen1 = B.index outlen_p 0ul in
               let msg1 = B.index temp1 0ul in
-              begin match session_read r11 encap1 sn1 inlen1 msg1 with
-              | Success ->
+              //begin match session_read r11 encap1 sn1 inlen1 msg1 with
+              //| Success ->
                 // The call to [session_free sn3/sn4] allows us to check that
                 // the invariants are correctly framed - the ones linking
                 // [dvp1] to [sn1] and [dvp2] to [sn2] are mostly preserved
@@ -380,8 +380,8 @@ let test2 (r0 : rid)
 //                if not (B.is_null (msg0 <: buffer uint8)) then B.free msg0;
 //                if not (B.is_null (msg1 <: buffer uint8)) then B.free msg1;
                 true
-              | _ -> false
-              end
+              //| _ -> false
+              //end
             | _ -> false
             end
           | _ -> false
@@ -403,7 +403,7 @@ let test2 (r0 : rid)
 /// Third toy example: check SMT patterns on code which interleaves sessions/peers
 /// deletion and creation
 #restart-solver
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let test3 (r0 : rid)
           (sk1 : aead_key_t)
           (spriv0 : private_key_t)
@@ -490,10 +490,10 @@ let test3 (r0 : rid)
 
 /// Fourth toy example: functional correctness.
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let wg_dc = idc_get_dc idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let wg_nc = idc_get_config idc
 
 module DS = Spec.Noise.API.Device.Definitions
@@ -501,7 +501,7 @@ module S = Spec.Noise.API.Session
 
 /// We only test the boolean returned by this function, but this is enough
 /// to test what we want.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let test4_spec
   (sk1 sk2 : aead_key)
   (spriv1 spriv2 : private_key wg_nc)
@@ -545,7 +545,7 @@ let test4_spec
 /// debug the SMT patterns and the signatures, and will be useful to debug
 /// them in the future if they are modified.
 #push-options "--z3rlimit 200"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let test4 (r0 : rid)
           (sk1 sk2 : aead_key_t)
           (spriv1 spriv2 : private_key_t)

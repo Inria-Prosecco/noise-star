@@ -62,20 +62,20 @@ val _align_fsti : unit
 /// memory (i.e.: less than 32 bits), so we don't need to care about using a bit
 /// encoding.
 
-#push-options "--__temp_no_proj Impl.Noise.API.Session" // Don't generate projectors
+//#push-options "--__temp_no_proj Impl.Noise.API.Session" // Don't generate projectors
 inline_for_extraction
 type rcode =
 | Success
 | Error of error_code
 | Stuck of error_code
-#pop-options
+//#pop-options
 
 (*** General Utilities *)
 
 /// The following helper computes the length of a message, without the payload.
 /// The total length of message i (starting from 0) is:
 /// [> payload_length + compute_message_length ...
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let compute_message_length
   (idc : idconfig)
   (step : nat{step < List.Tot.length (idc_get_pattern idc).messages}) :
@@ -85,42 +85,42 @@ let compute_message_length
 (*** Session *)
 (**** Types and predicates *)
 // We reveal this definition just to allow type renaming - for better code generation
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val session_t (idc : valid_idc) : Type0
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val session_p_or_null (idc : valid_idc) : Type0
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_g_is_null (#idc : valid_idc) (sn : session_p_or_null idc) : GTot bool
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type session_p (idc : valid_idc) =
   sn:session_p_or_null idc{not (session_p_g_is_null sn)}
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 type session_s (idc : valid_idc) = session (idc_get_dc idc)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_v (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot (session_s idc)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_invariant (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot Type0
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_is_gstuck (#idc : valid_idc) (h : mem) (st : session_p idc) : GTot bool
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val session_p_is_stuck (#idc : valid_idc) (st : session_p idc) :
   Stack bool (requires (fun h0 -> session_p_invariant h0 st))
   (ensures (fun h0 b h1 ->
     B.(modifies loc_none h0 h1) /\
     b = session_p_is_gstuck h0 st))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_live (#idc : valid_idc) (h : mem) (sn : session_p_or_null idc) :
   GTot Type0
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val session_p_is_null (#idc : valid_idc) (sn : session_p_or_null idc) :
   Stack bool
   (requires (fun h0 ->
@@ -128,51 +128,51 @@ val session_p_is_null (#idc : valid_idc) (sn : session_p_or_null idc) :
   (ensures (fun h0 b h1 ->
     h0 == h1 /\ b == session_p_g_is_null sn))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_g_get_device (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot (device_p idc)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_rid_of (#idc : valid_idc) (sn : session_p idc) : GTot HS.rid
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_region_of (#idc : valid_idc) (sn : session_p idc) : GTot B.loc =
   region_to_loc (session_p_rid_of sn)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_or_null_region_of (#idc : valid_idc) (sn : session_p_or_null idc) : GTot B.loc =
   if session_p_g_is_null sn then B.loc_none
   else session_p_region_of sn
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_region_with_device (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot B.loc =
   B.loc_union (session_p_region_of sn)
               (device_p_region_of (session_p_g_get_device h sn))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_or_null_region_with_device (#idc : valid_idc) (h : mem) (sn : session_p_or_null idc) :
   GTot B.loc =
   if session_p_g_is_null sn then B.loc_none
   else session_p_region_with_device h sn
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_g_is_initiator (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot bool =
   let sn_v = session_p_v h sn in
   session_is_initiator sn_v
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_g_is_handshake (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot bool =
   let sn_v = session_p_v h sn in
   session_is_handshake sn_v
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_g_is_transport (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot bool =
   not (session_p_g_is_handshake h sn)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val device_p_owns_session_p
   (#idc : valid_idc) (h : mem) (dvp : device_p idc) (sn : session_p idc) : GTot Type0
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val device_p_owns_session_p_lem
   (#idc : valid_idc) (h : mem) (dvp : device_p idc) (sn : session_p idc) :
   Lemma
@@ -180,14 +180,14 @@ val device_p_owns_session_p_lem
   (ensures (session_p_g_get_device h sn == dvp))
   [SMTPat (device_p_owns_session_p h dvp sn)]
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_invariant_live_lem (#idc : valid_idc) (h : mem) (sn : session_p idc) :
   Lemma
   (requires (session_p_invariant h sn))
   (ensures (session_p_live h sn))
   [SMTPat (session_p_invariant h sn)]
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_or_null_v
   (#idc : valid_idc) (h : mem)
   (sn : session_p_or_null idc) :
@@ -199,7 +199,7 @@ let session_p_or_null_v
 /// [session_p_or_null_invariant] in the post-conditions, rather than the more
 /// specific [session_p_invariant]. As the patterns are written in a forward style,
 /// we will however use [session_p_invariant] in the preconditions, whenever possible.
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_or_null_invariant
   (#idc : valid_idc) (h : mem)
   (sn : session_p_or_null idc)
@@ -221,7 +221,7 @@ let session_p_or_null_invariant
 
 /// The first, coarse grain frame lemma. Useless if the device gets modified
 /// by adding/removing peers.
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_frame_invariant :
      #idc:valid_idc
   -> l:B.loc
@@ -239,7 +239,7 @@ val session_p_frame_invariant :
     session_p_region_with_device h1 sn == session_p_region_with_device h0 sn))
 
 /// The finer frame lemma
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_frame_invariant_update_device
   (#idc : valid_idc) (l : B.loc) (sn : session_p idc) (dvp : device_p idc) (h0 h1 : mem) :
   Lemma
@@ -258,7 +258,7 @@ val session_p_frame_invariant_update_device
 /// This lemma frames the invariant in case the modified locs are disjoint
 /// from both the session and the device. The SMT patterns were carefully
 /// tested.
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_or_null_frame_invariant :
      #idc:valid_idc
   -> l:B.loc
@@ -278,7 +278,7 @@ val session_p_or_null_frame_invariant :
    SMTPat (B.modifies l h0 h1)]
 
 /// This lemma frames the invariant in case the device is modified.
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_or_null_frame_invariant_update_device :
      #idc:valid_idc
   -> l:B.loc
@@ -301,7 +301,7 @@ val session_p_or_null_frame_invariant_update_device :
    SMTPat (device_p_only_changed_peers_or_counters dvp h0 h1);
    SMTPat (device_p_invariant h1 dvp)]
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val session_p_g_get_device_disjoint_regions :
      #idc:valid_idc
   -> sn:session_p idc
@@ -315,7 +315,7 @@ val session_p_g_get_device_disjoint_regions :
   [SMTPat (session_p_invariant h0 sn); SMTPat (session_p_g_get_device h0 sn)]
 
 // Recall lemma for the session region
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val session_p_recall_region (#idc : valid_idc) (sn : session_p idc) :
   Stack unit
   (requires (fun h0 ->
@@ -334,7 +334,7 @@ val session_p_recall_region (#idc : valid_idc) (sn : session_p idc) :
      Monotonic.HyperHeap.disjoint (get_tip h1) (session_p_rid_of sn))))
 
 (**** Session utilities *)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_get_status_st (idc : valid_idc) =
   sn : session_p idc ->
   Stack status
@@ -350,7 +350,7 @@ type session_p_get_status_st (idc : valid_idc) =
     | _ -> False    
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_get_status :
   #idc : valid_idc ->
   session_p_get_status_st idc
@@ -359,7 +359,7 @@ val mk_session_p_get_status :
 // If we are in the handshake phase, it depends on the current step.
 // In transport phase, it is always payload_len + aead_tag (note that the state
 // can't necessarily send/receive a message).
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_compute_next_message_len_st (idc : valid_idc) =
      out : B.pointer size_t
   -> sn : session_p idc
@@ -385,12 +385,12 @@ type session_p_compute_next_message_len_st (idc : valid_idc) =
     else True
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_compute_next_message_len :
   #idc:valid_idc ->
   session_p_compute_next_message_len_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_get_hash_st (idc : valid_idc) =
      out: hash_t (idc_get_nc idc)
   -> sn : session_p idc ->
@@ -406,17 +406,17 @@ type session_p_get_hash_st (idc : valid_idc) =
     as_seq h1 out == session_get_hash sn_v
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_get_hash :
      #idc : valid_idc
   -> session_p_get_hash_st idc
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let session_p_g_get_id (#idc : valid_idc) (h : mem) (sn : session_p idc) : GTot state_id =
   let sn_v = session_p_v h sn in
   session_get_id sn_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_get_id_st (idc : valid_idc) =
   sn:session_p idc ->
   Stack (session_id_t idc)
@@ -425,18 +425,18 @@ type session_p_get_id_st (idc : valid_idc) =
     h1 == h0 /\
     session_id_v id = session_p_g_get_id h0 sn))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_get_id :
   #idc:valid_idc ->
   session_p_get_id_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let session_p_g_get_info (#idc : valid_idc) (h : mem) (sn : session_p idc) :
   GTot (idc_get_dc idc).dc_info =
   let sn_v = session_p_v h sn in
   session_get_info sn_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_get_info_st (idc : valid_idc) =
   // We copy the session information to out
   out:info_t idc ->
@@ -452,18 +452,18 @@ type session_p_get_info_st (idc : valid_idc) =
     info_invariant h1 out /\
     info_v h1 out == session_p_g_get_info h0 sn))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_get_info :
   #idc:valid_idc ->
   session_p_get_info_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let session_p_g_get_peer_id_v (#idc : valid_idc) (h : mem) (sn : session_p idc) :
   GTot (option peer_id) =
   let sn_v = session_p_v h sn in
   session_get_peer_id sn_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_get_peer_id_st (idc : valid_idc) =
   sn:session_p idc ->
   Stack (peer_id_opt_t idc)
@@ -473,18 +473,18 @@ type session_p_get_peer_id_st (idc : valid_idc) =
     h1 == h0 /\
     peer_id_opt_v pid = session_p_g_get_peer_id_v h0 sn))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_get_peer_id :
   #idc:valid_idc ->
   session_p_get_peer_id_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let session_p_g_get_peer_info (#idc : valid_idc) (h : mem) (sn : session_p idc) :
   GTot (option (idc_get_dc idc).dc_info) =
   let sn_v = session_p_v h sn in
   session_get_peer_info sn_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_get_peer_info_st (idc : valid_idc) =
   // We copy the session information to out
   out:info_t idc ->
@@ -504,12 +504,12 @@ type session_p_get_peer_info_st (idc : valid_idc) =
     | None -> not b /\ info_v h1 out == info_v h0 out
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_get_peer_info :
   #idc:valid_idc ->
   session_p_get_peer_info_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_reached_max_security_st (idc : valid_idc) =
   sn:session_p idc ->
   Stack bool
@@ -519,7 +519,7 @@ type session_p_reached_max_security_st (idc : valid_idc) =
     h1 == h0 /\
     b == session_reached_max_security (session_p_v h0 sn)))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_reached_max_security :
   #idc:valid_idc ->
   session_p_reached_max_security_st idc
@@ -541,13 +541,13 @@ type auth_level_t = s:UInt8.t{UInt8.v s <= max_auth_level}
 [@CMacro] let conf_strong_forward_secrecy : conf_level_t = UInt8.uint_to_t 5
 [@CMacro] let max_conf_level : conf_level_t = UInt8.uint_to_t max_conf_level
 
-#push-options "--__temp_no_proj Impl.Noise.API.Session" // Don't generate projectors
+//#push-options "--__temp_no_proj Impl.Noise.API.Session" // Don't generate projectors
 inline_for_extraction // inline the projectors
 type ac_level_t : Type0 =
 | Auth_level : l:auth_level_t -> ac_level_t
 | Conf_level : l:conf_level_t -> ac_level_t
 | No_level : ac_level_t
-#pop-options
+//#pop-options
 
 let ac_level_t_v (lvl : ac_level_t) : GTot ac_level  =
   match lvl with
@@ -559,7 +559,7 @@ val encap_message_p_or_null : Type0
 
 val encap_message_p_g_is_null (emp : encap_message_p_or_null) : GTot bool
 val encap_message_p_live (h : HS.mem) (emp : encap_message_p_or_null) : GTot Type0
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val encap_message_p_null : (emp:encap_message_p_or_null{encap_message_p_g_is_null emp})
 val encap_message_p_null_is_live (h : mem) :
   Lemma(encap_message_p_live h encap_message_p_null)
@@ -767,7 +767,7 @@ val unsafe_unpack_message :
 
 (**** Session: create/free *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 let session_p_create_post :
      #idc:valid_idc
   -> initiator:bool
@@ -808,7 +808,7 @@ let session_p_create_post :
     G.reveal (B.deref h1 (entropy_p <: B.buffer (G.erased entropy))) == entr'
   end
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_create_st (idc : valid_idc) (initiator : bool) =
      r:HS.rid
   -> dvp:device_p idc // TODO: may be none in the future
@@ -848,7 +848,7 @@ type session_p_create_st (idc : valid_idc) (initiator : bool) =
   (ensures (fun h0 sn h1 ->
    session_p_create_post #idc initiator r dvp pid h0 sn h1))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_create :
      #idc:valid_idc
   -> #initiator:bool
@@ -856,7 +856,7 @@ val mk_session_p_create :
   -> initialize:initialize_handshake_state_st (idc_get_nc idc)
   -> session_p_create_st idc initiator
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_free_st (idc : valid_idc) =
   sn:session_p idc ->
   ST unit
@@ -865,14 +865,14 @@ type session_p_free_st (idc : valid_idc) =
   (ensures (fun h0 res h1 ->
     B.(modifies (session_p_region_of sn) h0 h1)))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_free :
      #idc:valid_idc
   -> session_p_free_st idc
 
 (**** Session: messages *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 let session_p_write_pre (idc : valid_idc) :
      payload : encap_message_p
   -> sn : session_p idc
@@ -898,7 +898,7 @@ let session_p_write_pre (idc : valid_idc) :
   get_dh_pre (idc_get_nc idc) /\
   get_hash_pre (idc_get_nc idc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 let session_p_write_post (idc : valid_idc) :
      payload : encap_message_p
   -> sn : session_p idc
@@ -939,7 +939,7 @@ let session_p_write_post (idc : valid_idc) :
   | _ -> False
   end
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type session_p_write_st (idc : valid_idc) =
      payload : encap_message_p
   -> sn : session_p idc
@@ -952,14 +952,14 @@ type session_p_write_st (idc : valid_idc) =
   (ensures (fun h0 res h1 ->
     session_p_write_post idc payload sn r out_len out h0 res h1))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_write :
      #idc : valid_idc
   -> handshake_write_impl : dstate_p_handshake_write_st idc
   -> transport_write_impl : dstate_p_transport_write_st idc
   -> session_p_write_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 let session_p_read_pre (idc : valid_idc) :
      r : HS.rid
   -> payload_out : B.pointer encap_message_p_or_null
@@ -987,7 +987,7 @@ let session_p_read_pre (idc : valid_idc) :
   get_dh_pre (idc_get_nc idc) /\
   get_hash_pre (idc_get_nc idc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 let session_p_read_post (idc : valid_idc) :
      r : HS.rid
   -> payload_out : B.pointer encap_message_p_or_null
@@ -1037,7 +1037,7 @@ let session_p_read_post (idc : valid_idc) :
   | _ -> False
   end
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 let session_p_read_st (idc : valid_idc) =
      r : HS.rid
   -> payload_out : B.pointer encap_message_p_or_null
@@ -1050,7 +1050,7 @@ let session_p_read_st (idc : valid_idc) =
   (ensures (fun h0 res h1 ->
     session_p_read_post idc r payload_out sn_p inlen input h0 res h1))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_read :
      #idc : valid_idc
   -> handshake_read_impl : dstate_p_handshake_read_st idc

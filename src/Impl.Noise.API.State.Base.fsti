@@ -56,7 +56,7 @@ module St = Impl.Noise.Stateful
 /// which is the union of all the possible errors.
 /// However, we define some refined types to implement the spec error codes as subsets
 /// of this low-level error-code. Below is the refinement for [s_error_code].
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type s_error_code_or_success =
   e:error_code{
     (**) let _ = allow_inversion error_code in
@@ -79,11 +79,11 @@ type s_error_code_or_success =
     | CSecurity_level -> False
   }
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type s_error_code =
   e:s_error_code_or_success{e <> CSuccess}
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let s_error_code_v (e : s_error_code) : Spec.s_error =
   match e with
   | CIncorrect_transition -> Incorrect_transition
@@ -96,21 +96,21 @@ let s_error_code_v (e : s_error_code) : Spec.s_error =
   | CDecrypt_error -> Decryption
   | CSaturated_nonce -> Saturated_nonce
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let s_result_code a = result a s_error_code
 
 (*** Type definitions *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let handshake_pattern_is_valid (pattern : handshake_pattern) : Tot bool =
   (pattern.premessage_ir = None || pattern.premessage_ir = Some [PS]) &&
   (pattern.premessage_ri = None || pattern.premessage_ri = Some [PS]) &&
   Cons? pattern.messages
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type stateful_peer_info = St.stateful unit//Streaming.stateful unit
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 noeq type stateful_validation_state (nc : iconfig)
                                     (peer_info : stateful_peer_info) =
 | Stateful_vstate:
@@ -176,30 +176,30 @@ noeq type stateful_validation_state (nc : iconfig)
 
   stateful_validation_state nc peer_info
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let vst_s (#nc : iconfig) (#peer_info : stateful_peer_info)
           (vst : stateful_validation_state nc peer_info) : Type0 =
   vst.vst.St.s ()
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let vst_t (#nc : iconfig) (#peer_info : stateful_peer_info)
           (vst : stateful_validation_state nc peer_info) : Type0 =
   vst.vst.St.t ()
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let vst_footprint (#nc : iconfig) (#peer_info : stateful_peer_info)
                   (#vst : stateful_validation_state nc peer_info)
                   (st : vst_s vst) =
   vst.vst.St.footprint st
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let vst_freeable (#nc : iconfig) (#peer_info : stateful_peer_info)
                  (#vst : stateful_validation_state nc peer_info)
                  (h : mem)
                  (st : vst_s vst) =
   vst.vst.St.freeable h st
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let vst_invariant (#nc : iconfig) (#peer_info : stateful_peer_info)
                   (#vst : stateful_validation_state nc peer_info)
                   (h : mem)
@@ -207,7 +207,7 @@ let vst_invariant (#nc : iconfig) (#peer_info : stateful_peer_info)
   vst.vst.St.invariant h st
 
 /// Configurations
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 noeq type isconfig : Type u#1 = {
   isc_nc : iconfig;
   isc_sc : sc:sconfig{sc_get_config sc = get_config isc_nc};
@@ -217,30 +217,30 @@ noeq type isconfig : Type u#1 = {
   isc_lookups_psk : bool;
 }
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_nc : isconfig -> Tot iconfig =
   fun isc -> match isc with Mkisconfig nc sc pat ks pi lpsk -> nc
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_config (isc : isconfig) = get_config (isc_get_nc isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_pinfo : isconfig -> Tot stateful_peer_info =
   fun isc -> match isc with Mkisconfig nc sc pat ks pi lpsk -> pi
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_sc : isc:isconfig ->
   Tot (sc:sconfig{isc_get_config isc == sc_get_config sc /\
                   (isc_get_pinfo isc).St.t () == sc_get_pinfo sc}) =
   fun isc -> match isc with Mkisconfig nc sc pat ks pi lpsk -> sc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_ks : isconfig -> Tot key_slots =
   fun isc -> match isc with Mkisconfig nc sc pat ks pi lpsk -> ks
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_pattern : isconfig -> Tot wf_handshake_pattern =
   fun isc -> match isc with Mkisconfig nc sc pat ks pi lpsk -> pat
 
 /// Returns true if we lookup the psk when calling the validation function
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_lookups_psk (isc : isconfig) : bool =
   match isc with Mkisconfig nc sc pat ks pi lpsk -> lpsk
 
@@ -249,41 +249,41 @@ let isc_lookups_psk (isc : isconfig) : bool =
 // monolitically, then define a maker function for [lookup_peer_by_id], declare
 // it to preserve it in the call graph, then use this definition to generate
 // an [isc_validate] instance that we give to [handshake_read]
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type isc_validate (isc : isconfig) =
     v:stateful_validation_state (isc_get_nc isc) (isc_get_pinfo isc){
       v.vst.St.t () == sc_get_vstate (isc_get_sc isc) /\
       Stateful_vstate?.validate_spec v == sc_get_validate (isc_get_sc isc) /\
       v.recv_psk == isc_lookups_psk isc}
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_s isc = ks_get_s (isc_get_ks isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_psk isc = ks_get_psk (isc_get_ks isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_rs isc = ks_get_rs (isc_get_ks isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_e isc = ks_get_e (isc_get_ks isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_re isc = ks_get_re (isc_get_ks isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_send isc = ks_get_send (isc_get_ks isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_get_receive isc = ks_get_receive (isc_get_ks isc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let sprivate_key_t (isc : isconfig) = private_key_t_or_unit (isc_get_nc isc) (isc_get_s isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let spublic_key_t (isc : isconfig) = public_key_t_or_unit (isc_get_nc isc) (isc_get_s isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let eprivate_key_t (isc : isconfig) = private_key_t_or_unit (isc_get_nc isc) (isc_get_e isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let epublic_key_t (isc : isconfig) = public_key_t_or_unit (isc_get_nc isc) (isc_get_e isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let rspublic_key_t (isc : isconfig) = public_key_t_or_unit (isc_get_nc isc) (isc_get_rs isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let republic_key_t (isc : isconfig) = public_key_t_or_unit (isc_get_nc isc) (isc_get_re isc)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let psk_t (isc : isconfig) = preshared_key_t_or_unit (isc_get_psk isc)
 
 // TODO: move and use more
@@ -295,7 +295,7 @@ let mk_keypair_from_keys_or_unit (#isc : isconfig) (#b : bool) (h : mem)
   let pub = lbuffer_or_unit_to_opt_lseq h pub in
   if b then Some (mk_keypair (Some?.v pub) (Some?.v priv)) else None
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_keypair_m_from_keys_or_unit (#isc : isconfig) (#b : bool)
                                    (priv : private_key_t_or_unit (isc_get_nc isc) b)
                                    (pub : public_key_t_or_unit (isc_get_nc isc) b) :
@@ -305,7 +305,7 @@ let mk_keypair_m_from_keys_or_unit (#isc : isconfig) (#b : bool)
   let pub = lbuffer_or_unit_to_lbuffer_or_null pub in
   mk_keypair_m priv pub
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let step_to_status (initiator : bool) (step : nat) : status =
   if initiator then
     if step % 2 = 0 then Handshake_send step else Handshake_receive step
@@ -353,17 +353,17 @@ noeq type state_t_raw
                  spriv_t spub_t epriv_t epub_t rs_t re_t psk_t
                  send_key_t send_nonce_t receive_key_t receive_nonce_t
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type recv_transport_message_t (isc : isconfig) (initiator : bool) : Type0 =
   bool_or_gbool (save_received_transport initiator (isc_get_pattern isc))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let recv_transport_message_t_to_bool
   (#isc : isconfig) (#initiator : bool) (b : recv_transport_message_t isc initiator) :
   Tot bool =
   bool_or_gbool_to_bool b false
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t (isc : isconfig) (initiator : bool) =
   state_t_raw (isc_get_nc isc)
   (isc_get_ks isc)
@@ -380,7 +380,7 @@ let state_t (isc : isconfig) (initiator : bool) =
   (type_or_unit aead_key_t (isc_get_receive isc))
   (type_or_unit aead_nonce_t (isc_get_receive isc))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_is_handshake
   (#isc : isconfig) (#initiator : bool)
   (st : state_t isc initiator) : Tot bool = // IMS_Handshake? st
@@ -388,11 +388,11 @@ let state_t_is_handshake
   | IMS_Handshake _ _ _ _ _ _ _ _ _ _ _ -> true
   | _ -> false
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_is_transport (#isc:isconfig) (#initiator : bool) (st:state_t isc initiator) =
   not (state_t_is_handshake st)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_handshake_get_step :
      #isc:isconfig
   -> #initiator:bool
@@ -404,7 +404,7 @@ let state_t_handshake_get_step :
                     st_epriv st_epub st_rs st_re st_psk = st in
   step
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_handshake_get_static :
      #isc:isconfig
   -> #initiator:bool
@@ -458,7 +458,7 @@ val state_t_footprint_inclusion_lem (#isc : isconfig) (#initiator : bool) (st : 
     let l2 = state_t_footprint st in
     B.loc_includes l2 l1)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val state_t_handshake_get_rs :
      #isc:isconfig
   -> #initiator:bool
@@ -474,19 +474,19 @@ val state_t_handshake_invariant_stateful_live_rs
   (requires (state_t_invariant_stateful m st))
   (ensures (lbuffer_or_unit_live m (state_t_handshake_get_rs st)))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val isc_valid_meta_info (isc : isconfig) (smi : meta_info) : bool
 
 val isc_valid_meta_info_lem (isc : isconfig) (smi : meta_info) :
   Lemma (isc_valid_meta_info isc smi = ks_valid_meta_info (isc_get_ks isc) smi)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let isc_has_valid_pattern (isc : isconfig) : Tot bool =
   let pattern = isc_get_pattern isc in
   handshake_pattern_is_valid pattern
 
 #push-options "--ifuel 1"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_get_received_transport_message
   (#isc : isconfig) (#initiator : bool)
   (st : state_t isc initiator) :
@@ -497,7 +497,7 @@ let state_t_get_received_transport_message
 #pop-options
 
 #push-options "--ifuel 1"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_get_hash (#isc : isconfig) (#initiator : bool)
                      (st : state_t isc initiator) :
   hash_t (isc_get_nc isc) =
@@ -506,7 +506,7 @@ let state_t_get_hash (#isc : isconfig) (#initiator : bool)
   | IMS_Transport h _ _ _ _ _ -> h
 #pop-options
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val state_t_get_hash_lem (#isc : isconfig) (#initiator : bool)
                          (st : state_t isc initiator)
                          (h : mem) :
@@ -595,7 +595,7 @@ val transport_state_t_frame_invariant :
 
 (*** Create *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let create_state_smi_compute (ks : key_slots) (rsb pskb : bool) :
   meta_info =
   let hsf =
@@ -610,7 +610,7 @@ let create_state_smi_compute (ks : key_slots) (rsb pskb : bool) :
   let smi = { hsf = hsf; nonce = 0 } in
   smi
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val create_state_smi (isc : isconfig) (rsb pskb : bool) :
   smi:meta_info{isc_valid_meta_info isc smi}
 
@@ -618,7 +618,7 @@ val create_state_smi_lem (isc : isconfig) (rsb pskb : bool) :
   Lemma(create_state_smi isc rsb pskb = create_state_smi_compute (isc_get_ks isc) rsb pskb)
   [SMTPat(create_state_smi isc rsb pskb)]
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let create_state_smi_pre_aux
   (pattern : handshake_pattern)
   (has_s has_rs initiator rsb : bool) : Tot bool =
@@ -627,7 +627,7 @@ let create_state_smi_pre_aux
 
 // This definition MUSTN'T be revealed, because otherwise some subsequent
 // lax-checkings take huge amount of time
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val create_state_smi_pre
   (isc:isconfig{isc_has_valid_pattern isc})
   (initiator rsb pskb : bool) : Tot bool
@@ -652,7 +652,7 @@ val create_state_smi_valid_lem (isc : isconfig{isc_has_valid_pattern isc})
   (ensures (
     isc_valid_meta_info isc (create_state_smi isc rsb pskb)))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_create_state :
      #isc:isconfig{isc_has_valid_pattern isc}
   -> ssi:ss_impls (isc_get_nc isc)
@@ -720,7 +720,7 @@ val mk_state_t_create_state :
     end))
 
 (*** Free *)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_free :
      #isc:isconfig
   -> #initiator:bool
@@ -736,14 +736,14 @@ val mk_state_t_free :
 // JP: looking at the extracted code, max_size_t (from Lib.IntTypes) is defined
 // with pow2 which doesn't reduce, hence blocking reduction of a large number of
 // subterms -- use our own definition for max_size_t
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let max_size_t: s: nat { s == max_size_t } =
   assert_norm (4294967295 == max_size_t);
   4294967295
 
 // TODO: move those utilities
 // Definining the maximum possible lengths of hashes, AEADs, etc.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let hashable_check_max (nc : iconfig) :
   s:size_nat {
     s + hash_vsv nc <= max_size_t /\
@@ -754,14 +754,14 @@ let hashable_check_max (nc : iconfig) :
   (**) assert(max_size_t <= hash_max_input_norm (get_config nc));
   max_size_t - hash_vsv nc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let is_hashable_len (nc : iconfig) (l : size_t) :
   Pure bool (requires True)
   (ensures (fun b ->
     b = is_hashable_size (get_config nc) (size_v l))) =
   FStar.UInt32.(l <=^ size (hashable_check_max nc))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let hashable_with_tag_check_max (nc : iconfig) :
   s:size_nat {
     s + hash_vsv nc + aead_tag_size <= max_size_t /\
@@ -772,7 +772,7 @@ let hashable_with_tag_check_max (nc : iconfig) :
   (**) assert(max_size_t <= hash_max_input_norm (get_config nc));
   max_size_t - hash_vsv nc - aead_tag_size
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let is_hashable_with_tag_len (nc : iconfig) (l : size_t) :
   Pure bool (requires True)
   (ensures (fun b ->
@@ -782,7 +782,7 @@ let is_hashable_with_tag_len (nc : iconfig) (l : size_t) :
   (**) assert(max_size_t <= hash_max_input_norm (get_config nc));
   FStar.UInt32.(l <=^ size (hashable_with_tag_check_max  nc))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let aead_check_max (nc : iconfig) :
   s:size_nat{
     s <= aead_max_input (get_config nc) /\
@@ -791,7 +791,7 @@ let aead_check_max (nc : iconfig) :
   (**) assert(aead_max_input (get_config nc) + aead_tag_size <= max_size_t);
   aead_max_input_norm (get_config nc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let is_aead_len (nc : iconfig) (l : size_t) :
   Pure bool (requires True)
   (ensures (fun b ->
@@ -801,35 +801,35 @@ let is_aead_len (nc : iconfig) (l : size_t) :
   assert(aead_max_input (get_config nc) + aead_tag_size <= max_size_t);
   FStar.UInt32.(l <=^ size (aead_check_max nc))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let min2 (x y : nat) : n:nat{n <= x /\ n <= y} =
   if x <= y then x else y
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let min3 (x y z : nat) : n:nat{n <= x /\ n <= y /\ n <= z} =
   min2 x (min2 y z)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let plain_message_check_max (nc : iconfig) :
   s:size_nat {
     forall l. l <= s ==> is_plain_message_length (get_config nc) l
   } =
   min2 (aead_check_max nc) (hashable_with_tag_check_max nc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let is_plain_message_len (nc : iconfig) (l : size_t) :
   Pure bool (requires True)
   (ensures (fun b ->
     b = is_plain_message_length (get_config nc) (size_v l))) =
   FStar.UInt32.(l <=^ size (plain_message_check_max nc))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let check_payload_len (nc : iconfig) (l : size_t) :
   Pure bool (requires True)
   (ensures (fun b -> b = (size_v l + aead_tag_size + hash_vsv nc <= max_size_t))) =
   FStar.UInt32.(l <=^ size (max_size_t - aead_tag_size - hash_vsv nc))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let check_payload_msg_len (nc : iconfig) (smi : meta_info)
                           (is_psk : bool)
                           (pat : list message_token)
@@ -852,10 +852,10 @@ let check_payload_msg_len (nc : iconfig) (smi : meta_info)
     FStar.UInt32.(msg_len =^ size l1 +^ l2)
   else false
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let check_outlen = check_payload_msg_len
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let check_inlen = check_payload_msg_len
 
 /// The following function replaces:
@@ -863,7 +863,7 @@ let check_inlen = check_payload_msg_len
 /// - check_payload_len
 /// - check_outlen/check_inlen
 /// by merging them. It leads to better code at extraction time.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val check_input_output_len
   (nc : iconfig) (smi : meta_info) (is_psk : bool) (pat : list message_token)
   (payload_len msg_len : size_t) :
@@ -880,7 +880,7 @@ val check_input_output_len
 // In transport phase, it is always payload_len + aead_tag (note that the state
 // can't necessarily send/receive a message).
 #push-options "--ifuel 1"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_compute_next_message_len
   (#isc:isconfig) (#initiator:bool) (st : state_t isc initiator)
   (payload_len : size_t) (out : B.pointer size_t) :
@@ -908,7 +908,7 @@ val mk_state_t_compute_next_message_len
 
 // Given an message length, return the length of the decrypted payload/
 #push-options "--ifuel 1"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_compute_next_decrypted_payload_length
   (#isc:isconfig) (#initiator:bool) (st : state_t isc initiator)
   (message_len : size_t) (payload_len : B.pointer size_t) :
@@ -936,7 +936,7 @@ val mk_state_t_compute_next_decrypted_payload_length
 
 // Same as previous function, but no pointers - for internal use.
 #push-options "--ifuel 1"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_compute_next_decrypted_payload_length_option
   (#isc:isconfig) (#initiator:bool) (st : state_t isc initiator)
   (message_len : size_t) :
@@ -961,7 +961,7 @@ val mk_state_t_compute_next_decrypted_payload_length_option
     end))
 #pop-options
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let handshake_state_t_valid_values (#isc : isconfig)
                                    (initiator : bool) (i : nat)
                                    (st : state_t isc initiator{state_t_is_handshake st})
@@ -976,7 +976,7 @@ let state_t_handshake_shared_props (#isc : isconfig) (#initiator : bool)
   state_t_handshake_get_static st1 == state_t_handshake_get_static st2 /\
   state_t_core_footprint st1 == state_t_core_footprint st2
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_is_stuck
   (#isc : isconfig{List.Tot.length (isc_get_pattern isc).messages + 1 <= max_size_t})
   (#initiator : bool)
@@ -985,7 +985,7 @@ let state_t_is_stuck
   [@inline_let] let state_is_handshake = state_t_is_handshake st in
   state_is_handshake && UInt32.eq (state_t_handshake_get_step st) (size (n + 1))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val state_t_set_stuck
   (#isc : isconfig{List.Tot.length (isc_get_pattern isc).messages + 1 <= max_size_t})
   (#initiator : bool)
@@ -1001,7 +1001,7 @@ val state_t_set_stuck
       state_t_is_stuck st1
     else st1 == st))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val state_t_set_stuck_with_invariant
   (#isc : isconfig{List.Tot.length (isc_get_pattern isc).messages + 1 <= max_size_t})
   (#initiator : bool)
@@ -1069,7 +1069,7 @@ val send_message_post_lem
     send_message_tokens_with_payload_post #nc smi initiator is_psk pattern payload_len payload
                                           st outlen out h0 r h1)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let send_message_st_aux (nc : iconfig) (smi : meta_info) (initiator : bool)
                         (is_psk : bool)
                         (pattern : list message_token) :
@@ -1085,7 +1085,7 @@ let send_message_st_aux (nc : iconfig) (smi : meta_info) (initiator : bool)
   (ensures (send_message_post smi initiator is_psk
                                       pattern payload_len payload st outlen out))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let send_message_st (isc : isconfig) (smi : meta_info)
                     (initiator : bool)
                     (i : nat{i < List.Tot.length (isc_get_pattern isc).messages}) :
@@ -1199,7 +1199,7 @@ let mk_state_t_handshake_write_post :
   | _ -> False // Needed because we don't have ifuel
   end
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_handshake_write :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1275,7 +1275,7 @@ val receive_message_post_lem
     receive_message_tokens_with_payload_post
       #nc smi initiator is_psk pattern payload_outlen payload_out st inlen input h0 r h1)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let receive_message_st_aux (nc : iconfig) (smi : meta_info) (initiator : bool)
                            (is_psk : bool)
                            (tokens : list message_token) :
@@ -1291,7 +1291,7 @@ let receive_message_st_aux (nc : iconfig) (smi : meta_info) (initiator : bool)
   (ensures (receive_message_post smi initiator is_psk
                                      tokens payload_len payload st inlen input))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let receive_message_st (isc : isconfig) (smi : meta_info)
                        (i : nat{i < List.Tot.length (isc_get_pattern isc).messages}) :
   Type0 =
@@ -1343,7 +1343,7 @@ val receive_message_tokens_nout_post_lem
     Impl.Noise.SendReceive.receive_message_tokens_nout_post
       #nc smi initiator is_psk pattern st inlen input h0 r h1)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let receive_message_tokens_nout_st_aux (nc : iconfig) (smi : meta_info) (initiator : bool)
                                        (is_psk : bool)
                                        (tokens : list message_token) :
@@ -1357,7 +1357,7 @@ let receive_message_tokens_nout_st_aux (nc : iconfig) (smi : meta_info) (initiat
   (ensures (fun h0 r h1 -> receive_message_tokens_nout_post smi initiator is_psk
                                                           tokens st inlen input h0 r h1))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let receive_split_message_impls_aux
   (nc : iconfig) (smi : meta_info) (initiator : bool)
   (is_psk recv_psk : bool) (tokens_beg tokens_end : list message_token) :
@@ -1369,7 +1369,7 @@ let receive_split_message_impls_aux
 
 /// Note that we don't request as a precondition that the list of tokens contains [S]:
 /// there is no point in enforcing it now.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let receive_split_message_impls
   (isc : isconfig) (smi : meta_info)
   (i : nat{i < List.Tot.length (isc_get_pattern isc).messages}) :
@@ -1431,7 +1431,7 @@ let mk_state_t_handshake_read_with_S_smi_pre :
 
 (**** No S *)
 
-[@@ noextract_to "Karamel"] noextract unfold
+[@@ noextract_to "krml"] noextract unfold
 let mk_state_t_handshake_read_no_S_pre :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1469,7 +1469,7 @@ let mk_state_t_handshake_read_no_S_pre :
 
   handshake_state_t_valid_values initiator i st false
 
-[@@ noextract_to "Karamel"] noextract unfold
+[@@ noextract_to "krml"] noextract unfold
 let mk_state_t_handshake_read_no_S_post :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1538,7 +1538,7 @@ let mk_state_t_handshake_read_no_S_post :
   end
   end
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_handshake_read_no_S :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1567,7 +1567,7 @@ val mk_state_t_handshake_read_no_S :
 
 (**** With S *)
 
-[@@ noextract_to "Karamel"] noextract unfold
+[@@ noextract_to "krml"] noextract unfold
 let mk_state_t_handshake_read_with_S_pre_stateful :
      #isc:isconfig
   -> i:nat{i < List.Tot.length (isc_get_pattern isc).messages}
@@ -1605,7 +1605,7 @@ let mk_state_t_handshake_read_with_S_pre_stateful :
   get_dh_pre (isc_get_nc isc) /\
   get_hash_pre (isc_get_nc isc)
 
-[@@ noextract_to "Karamel"] noextract unfold
+[@@ noextract_to "krml"] noextract unfold
 let mk_state_t_handshake_read_with_S_pre :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1627,7 +1627,7 @@ let mk_state_t_handshake_read_with_S_pre :
   mk_state_t_handshake_read_with_S_smi_pre isc smi i /\
   handshake_state_t_valid_values initiator i st false
 
-[@@ noextract_to "Karamel"] noextract unfold
+[@@ noextract_to "krml"] noextract unfold
 let mk_state_t_handshake_read_with_S_post :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1700,7 +1700,7 @@ let mk_state_t_handshake_read_with_S_post :
 
 // Note that this function is ST and not Stack because the pinfo copy may
 // be stateful.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_handshake_read_with_S :
      #isc:isconfig
   -> smi:meta_info{isc_valid_meta_info isc smi}
@@ -1729,7 +1729,7 @@ val mk_state_t_handshake_read_with_S :
 
 (*** Split *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_split :
      #isc:isconfig
   -> #initiator:bool
@@ -1769,7 +1769,7 @@ val mk_state_t_split :
 
 (*** Transport *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_transport_write :
      #isc:isconfig
   -> #initiator:bool
@@ -1810,7 +1810,7 @@ val mk_state_t_transport_write :
     | _ -> False
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_state_t_transport_read :
      #isc:isconfig
   -> #initiator:bool

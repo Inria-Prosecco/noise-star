@@ -59,19 +59,34 @@ noeq type sconfig : Type u#1 = {
 
 // TODO: the sconfig definition was initially hidden, hence the presence
 // of several getters.
+
+[@ (strict_on_arguments [0])]
 let sc_get_config (sc : sconfig) : config = sc.sc_config
+
+[@ (strict_on_arguments [0])]
 let sc_get_vstate (sc : sconfig) : Type0 = sc.sc_vstate
+
+[@ (strict_on_arguments [0])]
 let sc_get_pinfo (sc : sconfig) : Type0 = sc.sc_pinfo
+
+[@ (strict_on_arguments [0])]
 let sc_get_validate (sc : sconfig) = sc.sc_validate
 
 val state : sconfig -> Type0
 
 (* Some functions to retrieve information from the state *)
 val state_get_pattern : #sc:sconfig -> state sc -> wf_handshake_pattern
+
+[@ (strict_on_arguments [0;1])]
 val state_get_status : #sc:sconfig -> state sc -> status
 
+[@ (strict_on_arguments [0;1])]
 val internal_state_get_hash : #nc:config -> internal_state nc -> hash nc
+
+[@ (strict_on_arguments [0;1])]
 val state_get_internal_state : #sc:sconfig -> state sc -> internal_state (sc_get_config sc)
+
+[@ (strict_on_arguments [0;1])]
 let state_get_hash : #sc:sconfig -> state sc -> hash (sc_get_config sc) =
   fun #sc st -> internal_state_get_hash (state_get_internal_state st)
 val state_is_initiator : #sc:sconfig -> state sc -> Tot bool

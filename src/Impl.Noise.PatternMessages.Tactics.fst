@@ -39,7 +39,7 @@ let generate_hski_declaration (debug : bool) (nc ssdhi : term) (hski_name : stri
   let sg = Sg_Let false [lb] in
   let decl : sigelt = pack_sigelt sg in
   let decl = set_sigelt_quals [ NoExtract; Inline_for_extraction ] decl in
-  let decl = set_sigelt_attrs [ `(noextract_to "Karamel") ] decl in
+  let decl = set_sigelt_attrs [ `(noextract_to "krml") ] decl in
   if debug then print_declaration sg;
   decl
 #pop-options

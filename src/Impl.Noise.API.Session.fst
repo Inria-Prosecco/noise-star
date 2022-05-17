@@ -134,7 +134,7 @@ let mk_session_p_compute_next_message_len #idc out sn payload_len =
 let mk_session_p_get_hash #idc out sn =
   mk_dstate_p_get_hash #idc out sn
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val valid_idc_handshake_pattern_no_empty_message
   (idc : valid_idc)
   (i : nat{i < List.Tot.length (idc_get_pattern idc).messages}) :
@@ -186,7 +186,7 @@ let mk_session_p_reached_max_security #idc snp =
 
 (**** Encapsulated messages *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let clevel_greater_than (l0 l1 : conf_level_t) :
   Pure bool (requires True)
   (ensures (fun b -> b = (Spec.clevel_greater_than (UInt8.v l0) (UInt8.v l1)))) =
@@ -195,7 +195,7 @@ let clevel_greater_than (l0 l1 : conf_level_t) :
   (l1 = uint_to_t 1 && (l0 = l1 || l0 >=^ uint_to_t 3)) ||
   (l1 = uint_to_t 0)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let alevel_greater_than (l0 l1 : auth_level_t) :
   Pure bool (requires True)
   (ensures (fun b -> b = (Spec.alevel_greater_than (UInt8.v l0) (UInt8.v l1)))) =
@@ -276,7 +276,7 @@ let encap_message_p_free emp =
   B.free emp.emp
 
 /// Internal helper
-[@@ noextract_to "Karamel"] inline_for_extraction noextract  
+[@@ noextract_to "krml"] inline_for_extraction noextract  
 val pack_message_with_level :
      r:HS.rid
   -> level:ac_level_t
@@ -353,7 +353,7 @@ let unsafe_unpack_message r out_ac_level out_msg_len out_msg emp =
   B.upd out_msg 0ul msg
 
 /// Helper for internal use only
-[@@ noextract_to "Karamel"] inline_for_extraction noextract  
+[@@ noextract_to "krml"] inline_for_extraction noextract  
 val pack_message_with_auth_level :
      r:HS.rid
   -> auth_level:auth_level_t
@@ -375,7 +375,7 @@ let pack_message_with_auth_level r auth_level msg_len msg =
 
 (*** Session: create/free *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract  
+[@@ noextract_to "krml"] inline_for_extraction noextract  
 let mk_session_p_create_uses_e_no_alloc_post :
      #idc:valid_idc
   -> initiator:bool // This parameter is meta
@@ -424,7 +424,7 @@ let mk_session_p_create_uses_e_no_alloc_post :
     G.reveal (B.deref h1 (entropy_p <: B.buffer (G.erased entropy))) == entr'
   end
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type mk_session_p_create_uses_e_no_alloc_st (idc : valid_idc) =
      initiator:bool // This parameter is meta
   -> r:HS.rid
@@ -461,7 +461,7 @@ type mk_session_p_create_uses_e_no_alloc_st (idc : valid_idc) =
 
 /// [mk_session_p_create] but with [uses_e = true] and no allocation (otherwise,
 /// proofs explode).
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_create_uses_e_no_alloc :
      #idc : valid_idc
   -> ssi:ss_impls (idc_get_nc idc)
@@ -503,7 +503,7 @@ let mk_session_p_create_uses_e_no_alloc #idc ssi initialize initiator r dvp epri
 /// rlimit. Working with [mk_session_p_create_uses_e] is also very difficult,
 /// because it needs a huge rlimit.
 /// I have thus no better solution than introducing another helper.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_create_uses_e_no_alloc_memzero :
      #idc : valid_idc
   -> ssi:ss_impls (idc_get_nc idc)
@@ -592,7 +592,7 @@ let mk_session_p_create_uses_e_no_alloc_memzero =
 
 /// [mk_session_p_create] but with [uses_e = true] and allocation
 /// of the ephemeral keys.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_create_uses_e :
      #idc:valid_idc
   -> ssi:ss_impls (idc_get_nc idc)
@@ -903,7 +903,7 @@ let mk_compute_handshake_auth_level initiator pattern step =
 
 (**** Session: messages: write *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val write_transport_check_security
   (initiator : bool) (pattern : wfs_handshake_pattern)
   (recv_tpt_msg : bool_or_gbool (save_received_transport initiator pattern))
@@ -924,7 +924,7 @@ let write_transport_check_security initiator pattern recv_tpt_msg h payload =
     | Conf_level req_level -> clevel_greater_than clevel req_level
     | _ -> false
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val write_handshake_check_security
   (initiator : bool)
   (pattern : wfs_handshake_pattern)
@@ -945,7 +945,7 @@ let write_handshake_check_security initiator pattern step h payload =
     | Conf_level req_level -> clevel_greater_than clevel req_level
     | _ -> false
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_write_aux_transport :
      #idc : valid_idc
   -> transport_write_impl : dstate_p_transport_write_st idc
@@ -1082,7 +1082,7 @@ let mk_session_p_write_aux_transport #idc transport_write_impl initiator =
     end
 #pop-options
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_write_aux_handshake :
      #idc : valid_idc
   -> handshake_write_impl : dstate_p_handshake_write_st idc
@@ -1296,7 +1296,7 @@ let mk_session_p_write #idc handshake_write_impl transport_write_impl =
 
 (**** Session: messages: read *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val pack_message_with_auth_level_to_pointer :
      r:HS.rid
   -> auth_level:auth_level_t
@@ -1348,7 +1348,7 @@ let pack_message_with_auth_level_to_pointer r auth_level msg_len msg out =
   (**) let h1 = ST.get () in
   (**) assert(encap_message_p_invariant h1 emp)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_read_aux_transport :
      #idc : valid_idc
   -> transport_read_impl : dstate_p_transport_read_st idc
@@ -1464,7 +1464,7 @@ let mk_session_p_read_aux_transport #idc transport_read_impl initiator =
     end
 #pop-options
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_session_p_read_aux_handshake :
      #idc : valid_idc
   -> handshake_read_impl : dstate_p_handshake_read_st idc

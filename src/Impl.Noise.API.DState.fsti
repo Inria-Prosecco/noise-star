@@ -62,7 +62,7 @@ val _align_fsti : unit
 /// which is the union of all the possible errors.
 /// However, we define some refined types to implement the spec error codes as subsets
 /// of this low-level error-code. Below is the refinement for [ds_error_code].
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type ds_error_code_or_success =
   e:error_code{
     (**) let _ = allow_inversion error_code in
@@ -85,11 +85,11 @@ type ds_error_code_or_success =
     | CSecurity_level -> False
   }
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type ds_error_code =
   e:ds_error_code_or_success{e <> CSuccess}
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let ds_error_code_v (e : s_error_code) : Spec.ds_error =
   match e with
   | CIncorrect_transition -> Incorrect_transition
@@ -106,18 +106,18 @@ let ds_error_code_v (e : s_error_code) : Spec.ds_error =
   | CDecrypt_error -> Spec.Decryption
   | CSaturated_nonce -> Spec.Saturated_nonce
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let ds_result_code a = result a ds_error_code
 
 (*** Configuration *)
 
-[@@ (strict_on_arguments [1]); noextract_to "Karamel"]
+[@@ (strict_on_arguments [1]); noextract_to "krml"]
 inline_for_extraction noextract
 let idc_get_ks (idc : valid_idc) (initiator : bool) :
   key_slots =
   key_slots_from_pattern initiator (idc_get_pattern idc)
 
-[@@ (strict_on_arguments [1]); noextract_to "Karamel"]
+[@@ (strict_on_arguments [1]); noextract_to "krml"]
 inline_for_extraction noextract
 val idc_get_isc (idc : valid_idc) (initiator : bool) :
   isc:valid_isc initiator{
@@ -130,130 +130,130 @@ val idc_get_isc (idc : valid_idc) (initiator : bool) :
 val idc_get_resp_isc_is_valid (idc : valid_idc) :
   Lemma(resp_isc_is_valid (idc_get_isc idc true) (idc_get_isc idc false))
 
-[@@ (strict_on_arguments [1]); noextract_to "Karamel"]
+[@@ (strict_on_arguments [1]); noextract_to "krml"]
 inline_for_extraction noextract
 val idc_get_validate (idc : valid_idc) (initiator : bool) :
   isc_validate (idc_get_isc idc initiator)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let idc_get_init_isc (idc : valid_idc) : valid_init_isc = idc_get_isc idc true
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let idc_get_resp_isc (idc : valid_idc) : valid_resp_isc (idc_get_init_isc idc) =
   (**) idc_get_resp_isc_is_valid idc;
   idc_get_isc idc false
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let idc_get_send (idc : valid_idc) (initiator : bool) : Tot bool =
   isc_get_send (idc_get_isc idc initiator)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let idc_get_receive (idc : valid_idc) (initiator : bool) : Tot bool =
   isc_get_receive (idc_get_isc idc initiator)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type sprivate_key_t (idc : valid_idc) (initiator : bool) =
   private_key_t_or_unit (idc_get_nc idc) (isc_get_s (idc_get_isc idc initiator))
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type spublic_key_t (idc : valid_idc) (initiator : bool)  =
   public_key_t_or_unit (idc_get_nc idc) (isc_get_s (idc_get_isc idc initiator))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type eprivate_key_t (idc : valid_idc) (initiator : bool) =
   private_key_t_or_unit (idc_get_nc idc) (isc_get_e (idc_get_isc idc initiator))
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type epublic_key_t (idc : valid_idc) (initiator : bool) =
   public_key_t_or_unit (idc_get_nc idc) (isc_get_e (idc_get_isc idc initiator))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type rspublic_key_t (idc : valid_idc) (initiator : bool) =
   public_key_t_or_unit (idc_get_nc idc) (isc_get_rs (idc_get_isc idc initiator))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type dstate_id_t (idc : valid_idc) = state_id_t idc
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let dstate_id_v (#idc : valid_idc) = fun (id : dstate_id_t idc) -> state_id_v #idc id
 
 (*** DState *)
 (**** Definitions *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val dstate_t : valid_idc -> Type0
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val dstate_p_or_null (idc : valid_idc) : Type0
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_g_is_null (#idc : valid_idc) (stp : dstate_p_or_null idc) : GTot bool
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type dstate_p (idc : valid_idc) =
   dsp:dstate_p_or_null idc{not (dstate_p_g_is_null dsp)}
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 type dstate_s (idc : valid_idc) = dstate (idc_get_dc idc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_null (idc : valid_idc) : stp:dstate_p_or_null idc{dstate_p_g_is_null stp}
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_g_get_device (#idc : valid_idc) (h : mem) (dst_p : dstate_p idc) : GTot (device_p idc)
 
 // By providing an access to the state rid and revealing the fact that the
 // state footprint is in this region, rather than only providing [state_p_region_of],
 // we allow ourselves to write recall lemmas like [dstate_p_recall_region].
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_rid_of (#idc : valid_idc) (stp : dstate_p idc) :
   GTot HS.rid
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_region_of (#idc : valid_idc) (stp : dstate_p idc) : GTot B.loc =
   region_to_loc (dstate_p_rid_of stp)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_or_null_region_of (#idc : valid_idc) (stp : dstate_p_or_null idc) :
   GTot B.loc =
   if dstate_p_g_is_null stp then B.loc_none
   else region_to_loc (dstate_p_rid_of stp)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_region_with_device (#idc : valid_idc) (h : mem) (stp : dstate_p idc) : GTot B.loc =
   B.loc_union (dstate_p_region_of stp)
               (device_p_region_of (dstate_p_g_get_device h stp))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_or_null_region_with_device (#idc : valid_idc) (h : mem) (stp : dstate_p_or_null idc) : GTot B.loc =
   if dstate_p_g_is_null stp then B.loc_none
   else dstate_p_region_with_device h stp
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_v (#idc : valid_idc) (h : mem) (stp : dstate_p idc) : GTot (dstate_s idc)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_is_gstuck (#idc : valid_idc) (h : mem) (st : dstate_p idc) :
   GTot bool =  
   let st_v = dstate_p_v h st in
   dstate_is_stuck st_v
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_g_is_initiator (#idc : valid_idc) (h : mem) (st : dstate_p idc) : GTot bool =
   let st_v = dstate_p_v h st in
   dstate_is_initiator st_v
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_g_is_handshake (#idc : valid_idc) (h : mem) (st : dstate_p idc) : GTot bool =
   let st_v = dstate_p_v h st in
   dstate_is_handshake st_v
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_g_is_transport (#idc : valid_idc) (h : mem) (st : dstate_p idc) : GTot bool =
   not (dstate_p_g_is_handshake h st)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_g_has_static (#idc : valid_idc) (h : mem) (st : dstate_p idc) : GTot bool =
   let initiator = dstate_p_g_is_initiator h st in
   isc_get_s (idc_get_isc idc initiator)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_g_handshake_get_static :
      #idc:valid_idc
   -> h:mem
@@ -262,14 +262,14 @@ val dstate_p_g_handshake_get_static :
        let initiator = dstate_p_g_is_initiator h st in
        sprivate_key_t idc initiator & spublic_key_t idc initiator)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_invariant (#idc : valid_idc) (h : mem) (stp : dstate_p idc) : GTot Type0
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_live (#idc : valid_idc) (h : mem) (stp : dstate_p_or_null idc) :
   GTot Type0
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val dstate_p_is_null (#idc : valid_idc) (stp : dstate_p_or_null idc) :
   Stack bool
   (requires (fun h0 ->
@@ -278,7 +278,7 @@ val dstate_p_is_null (#idc : valid_idc) (stp : dstate_p_or_null idc) :
     h0 == h1 /\ b == dstate_p_g_is_null stp))
 
 // Recall lemma for the state region
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val dstate_p_recall_region (#idc : valid_idc) (stp : dstate_p idc) :
   Stack unit
   (requires (fun h0 ->
@@ -294,18 +294,18 @@ val dstate_p_recall_region (#idc : valid_idc) (stp : dstate_p idc) :
     (is_stack_region (get_tip h0) ==>
      Monotonic.HyperHeap.disjoint (get_tip h1) (dstate_p_rid_of stp))))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val dstate_p_is_stuck (#idc : valid_idc) (st : dstate_p idc) :
   Stack bool (requires (fun h0 -> dstate_p_invariant h0 st))
   (ensures (fun h0 b h1 ->
     h1 == h0 /\
     b = dstate_p_is_gstuck h0 st))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val device_p_owns_dstate_p
   (#idc : valid_idc) (h : mem) (dvp : device_p idc) (stp : dstate_p idc) : GTot Type0
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val device_p_owns_dstate_p_lem
   (#idc : valid_idc) (h : mem) (dvp : device_p idc) (stp : dstate_p idc) :
   Lemma
@@ -313,7 +313,7 @@ val device_p_owns_dstate_p_lem
   (ensures (dstate_p_g_get_device h stp == dvp))
   [SMTPat (device_p_owns_dstate_p h dvp stp)]
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_or_null_v
   (#idc : valid_idc) (h : mem)
   (stp : dstate_p_or_null idc) :
@@ -321,7 +321,7 @@ let dstate_p_or_null_v
   if dstate_p_g_is_null stp then None
   else Some (dstate_p_v h stp)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_or_null_invariant
   (#idc : valid_idc) (h : mem)
   (stp : dstate_p_or_null idc)
@@ -336,7 +336,7 @@ let dstate_p_or_null_invariant
     end
   end
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_invariant_get_device
   (#idc : valid_idc) (h : mem) (stp : dstate_p idc) :
   Lemma
@@ -347,13 +347,13 @@ val dstate_p_invariant_get_device
     device_p_invariant h dvp /\
     device_p_owns_dstate_p h dvp stp))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_same_device
   (#idc : valid_idc) (stp : dstate_p idc) (h0 h1 : mem) : GTot Type0 =
   let dvp = dstate_p_g_get_device h0 stp in
   device_p_owns_dstate_p h1 dvp stp
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_invariant_live_lem (#idc : valid_idc) (h : mem) (stp : dstate_p idc) :
   Lemma
   (requires (dstate_p_invariant h stp))
@@ -362,7 +362,7 @@ val dstate_p_invariant_live_lem (#idc : valid_idc) (h : mem) (stp : dstate_p idc
 
 /// The first, coarse grain frame lemma. Useless if the device gets modified
 /// by adding/removing peers.
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_frame_invariant :
     #idc:valid_idc
   -> l:B.loc
@@ -380,7 +380,7 @@ val dstate_p_frame_invariant :
     dstate_p_region_with_device h1 st == dstate_p_region_with_device h0 st))
 
 /// The finer frame lemma
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_frame_invariant_update_device
   (#idc : valid_idc) (l : B.loc) (stp : dstate_p idc) (dvp : device_p idc) (h0 h1 : mem) :
   Lemma
@@ -398,7 +398,7 @@ val dstate_p_frame_invariant_update_device
 
 /// This lemma frames the invariant in case the modified locs are disjoint
 /// from both the state and the device.
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_or_null_frame_invariant :
      #idc:valid_idc
   -> l:B.loc
@@ -416,7 +416,7 @@ val dstate_p_or_null_frame_invariant :
     dstate_p_or_null_v h1 stp == dstate_p_or_null_v h0 stp))
 
 /// This lemma frames the invariant in case the device is modified.
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_or_null_frame_invariant_update_device :
      #idc:valid_idc
   -> l:B.loc
@@ -436,19 +436,19 @@ val dstate_p_or_null_frame_invariant_update_device :
     dstate_p_or_null_v h1 stp == dstate_p_or_null_v h0 stp))
 
 // TODO: remove
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val idc_pattern_length_not_zero (idc : valid_idc) :
   Lemma(List.Tot.length (idc_get_pattern idc).messages > 0)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let send_message_impls (idc : valid_idc) : Type0 =
   send_message_impls (idc_get_init_isc idc) (idc_get_resp_isc idc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let receive_message_impls (idc : valid_idc) : Type0 =
   receive_message_impls (idc_get_init_isc idc) (idc_get_resp_isc idc)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 val dstate_p_g_get_device_disjoint_regions :
      #idc:valid_idc
   -> stp:dstate_p idc
@@ -468,7 +468,7 @@ type status =
 | Handshake_write
 | Transport
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_status (#idc : valid_idc) (dst_p : dstate_p idc) :
   Stack status
   (requires (fun h0 -> dstate_p_invariant h0 dst_p))
@@ -487,7 +487,7 @@ val mk_dstate_p_get_status (#idc : valid_idc) (dst_p : dstate_p idc) :
 // If we are in the handshake phase, it depends on the current step.
 // In transport phase, it is always payload_len + aead_tag (note that the state
 // can't necessarily send/receive a message).
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_compute_next_message_len
   (#idc:valid_idc) (out : B.pointer size_t)
   (dst_p : dstate_p idc) (payload_len : size_t) :
@@ -514,7 +514,7 @@ val mk_dstate_p_compute_next_message_len
     else True
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_hash (#idc : valid_idc) (out: hash_t (idc_get_nc idc)) (dst : dstate_p idc) :
   Stack unit
   (requires (fun h0 ->
@@ -528,12 +528,12 @@ val mk_dstate_p_get_hash (#idc : valid_idc) (out: hash_t (idc_get_nc idc)) (dst 
     as_seq h1 out == dstate_get_hash dst_v
     end))
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_g_get_id (#idc : valid_idc) (h : mem) (stp : dstate_p idc) : GTot state_id =
   let st_v = dstate_p_v h stp in
   dstate_get_id st_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_get_id_st (idc : valid_idc) =
   stp:dstate_p idc ->
   Stack (dstate_id_t idc)
@@ -542,18 +542,18 @@ type dstate_p_get_id_st (idc : valid_idc) =
     h1 == h0 /\
     dstate_id_v id = dstate_p_g_get_id h0 stp))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_id :
   #idc:valid_idc ->
   dstate_p_get_id_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let dstate_p_g_get_info (#idc : valid_idc) (h : mem) (stp : dstate_p idc) :
   GTot (idc_get_dc idc).dc_info =
   let st_v = dstate_p_v h stp in
   dstate_get_info st_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_get_info_st (idc : valid_idc) =
   // We copy the dstate information to out
   out:info_t idc ->
@@ -569,18 +569,18 @@ type dstate_p_get_info_st (idc : valid_idc) =
     info_invariant h1 out /\
     info_v h1 out == dstate_p_g_get_info h0 stp))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_info :
   #idc:valid_idc ->
   dstate_p_get_info_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let dstate_p_g_get_peer_id_v (#idc : valid_idc) (h : mem) (stp : dstate_p idc) :
   GTot (option peer_id) =
   let st_v = dstate_p_v h stp in
   dstate_get_peer_id st_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_get_peer_id_st (idc : valid_idc) =
   stp:dstate_p idc ->
   Stack (peer_id_opt_t idc)
@@ -590,18 +590,18 @@ type dstate_p_get_peer_id_st (idc : valid_idc) =
     h1 == h0 /\
     peer_id_opt_v pid = dstate_p_g_get_peer_id_v h0 stp))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_peer_id :
   #idc:valid_idc ->
   dstate_p_get_peer_id_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let dstate_p_g_get_peer_info (#idc : valid_idc) (h : mem) (stp : dstate_p idc) :
   GTot (option (idc_get_dc idc).dc_info) =
   let st_v = dstate_p_v h stp in
   dstate_get_peer_info st_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_get_peer_info_st (idc : valid_idc) =
   // We copy the dstate information to out
   out:info_t idc ->
@@ -621,26 +621,26 @@ type dstate_p_get_peer_info_st (idc : valid_idc) =
     | None -> not b /\ info_v h1 out == info_v h0 out
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_peer_info :
   #idc:valid_idc ->
   dstate_p_get_peer_info_st idc
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_g_get_static_v (#idc : valid_idc) (h : mem)
   (stp : dstate_p idc{dstate_p_g_is_handshake h stp}) :
   GTot (option (keypair (idc_get_config idc))) =
   let st_v = dstate_p_v h stp in
   dstate_get_static st_v
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let dstate_p_g_get_remote_static_v (#idc : valid_idc) (h : mem)
   (stp : dstate_p idc{dstate_p_g_is_handshake h stp}) :
   GTot (option (public_key (idc_get_config idc))) =
   let st_v = dstate_p_v h stp in
   dstate_get_remote_static st_v
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_get_static_priv_st (idc : valid_idc{idc_uses_s idc}) =
   // We copy the dstate static to out
   out:private_key_t (idc_get_nc idc) ->
@@ -659,14 +659,14 @@ type dstate_p_get_static_priv_st (idc : valid_idc{idc_uses_s idc}) =
     else as_seq h1 out == as_seq h0 out
     end))
 
-(*[@@ noextract_to "Karamel"] inline_for_extraction noextract
+(*[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_static_priv :
   #idc:valid_idc{idc_uses_s idc} ->
   dstate_p_get_static_priv_st idc*)
 
 /// Note that the initiator may have a key and not the responder, or the opposite.
 /// We thus return a boolean to express success.
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_get_static_pub_st (idc : valid_idc{idc_uses_s idc}) =
   // We copy the dstate static to out
   out:public_key_t (idc_get_nc idc) ->
@@ -685,12 +685,12 @@ type dstate_p_get_static_pub_st (idc : valid_idc{idc_uses_s idc}) =
     else as_seq h1 out == as_seq h0 out
     end))
 
-(*[@@ noextract_to "Karamel"] inline_for_extraction noextract
+(*[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_static_pub :
   #idc:valid_idc{idc_uses_s idc} ->
   dstate_p_get_static_pub_st idc *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_get_remote_static_st (idc : valid_idc{idc_peers_have_s idc}) =
   // We copy the dstate remote static to out
   out:public_key_t (idc_get_nc idc) ->
@@ -711,25 +711,25 @@ type dstate_p_get_remote_static_st (idc : valid_idc{idc_peers_have_s idc}) =
     else as_seq h1 out == as_seq h0 out
     end))
 
-(*[@@ noextract_to "Karamel"] inline_for_extraction noextract
+(*[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_get_remote_static :
   #idc:valid_idc{idc_peers_have_s idc} ->
   dstate_p_get_remote_static_st idc*)
 
 (*// Extraction helpers which are used to define and extract functions only if they make sense
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_dstate_p_get_static_priv_or_unit :
   #idc:valid_idc ->
   type_or_unit (dstate_p_get_static_priv_st idc) (idc_uses_s idc) =
   fun #idc -> if idc_uses_s idc then mk_dstate_p_get_static_priv #idc else ()
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_dstate_p_get_static_pub_or_unit :
   #idc:valid_idc ->
   type_or_unit (dstate_p_get_static_pub_st idc) (idc_uses_s idc) =
   fun #idc -> if idc_uses_s idc then mk_dstate_p_get_static_pub #idc else () *)
 
-(*[@@ noextract_to "Karamel"] inline_for_extraction noextract
+(*[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_dstate_p_get_remote_static_or_unit :
   #idc:valid_idc ->
   type_or_unit (dstate_p_get_remote_static_st idc) (idc_peers_have_s idc) =
@@ -738,7 +738,7 @@ let mk_dstate_p_get_remote_static_or_unit :
 
 (**** Create, free *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_create_st (idc : valid_idc) (initiator : bool)=
      r:HS.rid
   -> dvp:device_p idc // TODO: may be none in the future
@@ -801,7 +801,7 @@ type dstate_p_create_st (idc : valid_idc) (initiator : bool)=
 
 // TODO: investigate why it typechecked while initiator was always set to true
 // in the body
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_create :
      #idc:valid_idc
   -> ssi:ss_impls (idc_get_nc idc)
@@ -809,7 +809,7 @@ val mk_dstate_p_create :
   -> initiator:bool // This parameter is meta
   -> dstate_p_create_st idc initiator
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract unfold
+[@@ noextract_to "krml"] inline_for_extraction noextract unfold
 type dstate_p_free_st (idc : valid_idc) =
   stp:dstate_p idc ->
   ST unit
@@ -818,39 +818,39 @@ type dstate_p_free_st (idc : valid_idc) =
   (ensures (fun h0 res h1 ->
     B.(modifies (dstate_p_region_of stp) h0 h1)))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_free :
      #idc:valid_idc
   -> dstate_p_free_st idc
 
 (**** Handshake *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_handshake_write_rec_impl (initiator : bool) (idc : valid_idc) =
   Impl.Noise.API.State.StateMachine.state_t_handshake_write_rec_impl
     initiator (idc_get_init_isc idc) (idc_get_resp_isc idc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let state_t_handshake_read_rec_impl (initiator : bool) (idc : valid_idc) =
   Impl.Noise.API.State.StateMachine.state_t_handshake_read_rec_impl
     initiator (idc_get_init_isc idc) (idc_get_resp_isc idc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_state_t_handshake_write_rec (#idc : valid_idc) (initiator : bool) (impls : send_message_impls idc) :
   state_t_handshake_write_rec_impl initiator idc =
   Impl.Noise.API.State.StateMachine.mk_state_t_handshake_write_rec
     initiator (idc_get_init_isc idc) (idc_get_resp_isc idc) impls
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_state_t_handshake_read_rec (#idc : valid_idc) (initiator : bool) (impls : receive_message_impls idc) :
   state_t_handshake_read_rec_impl initiator idc =
   Impl.Noise.API.State.StateMachine.mk_state_t_handshake_read_rec
     initiator (idc_get_init_isc idc) (idc_get_resp_isc idc) impls
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val dstate_t_handshake_write_st (idc : valid_idc) : Type0
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type dstate_p_handshake_write_st (idc : valid_idc) =
      payload_len : size_t
   -> payload:lbuffer uint8 payload_len
@@ -899,7 +899,7 @@ type dstate_p_handshake_write_st (idc : valid_idc) =
       (dstate_p_g_is_handshake h0 st ==> dstate_p_is_gstuck h1 st)
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_handshake_write :
      #idc : valid_idc
   -> impl_init : state_t_handshake_write_rec_impl true idc
@@ -907,7 +907,7 @@ val mk_dstate_p_handshake_write :
   -> split_impl : split_st (idc_get_nc idc)
   -> dstate_p_handshake_write_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type dstate_p_handshake_read_st (idc : valid_idc) =
      payload_outlen : size_t
   -> payload_out : lbuffer uint8 payload_outlen
@@ -976,7 +976,7 @@ type dstate_p_handshake_read_st (idc : valid_idc) =
       (dstate_p_g_is_handshake h0 st ==> dstate_p_is_gstuck h1 st)
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_handshake_read :
      #idc : valid_idc
   -> impl_init : state_t_handshake_read_rec_impl true idc
@@ -987,7 +987,7 @@ val mk_dstate_p_handshake_read :
 
 (**** Transport *)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type dstate_p_transport_write_st (idc : valid_idc) =
      plen : size_t
   -> p : lbuffer uint8 plen
@@ -1034,13 +1034,13 @@ type dstate_p_transport_write_st (idc : valid_idc) =
       dstate_p_v h1 st == dstate_p_v h0 st
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_transport_write :
      #idc:valid_idc
   -> encrypt : iaead_encrypt_type (idc_get_nc idc)
   -> dstate_p_transport_write_st idc
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type dstate_p_transport_read_st (idc : valid_idc) =
      plen : size_t
   -> p : lbuffer uint8 plen
@@ -1087,7 +1087,7 @@ type dstate_p_transport_read_st (idc : valid_idc) =
       dstate_p_v h1 st == dstate_p_v h0 st
     end))
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val mk_dstate_p_transport_read :
      #idc:valid_idc
   -> decrypt : iaead_decrypt_type (idc_get_nc idc)
@@ -1105,10 +1105,10 @@ noeq type api_functions_impls (idc : valid_idc) = {
 
 open Impl.Noise.Extraction
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 type api_wf_handshake_pattern = hsk:wfs_handshake_pattern{check_pattern hsk}
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let check_api_hs (hsk : wfs_handshake_pattern{normalize_term #bool (check_pattern hsk)}) :
   api_wf_handshake_pattern =
   (**) normalize_term_spec (check_pattern hsk);
@@ -1118,7 +1118,7 @@ let check_api_hs (hsk : wfs_handshake_pattern{normalize_term #bool (check_patter
 /// [unit -> idconfig_raw] strict on the first argument, to not expand the
 /// body of idc as long as possible during the normalization process (see
 /// the comments for Impl.Noise.API.Device.idconfig_raw)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_idc
   (nc : iconfig)
   (pattern : wfs_handshake_pattern{normalize_term #bool (check_pattern pattern)})
@@ -1153,7 +1153,7 @@ let mk_idc
   } in
   (fun () -> idc)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_send_message_impls
   (idc : valid_idc)
   (ssdhi : ssdh_impls (idc_get_nc idc)) :
@@ -1164,7 +1164,7 @@ let mk_send_message_impls
     // I don't understand why we need [convert_type]: the type-checking seems to happen in Z3
     (convert_type ssdhi)
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let mk_receive_message_impls
   (idc : valid_idc)
   (ssdhi : ssdh_impls (idc_get_nc idc)) :

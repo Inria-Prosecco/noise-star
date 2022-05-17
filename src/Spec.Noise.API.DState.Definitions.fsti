@@ -36,6 +36,7 @@ let ds_result (a : Type) = result a ds_error
 
 /// We need a way to convert a dconfig to an sconfig
 noextract
+//[@ (strict_on_arguments [0])]
 val dconfig_to_sconfig (dc : dconfig) : State.sconfig
 
 

@@ -292,7 +292,7 @@ let generate_declaration (debug : bool)
     let decl =
       if get_inline_for_extraction params then
         let decl = set_sigelt_quals [ NoExtract; Inline_for_extraction ] decl in
-        let decl = set_sigelt_attrs [ `(noextract_to "Karamel") ] decl in
+        let decl = set_sigelt_attrs [ `(noextract_to "krml") ] decl in
         decl
       else decl
     in

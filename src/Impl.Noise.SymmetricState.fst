@@ -90,14 +90,15 @@ let initialize_symmetric_hash_ #nc nci pname_len pname hashbuf =
     (**) assert(S.sub hash_v1 0 pname_len_v `S.equal` h0.[|pname|]);
     (**) assert(S.sub hash_v1 pname_len_v hash_end_len_v `S.equal`
                       (S.create hash_end_len_v (u8 0)));
-    (**) calc (S.equal) {
+    (**) calc (==) {
     (**)   Ghost.reveal hash_v1;
     (**) (S.equal) { lemma_slice hash_v1 (size_v pname_len) }
     (**)   (slice hash_v1 0 (size_v pname_len)) @|
     (**)          (slice hash_v1 (size_v pname_len) (S.length hash_v1));
-    (**) (S.equal) {}
-    (**)   h0.[|pname|] @| (S.create hash_end_len_v (u8 0));
+    (**) (==) {}
+    (**)   S.concat #uint8 #(size_v pname_len) #(hash_end_len_v) (h0.[|pname|]) (S.create hash_end_len_v (u8 0));
     (**) };
+    
     (**) assert(eval_hash h1 hashbuf ==
     (**)          initialize_symmetric_hash_v_ (get_config nc) (LB.as_seq h0 pname));
     success hash_return_type

@@ -27,7 +27,7 @@ let _align_beg = ()
 
 (*** IKpsk2 *)
 (**** Handshake test *)
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let perform_IKpsk2_handshake_init_pre_ (is ie rs re : keypair Spec.wgc) :
   Tot (option ((handshake_state Spec.wgc) & (handshake_state Spec.wgc))) =
   (* Initialize *)
@@ -45,7 +45,7 @@ let perform_IKpsk2_handshake_init_pre_ (is ie rs re : keypair Spec.wgc) :
     | Res ist0 ->
       Some (ist0, rst0)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let perform_IKpsk2_handshake_initiation_ (ist rst : handshake_state Spec.wgc)
                                          (ts : Spec.timestamp) :
   Tot (option ((handshake_state Spec.wgc) & (handshake_state Spec.wgc))) =
@@ -60,7 +60,7 @@ let perform_IKpsk2_handshake_initiation_ (ist rst : handshake_state Spec.wgc)
     | Res (ts', rst1) ->
       Some(ist1, rst1)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let perform_IKpsk2_handshake_response_ (ist rst : handshake_state Spec.wgc) :
   Tot (option ((handshake_state Spec.wgc) & (handshake_state Spec.wgc))) =
   (* Create response *)
@@ -75,7 +75,7 @@ let perform_IKpsk2_handshake_response_ (ist rst : handshake_state Spec.wgc) :
       if S.length eps > 0 then None else
       Some(ist1, rst1)
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let perform_IKpsk2_handshake_decomposed_
   (is ie rs re : keypair Spec.wgc)
   (psk : preshared_key)
@@ -100,12 +100,12 @@ let perform_IKpsk2_handshake_decompose_lem
     perform_IKpsk2_handshake_decomposed_ is ie rs re psk ts)
   = ()
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let premessage_IKpsk2_len : n:size_nat{n > 0} =
   assert_norm(premessage_vsv wg_inc Spec.pattern_IKpsk2 false > 0);
   premessage_vsv wg_inc Spec.pattern_IKpsk2 false
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let initiation_IKpsk2_len :
   n:size_nat{n == pat_message_vsv wg_inc Spec.pattern_IKpsk2 12 0 /\ n > 0}
   =
@@ -113,7 +113,7 @@ let initiation_IKpsk2_len :
   assert_norm(pat_message_vsv wg_inc Spec.pattern_IKpsk2 12 0 > 0);
   pat_message_vsv wg_inc Spec.pattern_IKpsk2 12 0
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let response_IKpsk2_len :
   n:size_nat{n == pat_message_vsv wg_inc Spec.pattern_IKpsk2 0 1 /\ n > 0}
   =
@@ -122,7 +122,7 @@ let response_IKpsk2_len :
   pat_message_vsv wg_inc Spec.pattern_IKpsk2 0 1
 
 (** initialize and exchange premessages *)
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let cperform_IKpsk2_handshake_init_pre_post
   (pname : hashable_t wg_inc 37ul) (prologue : hashable_t wg_inc 34ul)
   (is ie rs re : keypair_t wg_inc)
@@ -144,7 +144,7 @@ let cperform_IKpsk2_handshake_init_pre_post
   | Some (ist_v1', rst_v1') ->
     rst_v1' == rst_v1 /\ ist_v1' == ist_v1
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let cperform_IKpsk2_handshake_init_pre_post_lem
   (pname : hashable_t wg_inc 37ul) (prologue : hashable_t wg_inc 34ul)
   (is ie rs re : keypair_t wg_inc)
@@ -163,7 +163,7 @@ let cperform_IKpsk2_handshake_init_pre_post_lem
         cperform_IKpsk2_handshake_init_pre_post pname prologue is ie rs re ist rst h0 () h3)) =
   ()
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val cperform_IKpsk2_handshake_init_pre_with_buffer
   (pname : hashable_t wg_inc 37ul) (prologue : hashable_t wg_inc 34ul)
   (pbuf : lbuffer uint8 (size premessage_IKpsk2_len))
@@ -209,7 +209,7 @@ let cperform_IKpsk2_handshake_init_pre_with_buffer pname prologue pbuf is ie rs 
   (**) eval_handshake_state_same_lem h3 h4 rst rsmi
 #pop-options
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val cperform_IKpsk2_handshake_init_pre
   (pname : hashable_t wg_inc 37ul) (prologue : hashable_t wg_inc 34ul)
   (is ie rs re : keypair_t wg_inc)
@@ -222,7 +222,7 @@ val cperform_IKpsk2_handshake_init_pre
     cperform_IKpsk2_handshake_init_pre_post pname prologue is ie rs re ist rst h0 r h1))
 
 #push-options "--z3rlimit 100 --fuel 1 --ifuel 1"
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 let cperform_IKpsk2_handshake_init_pre pname prologue is ie rs re
                                        ist rst =
   (**) let h0 = HST.get () in
@@ -240,7 +240,7 @@ let cperform_IKpsk2_handshake_init_pre pname prologue is ie rs re
 
 (**  create initiation *)
 #push-options "--z3rlimit 50 --fuel 0 --ifuel 0"
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let cperform_IKpsk2_handshake_initiation_post
   (ts : timestamp_t)
   (ist rst : handshake_state_t wg_inc)
@@ -261,7 +261,7 @@ let cperform_IKpsk2_handshake_initiation_post
     ist_v1' == ist_v1 /\ rst_v1' == rst_v1
   | _ -> False
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val cperform_IKpsk2_handshake_initiation_with_buffers
   (ibuf : lbuffer uint8 (size (initiation_IKpsk2_len)))
   (ts ts' : timestamp_t)
@@ -332,7 +332,7 @@ let cperform_IKpsk2_handshake_initiation_post_lem
   eval_handshake_state_same_lem h2 h3 ist ismi1;
   eval_handshake_state_same_lem h2 h3 rst rsmi1
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val cperform_IKpsk2_handshake_initiation
   (ts : timestamp_t)
   (ist rst : handshake_state_t wg_inc) :
@@ -361,7 +361,7 @@ let cperform_IKpsk2_handshake_initiation ts ist rst =
 #pop-options
 
 (** set psk *)
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val cperform_IKpsk2_handshake_set_psk
   (psk : preshared_key_t)
   (ist rst : handshake_state_t wg_inc) :
@@ -393,14 +393,14 @@ let cperform_IKpsk2_handshake_set_psk psk ist rst =
 #pop-options
 
 (** create response *)
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let cperform_IKpsk2_handshake_response_pre
   (ist rst : handshake_state_t wg_inc)
   (h : mem) =
   live h ist /\ live h rst /\
   disjoint ist rst
 
-[@@ noextract_to "Karamel"] noextract
+[@@ noextract_to "krml"] noextract
 let cperform_IKpsk2_handshake_response_post
   (ist rst : handshake_state_t wg_inc)
   (h0 : mem) (r : rtype (prim_error_code_return_type)) (h1 : mem) =
@@ -419,7 +419,7 @@ let cperform_IKpsk2_handshake_response_post
     ist_v1' == ist_v1 /\ rst_v1' == rst_v1
   | _ -> False
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val cperform_IKpsk2_handshake_response_with_buffers
   (rbuf : lbuffer uint8 (size response_IKpsk2_len))
   (ist rst : handshake_state_t wg_inc) :
@@ -513,7 +513,7 @@ let cperform_IKpsk2_handshake_response_post_lem
   eval_handshake_state_same_lem h2 h3 ist ismi1;
   eval_handshake_state_same_lem h2 h3 rst rsmi1
 
-[@@ noextract_to "Karamel"] inline_for_extraction noextract
+[@@ noextract_to "krml"] inline_for_extraction noextract
 val cperform_IKpsk2_handshake_response
   (ist rst : handshake_state_t wg_inc) :
   Stack (rtype (prim_error_code_return_type))
