@@ -66,4 +66,4 @@ to contact the authors.
 ## Paper
 
 The results of this work have been published at S&P 2022.
-The paper is available [here](https://eprint.iacr.org/2022/607.pdf).
+The paper (long version) is available [here](https://eprint.iacr.org/2022/607.pdf).
