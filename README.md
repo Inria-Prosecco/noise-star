@@ -62,3 +62,8 @@ generate implementations for a limited choice of cryptographic primitive
 implementations. If you desire a specific choice of implementations made available
 by the [Hacl\*](https://github.com/project-everest/hacl-star) library, feel free
 to contact the authors.
+
+## Paper
+
+The results of this work have been published at S&P 2022.
+The paper is available [here](https://eprint.iacr.org/2022/607.pdf).
