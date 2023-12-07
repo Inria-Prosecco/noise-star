@@ -47,13 +47,13 @@ let is_supported_aead_alg (a : AEAD.alg) : bool =
 
 type aead_alg = a:AEAD.alg{is_supported_aead_alg a}
 
-let is_supported_hash_alg (a : Hash.algorithm) : bool =
+let is_supported_hash_alg (a : Hash.hash_alg) : bool =
   match a with
   | SHA2_256 | SHA2_512
   | Blake2S | Blake2B -> true
   | _ -> false
 
-type hash_alg = a:Hash.algorithm{is_supported_hash_alg a}
+type hash_alg = a:Hash.hash_alg{is_supported_hash_alg a}
 
 /// Noise algorithmic configuration:
 /// dh algorithm & aead algorithm & hash algorithm
@@ -264,7 +264,7 @@ type ahash (a : hash_alg) = lbytes (ahash_size a)
 type hash (nc : config) = lbytes (hash_size nc)
 
 let ahash_max_input (a : hash_alg) : Tot pos =
-  Hash.max_input_length a
+  Some?.v (Hash.max_input_length a)
 
 let hash_max_input (nc : config) : Tot pos =
   ahash_max_input (get_hash_alg nc)
